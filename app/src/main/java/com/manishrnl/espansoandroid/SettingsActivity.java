@@ -55,6 +55,8 @@ public final class SettingsActivity extends Activity {
                 openExportPicker());
         findViewById(R.id.settingsNewShortcut).setOnClickListener(view ->
                 startActivity(new Intent(this, EditorActivity.class)));
+        findViewById(R.id.settingsRecycleBin).setOnClickListener(view ->
+                startActivity(new Intent(this, TrashActivity.class)));
         findViewById(R.id.settingsAppearance).setOnClickListener(view ->
                 startActivity(new Intent(this, KeyboardSettingsActivity.class)));
         findViewById(R.id.settingsDeveloperWebsite).setOnClickListener(view ->
@@ -68,6 +70,7 @@ public final class SettingsActivity extends Activity {
     protected void onResume() {
         super.onResume();
         updateExpansionStatus();
+        updateRecycleBinCount();
     }
 
     @Override
@@ -126,6 +129,12 @@ public final class SettingsActivity extends Activity {
                             : View.GONE
             );
         }
+    }
+
+    private void updateRecycleBinCount() {
+        int count = database.getTrashEntryCount();
+        TextView button = findViewById(R.id.settingsRecycleBin);
+        button.setText(getString(R.string.recycle_bin_with_count, count));
     }
 
     private void openAccessibilitySetup() {

@@ -15,7 +15,7 @@
         android:padding="12dp">
 
         <ImageButton
-            android:id="@+id/folderBackButton"
+            android:id="@+id/trashBackButton"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:background="@drawable/bg_button_secondary"
@@ -30,56 +30,54 @@
             android:layout_height="1dp"
             android:layout_weight="1" />
 
-        <ImageButton
-            android:id="@+id/folderDeleteButton"
-            android:layout_width="44dp"
+        <Button
+            android:id="@+id/emptyTrashButton"
+            android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/bg_danger_button"
-            android:contentDescription="@string/delete_folder"
-            android:padding="11dp"
-            android:src="@drawable/ic_delete"
-            android:tint="?attr/colorDanger"
-            android:tooltipText="@string/delete_folder" />
-
-        <ImageButton
-            android:id="@+id/folderAddButton"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="@drawable/bg_button_primary"
-            android:contentDescription="@string/add_template"
-            android:padding="11dp"
-            android:src="@drawable/ic_template_add"
-            android:tint="@color/on_accent"
-            android:tooltipText="@string/add_template" />
+            android:minWidth="0dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/empty_recycle_bin"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorDanger"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/folderTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:text="@string/recycle_bin"
         android:textColor="?attr/colorTextPrimary"
         android:textSize="29sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/folderShortcutSummary"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/recycle_bin_detail"
         android:textColor="?attr/colorTextSecondary"
         android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/emptyShortcuts"
+        android:id="@+id/trashSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/accent"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/emptyTrash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_card"
         android:gravity="center"
         android:padding="28dp"
-        android:text="@string/no_shortcuts_in_folder"
+        android:text="@string/recycle_bin_empty"
         android:textColor="?attr/colorTextSecondary"
         android:textSize="14sp"
         android:visibility="gone" />

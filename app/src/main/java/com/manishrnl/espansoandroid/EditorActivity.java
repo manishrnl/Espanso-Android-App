@@ -117,10 +117,10 @@ public final class EditorActivity extends Activity {
     private void confirmDelete() {
         new AlertDialog.Builder(this)
                 .setTitle("Delete shortcut?")
-                .setMessage("This removes the shortcut from local device storage.")
+                .setMessage("The shortcut will move to the recycle bin for 90 days.")
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
-                    database.delete(shortcutId);
+                    database.moveShortcutToTrash(shortcutId);
                     setResult(RESULT_OK);
                     finish();
                 })

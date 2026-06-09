@@ -219,6 +219,28 @@
                 android:text="@string/add_unfiled_shortcut"
                 android:textAllCaps="false"
                 android:textColor="?attr/colorTextPrimary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/recycle_bin_settings_detail"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/settingsRecycleBin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_button_secondary"
+                android:drawableStart="@drawable/ic_delete"
+                android:drawablePadding="9dp"
+                android:drawableTint="?attr/colorTextPrimary"
+                android:gravity="center"
+                android:text="@string/recycle_bin"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTextPrimary" />
         </LinearLayout>
 
         <LinearLayout

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Espanso Local</string>
-    <string name="keyboard_name">Espanso Local Keyboard</string>
+    <string name="app_name">Espanso</string>
+    <string name="keyboard_name">Espanso Keyboard</string>
     <string name="accessibility_service_name">Espanso expansion with any keyboard</string>
     <string name="accessibility_service_description">Uses the Android accessibility editor connection to expand local shortcuts and show popup suggestions while Gboard, SwiftKey, or another keyboard remains active. Password fields are ignored.</string>
     <string name="main_title">Espanso</string>
@@ -18,7 +18,7 @@
     <string name="search_hint">Keyword, replacement, or folder</string>
     <string name="no_search_results">No shortcuts match this search.</string>
     <string name="no_shortcuts_available">No shortcuts are available to search.</string>
-    <string name="settings_subtitle">Expansion, keyboard selection, data, and appearance.</string>
+    <string name="settings_subtitle">Expansion, keyboard selection, data recovery, and appearance.</string>
     <string name="folders">Folders</string>
     <string name="folders_subtitle">Open a folder to view and edit its shortcuts.</string>
     <string name="folder_and_shortcut_summary">%1$s, %2$s</string>
@@ -72,6 +72,39 @@
         <item quantity="other">Exported %1$d shortcuts.</item>
     </plurals>
     <string name="add_template">Add template</string>
+    <string name="delete_folder">Delete folder</string>
+    <string name="delete_folder_title">Move folder to recycle bin?</string>
+    <plurals name="delete_folder_message">
+        <item quantity="one">Move "%1$s" and its %2$d shortcut to the recycle bin? It can be restored for 90 days.</item>
+        <item quantity="other">Move "%1$s" and its %2$d shortcuts to the recycle bin? They can be restored for 90 days.</item>
+    </plurals>
+    <string name="move_to_recycle_bin">Move to recycle bin</string>
+    <string name="recycle_bin">Recycle bin</string>
+    <string name="recycle_bin_with_count">Recycle bin (%1$d)</string>
+    <string name="recycle_bin_settings_detail">Deleted folders and shortcuts can be restored here for 90 days.</string>
+    <string name="recycle_bin_detail">Deleted folders and shortcuts are automatically removed permanently after 90 days.</string>
+    <string name="recycle_bin_empty">The recycle bin is empty.</string>
+    <plurals name="trash_entry_count">
+        <item quantity="one">%1$d recoverable item</item>
+        <item quantity="other">%1$d recoverable items</item>
+    </plurals>
+    <string name="shortcut">Shortcut</string>
+    <string name="empty_replacement">Empty replacement</string>
+    <string name="trash_shortcut_detail">%1$s\nFolder: %2$s</string>
+    <string name="deleted_on">Deleted %1$s</string>
+    <string name="restore">Restore</string>
+    <string name="restored">Restored.</string>
+    <plurals name="restore_folder_message">
+        <item quantity="one">Restore "%1$s" and its %2$d shortcut? If the folder already exists, the shortcut will be merged into it.</item>
+        <item quantity="other">Restore "%1$s" and its %2$d shortcuts? If the folder already exists, the shortcuts will be merged into it.</item>
+    </plurals>
+    <string name="restore_shortcut_message">Restore shortcut "%1$s" to its original folder?</string>
+    <string name="delete_permanently">Delete permanently</string>
+    <string name="delete_permanently_title">Delete permanently?</string>
+    <string name="delete_permanently_message">This item cannot be restored after permanent deletion.</string>
+    <string name="empty_recycle_bin">Empty recycle bin</string>
+    <string name="empty_recycle_bin_title">Empty recycle bin?</string>
+    <string name="empty_recycle_bin_message">All deleted folders and shortcuts will be removed permanently and cannot be restored.</string>
     <plurals name="shortcut_count">
         <item quantity="one">%1$d shortcut</item>
         <item quantity="other">%1$d shortcuts</item>

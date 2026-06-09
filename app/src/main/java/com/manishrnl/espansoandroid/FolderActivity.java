@@ -1,6 +1,7 @@
 package com.manishrnl.espansoandroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,6 +52,9 @@ public final class FolderActivity extends Activity {
         header.findViewById(R.id.folderBackButton).setOnClickListener(view -> finish());
         header.findViewById(R.id.folderAddButton).setOnClickListener(view ->
                 openEditor(-1));
+        View deleteFolderButton = header.findViewById(R.id.folderDeleteButton);
+        deleteFolderButton.setVisibility(folder.isEmpty() ? View.GONE : View.VISIBLE);
+        deleteFolderButton.setOnClickListener(view -> confirmDeleteFolder());
 
         shortcutList.addHeaderView(header, null, false);
         shortcutList.setAdapter(adapter);
@@ -100,5 +104,25 @@ public final class FolderActivity extends Activity {
             intent.putExtra(EditorActivity.EXTRA_DEFAULT_FOLDER, folder);
         }
         startActivity(intent);
+    }
+
+    private void confirmDeleteFolder() {
+        int shortcutCount = adapter.getCount();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.delete_folder_title)
+                .setMessage(getResources().getQuantityString(
+                        R.plurals.delete_folder_message,
+                        shortcutCount,
+                        folder.replace("\\", " / "),
+                        shortcutCount
+                ))
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.move_to_recycle_bin, (dialog, which) -> {
+                    if (database.moveFolderToTrash(folder)) {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                })
+                .show();
     }
 }
