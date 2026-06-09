@@ -22,6 +22,7 @@ public final class KeyboardSettingsActivity extends Activity {
         keyboardThemeButton = findViewById(R.id.keyboardThemeButton);
         keyHeightButton = findViewById(R.id.keyHeightButton);
         Switch numberRowSwitch = findViewById(R.id.numberRowSwitch);
+        Switch symbolHintsSwitch = findViewById(R.id.symbolHintsSwitch);
         Switch suggestionBarSwitch = findViewById(R.id.suggestionBarSwitch);
         Switch hapticSwitch = findViewById(R.id.hapticSwitch);
         Switch soundSwitch = findViewById(R.id.soundSwitch);
@@ -32,12 +33,15 @@ public final class KeyboardSettingsActivity extends Activity {
         keyHeightButton.setOnClickListener(view -> showKeyHeightDialog());
 
         numberRowSwitch.setChecked(AppPreferences.isNumberRowEnabled(this));
+        symbolHintsSwitch.setChecked(AppPreferences.areSymbolHintsEnabled(this));
         suggestionBarSwitch.setChecked(AppPreferences.isSuggestionBarEnabled(this));
         hapticSwitch.setChecked(AppPreferences.isHapticFeedbackEnabled(this));
         soundSwitch.setChecked(AppPreferences.isSoundFeedbackEnabled(this));
 
         numberRowSwitch.setOnCheckedChangeListener((button, checked) ->
                 AppPreferences.setNumberRowEnabled(this, checked));
+        symbolHintsSwitch.setOnCheckedChangeListener((button, checked) ->
+                AppPreferences.setSymbolHintsEnabled(this, checked));
         suggestionBarSwitch.setOnCheckedChangeListener((button, checked) ->
                 AppPreferences.setSuggestionBarEnabled(this, checked));
         hapticSwitch.setOnCheckedChangeListener((button, checked) ->

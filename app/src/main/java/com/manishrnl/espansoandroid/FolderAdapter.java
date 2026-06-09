@@ -23,11 +23,17 @@ public final class FolderAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
     }
 
-    public void setShortcuts(List<Shortcut> shortcuts) {
+    public void setData(List<Shortcut> shortcuts, List<String> folders) {
         Map<String, Integer> counts = new HashMap<>();
         for (Shortcut shortcut : shortcuts) {
             String folder = shortcut.getFolder().trim();
             counts.put(folder, counts.getOrDefault(folder, 0) + 1);
+        }
+        for (String folder : folders) {
+            String normalized = folder == null ? "" : folder.trim();
+            if (!normalized.isEmpty()) {
+                counts.putIfAbsent(normalized, 0);
+            }
         }
 
         items.clear();

@@ -9,6 +9,16 @@
     android:paddingHorizontal="18dp"
     android:paddingVertical="14dp">
 
+    <ImageView
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/bg_folder_icon"
+        android:contentDescription="@null"
+        android:padding="11dp"
+        android:src="@drawable/ic_folder"
+        android:tint="@color/accent" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,13 +44,12 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <TextView
+    <ImageView
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:gravity="center"
-        android:text="@string/open_folder_arrow"
-        android:textColor="@color/accent"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:contentDescription="@null"
+        android:padding="6dp"
+        android:src="@drawable/ic_chevron_right"
+        android:tint="@color/accent" />
 
 </LinearLayout>

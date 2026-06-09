@@ -22,6 +22,7 @@ public final class AppPreferences {
     private static final String KEYBOARD_THEME = "keyboard_theme";
     private static final String KEY_HEIGHT = "key_height";
     private static final String NUMBER_ROW = "number_row";
+    private static final String SYMBOL_HINTS = "symbol_hints";
     private static final String SUGGESTION_BAR = "suggestion_bar";
     private static final String HAPTIC_FEEDBACK = "haptic_feedback";
     private static final String SOUND_FEEDBACK = "sound_feedback";
@@ -110,6 +111,14 @@ public final class AppPreferences {
 
     public static void setNumberRowEnabled(Context context, boolean value) {
         preferences(context).edit().putBoolean(NUMBER_ROW, value).apply();
+    }
+
+    public static boolean areSymbolHintsEnabled(Context context) {
+        return preferences(context).getBoolean(SYMBOL_HINTS, true);
+    }
+
+    public static void setSymbolHintsEnabled(Context context, boolean value) {
+        preferences(context).edit().putBoolean(SYMBOL_HINTS, value).apply();
     }
 
     public static boolean isSuggestionBarEnabled(Context context) {

@@ -89,7 +89,15 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
         }
         CharSequence packageName = event.getPackageName();
         if (packageName != null && getPackageName().contentEquals(packageName)) {
-            hideSuggestions();
+            // Adding the accessibility overlay emits an event from this package.
+            // An app Activity has this package as its class too, so still dismiss
+            // the overlay when the user opens one of this app's screens.
+            CharSequence className = event.getClassName();
+            if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+                    && className != null
+                    && className.toString().startsWith(getPackageName())) {
+                hideSuggestions();
+            }
             return;
         }
 

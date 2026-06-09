@@ -4,8 +4,20 @@
     <string name="accessibility_service_name">Espanso expansion with any keyboard</string>
     <string name="accessibility_service_description">Uses the Android accessibility editor connection to expand local shortcuts and show popup suggestions while Gboard, SwiftKey, or another keyboard remains active. Password fields are ignored.</string>
     <string name="main_title">Espanso</string>
-    <string name="main_eyebrow">PRIVATE TEXT EXPANSION</string>
+    <string name="main_eyebrow">MANISH RNL</string>
+    <string name="company_name">Manish rnl</string>
+    <string name="company_logo_description">Manish rnl company logo</string>
     <string name="settings">Settings</string>
+    <string name="create_folder">Create folder</string>
+    <string name="create_folder_detail">Create an empty folder now, then add templates inside it.</string>
+    <string name="folder_name_hint">Folder name</string>
+    <string name="folder_name_required">Folder name is required.</string>
+    <string name="folder_already_exists">That folder already exists.</string>
+    <string name="create">Create</string>
+    <string name="search_shortcuts">Search shortcuts</string>
+    <string name="search_hint">Keyword, replacement, or folder</string>
+    <string name="no_search_results">No shortcuts match this search.</string>
+    <string name="no_shortcuts_available">No shortcuts are available to search.</string>
     <string name="settings_subtitle">Expansion, keyboard selection, data, and appearance.</string>
     <string name="folders">Folders</string>
     <string name="folders_subtitle">Open a folder to view and edit its shortcuts.</string>
@@ -25,6 +37,12 @@
     <string name="global_expansion_active_detail">Espanso can expand local shortcuts and show suggestions in supported editable fields.</string>
     <string name="global_expansion">Expansion with Gboard or SwiftKey</string>
     <string name="third_party_keyboard_note">Android 13 and newer use a direct accessibility editor connection alongside your selected keyboard. Android 8&#8211;12 use the compatible accessibility-event fallback. After installing this update, turn the Espanso accessibility service off and on once.</string>
+    <string name="restricted_settings_title">Restricted setting on Android</string>
+    <string name="restricted_settings_card_detail">If Espanso is greyed out or Android says this setting is unavailable, the APK was marked as sideloaded. Tap below, open the three-dot menu in App info, choose “Allow restricted settings,” then return to Accessibility and enable Espanso.</string>
+    <string name="restricted_settings_message">Android blocks Accessibility for some apps installed from APK files. This security control cannot be bypassed by an app.\n\n1. Tap “Open App info.”\n2. Tap the three-dot menu at the top right.\n3. Choose “Allow restricted settings” and confirm.\n4. Return here and tap “Open Accessibility.”\n\nIf the menu is absent, reinstall through Google Play or another trusted app store/package installer supported by the device.</string>
+    <string name="fix_restricted_settings">Fix restricted setting</string>
+    <string name="open_app_info">Open App info</string>
+    <string name="open_accessibility">Open Accessibility</string>
     <string name="accessibility_disclosure_title">Allow expansion with any keyboard?</string>
     <string name="accessibility_disclosure_message">Espanso uses Android Accessibility only to read the editable field where you are typing, match your local shortcuts, replace matched text, show local suggestions, and undo the last expansion. Password fields are ignored. Text is not collected, stored as typing history, or sent off this device. Android will show a system warning because this access can view screen content.</string>
     <string name="continue_label">Continue</string>
@@ -36,6 +54,10 @@
     <string name="appearance_and_fallback">Appearance and fallback keyboard</string>
     <string name="appearance_and_fallback_detail">Change the app theme or customize the optional Espanso keyboard. Gboard and SwiftKey remain the recommended keyboards.</string>
     <string name="open_appearance">Open appearance settings</string>
+    <string name="developer_name">Manish Kumar</string>
+    <string name="developer_detail">Software developer focused on Spring Boot, Hibernate JPA, MySQL, React, microservices, full-stack projects, and backend engineering.</string>
+    <string name="view_developer_projects">View developer projects</string>
+    <string name="developer_website_url">https://www.manishrnl.in/projects</string>
     <string name="replace_shortcuts_title">Replace current shortcuts?</string>
     <plurals name="replace_shortcuts_message">
         <item quantity="one">Import %1$d shortcut and replace all shortcuts currently stored on this device?</item>
@@ -49,8 +71,7 @@
         <item quantity="one">Exported %1$d shortcut.</item>
         <item quantity="other">Exported %1$d shortcuts.</item>
     </plurals>
-    <string name="open_folder_arrow">&gt;</string>
-    <string name="add_shortcut">New shortcut</string>
+    <string name="add_template">Add template</string>
     <plurals name="shortcut_count">
         <item quantity="one">%1$d shortcut</item>
         <item quantity="other">%1$d shortcuts</item>
@@ -91,6 +112,8 @@
     <string name="setting_value">%1$s: %2$s</string>
     <string name="number_row">Always show number row</string>
     <string name="number_row_description">Keep 0&#8211;9 above the letter rows.</string>
+    <string name="symbol_hints">Symbols inside letter keys</string>
+    <string name="symbol_hints_description">Show small symbol hints on letters. Long-press a letter to type its symbol.</string>
     <string name="suggestion_bar">Shortcut toolbar</string>
     <string name="suggestion_bar_description">Show matching shortcuts, paste, cursor, and settings controls.</string>
     <string name="haptic_feedback">Haptic feedback</string>
@@ -98,5 +121,12 @@
     <string name="sound_feedback">Keypress sound</string>
     <string name="sound_feedback_description">Play the Android keyboard click sound.</string>
     <string name="back">Back</string>
+    <string name="backspace">Backspace</string>
+    <string name="shift">Shift</string>
+    <string name="space">Space</string>
+    <string name="emoji">Emoji</string>
+    <string name="paste">Paste</string>
+    <string name="cursor_left">Move cursor left</string>
+    <string name="cursor_right">Move cursor right</string>
     <string name="keyboard_changes_note">Changes apply the next time the keyboard opens.</string>
 </resources>

@@ -17,6 +17,8 @@ https://github.com/manishrnl/
   Android 13+
 - Accessibility-event compatibility mode on Android 8-12
 - Optional custom keyboard fallback
+- Gboard-style fallback layout with icon controls and backspace above Enter
+- Optional symbol hints inside letter keys with long-press symbol entry
 - Popup shortcut suggestions beside the active text field
 - First-backspace undo restores the original shortcut
 - Light, dark, OLED, and app-matched keyboard themes
@@ -27,6 +29,7 @@ https://github.com/manishrnl/
 - Keyboard preferences shortcut directly in the suggestion toolbar
 - SQLite storage inside the app's private device storage
 - Alphabetical folder-only home screen
+- Persistent empty folders with a dedicated home-screen add-folder action
 - Open a folder to add, edit, and delete its shortcuts
 - CSV import and export through Android's system document picker
 - CSV folder structure preserved as navigable folders
@@ -133,6 +136,10 @@ adb shell am start -n com.manishrnl.espansoandroid/.MainActivity
 2. Open **Settings** and tap **Enable global expansion**.
 3. In Android Accessibility settings, enable **Espanso expansion with any
    keyboard**.
+   - On Android 13 or newer, a manually installed APK may show **Restricted
+     setting**. Open Espanso **Settings > Fix restricted setting > Open App
+     info**, tap the three-dot menu, choose **Allow restricted settings**, then
+     return to Accessibility. Android intentionally requires this user action.
 4. After an app update, turn this accessibility service off and on once so
    Android reloads its editor capability.
 5. Return to the app and tap **Choose keyboard** if you want to select Gboard,

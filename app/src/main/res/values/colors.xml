@@ -21,4 +21,6 @@
 
     <color name="success">#1A9B69</color>
     <color name="danger">#D64B5F</color>
+    <color name="warning">#B7791F</color>
+    <color name="warning_border">#E9C46A</color>
 </resources>

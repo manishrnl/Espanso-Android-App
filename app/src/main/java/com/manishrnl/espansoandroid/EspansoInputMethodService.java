@@ -7,13 +7,19 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.inputmethodservice.InputMethodService;
 import android.media.AudioManager;
 import android.os.Build;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
@@ -52,6 +58,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     private boolean capsLock;
     private boolean privateField;
     private boolean showNumberRow;
+    private boolean showSymbolHints;
     private boolean showSuggestionBar;
     private boolean hapticFeedback;
     private boolean soundFeedback;
@@ -146,6 +153,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     private void loadPreferences() {
         keyHeightDp = AppPreferences.getKeyHeight(this);
         showNumberRow = AppPreferences.isNumberRowEnabled(this);
+        showSymbolHints = AppPreferences.areSymbolHintsEnabled(this);
         showSuggestionBar = AppPreferences.isSuggestionBarEnabled(this);
         hapticFeedback = AppPreferences.isHapticFeedbackEnabled(this);
         soundFeedback = AppPreferences.isSoundFeedbackEnabled(this);
@@ -202,11 +210,21 @@ public final class EspansoInputMethodService extends InputMethodService {
         suggestionRow = createRow(42);
         suggestionRow.setPadding(dp(1), 0, dp(1), dp(3));
         suggestionRow.addView(
-                createActionKey("Prefs", view -> openKeyboardSettings(), true),
+                createIconKey(
+                        R.drawable.ic_settings,
+                        getString(R.string.settings),
+                        view -> openKeyboardSettings(),
+                        false
+                ),
                 weightedParams(0.85f, 42)
         );
         suggestionRow.addView(
-                createActionKey("<", view -> moveCursor(KeyEvent.KEYCODE_DPAD_LEFT), true),
+                createIconKey(
+                        R.drawable.ic_keyboard_left,
+                        getString(R.string.cursor_left),
+                        view -> moveCursor(KeyEvent.KEYCODE_DPAD_LEFT),
+                        false
+                ),
                 weightedParams(0.55f, 42)
         );
         for (int index = 0; index < 3; index++) {
@@ -218,11 +236,21 @@ public final class EspansoInputMethodService extends InputMethodService {
             suggestionRow.addView(suggestion, weightedParams(1.55f, 42));
         }
         suggestionRow.addView(
-                createActionKey(">", view -> moveCursor(KeyEvent.KEYCODE_DPAD_RIGHT), true),
+                createIconKey(
+                        R.drawable.ic_keyboard_right,
+                        getString(R.string.cursor_right),
+                        view -> moveCursor(KeyEvent.KEYCODE_DPAD_RIGHT),
+                        false
+                ),
                 weightedParams(0.55f, 42)
         );
         suggestionRow.addView(
-                createActionKey("Paste", view -> pasteClipboard(), true),
+                createIconKey(
+                        R.drawable.ic_keyboard_paste,
+                        getString(R.string.paste),
+                        view -> pasteClipboard(),
+                        false
+                ),
                 weightedParams(0.85f, 42)
         );
         keyboardView.addView(suggestionRow);
@@ -232,21 +260,39 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (showNumberRow) {
             addCharacterRow("1234567890", 0f);
         }
-        addCharacterRow("qwertyuiop", 0f);
-        addCharacterRow("asdfghjkl", 0.48f);
+        addLetterRow("qwertyuiop", "1234567890", 0f);
+        addLetterRow("asdfghjkl", "@#$&*()-+", 0.48f);
 
         LinearLayout row = createRow(keyHeightDp);
         row.addView(
-                createActionKey(shiftLabel(), view -> handleShift(), false),
+                createIconKey(
+                        capsLock
+                                ? R.drawable.ic_keyboard_caps
+                                : R.drawable.ic_keyboard_shift,
+                        getString(R.string.shift),
+                        view -> handleShift(),
+                        shifted
+                ),
                 weightedParams(1.45f, keyHeightDp)
         );
-        for (char character : "zxcvbnm".toCharArray()) {
+        String letters = "zxcvbnm";
+        String hints = "*\"':;!?";
+        for (int index = 0; index < letters.length(); index++) {
+            char character = letters.charAt(index);
             row.addView(
-                    createCharacterKey(applyShift(character)),
+                    createLetterKey(
+                            applyShift(character),
+                            String.valueOf(hints.charAt(index))
+                    ),
                     weightedParams(1f, keyHeightDp)
             );
         }
-        TextView delete = createActionKey("Del", view -> handleBackspace(), false);
+        TextView delete = createIconKey(
+                R.drawable.ic_keyboard_backspace,
+                getString(R.string.backspace),
+                view -> handleBackspace(),
+                false
+        );
         delete.setOnLongClickListener(view -> {
             provideFeedback(view);
             deleteWord();
@@ -260,14 +306,18 @@ public final class EspansoInputMethodService extends InputMethodService {
         addCharacterRow("1234567890", 0f);
         addCharacterKeys(new String[]{"@", "#", "$", "%", "&", "-", "+", "(", ")", "/"});
         addCharacterKeys(new String[]{"*", "\"", "'", ":", ";", "!", "?", "_", "=", "\\"});
-        addCharacterKeys(new String[]{"[", "]", "{", "}", "<", ">", "^", "`", "~"});
+        addCharacterKeysWithBackspace(
+                new String[]{"[", "]", "{", "}", "<", ">", "^", "`", "~"}
+        );
     }
 
     private void addSecondarySymbols() {
         addCharacterKeys(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"});
         addCharacterKeys(new String[]{"|", "•", "√", "π", "÷", "×", "§", "∆", "£", "€"});
         addCharacterKeys(new String[]{"¥", "¢", "°", "©", "®", "™", "✓", "[", "]", "{"});
-        addCharacterKeys(new String[]{"}", "<", ">", "^", "`", "~", "_", "=", "\\"});
+        addCharacterKeysWithBackspace(
+                new String[]{"}", "<", ">", "^", "`", "~", "_", "=", "\\"}
+        );
     }
 
     private void addEmojiKeyboard() {
@@ -283,7 +333,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                 0x1F618, 0x1F61C, 0x1F914, 0x1F610, 0x1F612,
                 0x1F622, 0x1F62D, 0x1F621
         ));
-        addCharacterKeys(emojiRow(
+        addCharacterKeysWithBackspace(emojiRow(
                 0x1F44D, 0x1F44F, 0x1F64F, 0x1F4AA, 0x2764,
                 0x1F525, 0x2728, 0x1F389
         ));
@@ -293,7 +343,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         addCharacterKeys(new String[]{"1", "2", "3"});
         addCharacterKeys(new String[]{"4", "5", "6"});
         addCharacterKeys(new String[]{"7", "8", "9"});
-        addCharacterKeys(new String[]{"-", "0", "."});
+        addCharacterKeysWithBackspace(new String[]{"-", "0", "."});
     }
 
     private void addControlRow() {
@@ -304,15 +354,21 @@ public final class EspansoInputMethodService extends InputMethodService {
                     weightedParams(1f, keyHeightDp + 2)
             );
             row.addView(
-                    createActionKey("Space", view -> handleSpace(), false),
+                    createIconKey(
+                            R.drawable.ic_keyboard_space,
+                            getString(R.string.space),
+                            view -> handleSpace(),
+                            false
+                    ),
                     weightedParams(3f, keyHeightDp + 2)
             );
             row.addView(
-                    createActionKey("Del", view -> handleBackspace(), false),
-                    weightedParams(1.3f, keyHeightDp + 2)
-            );
-            row.addView(
-                    createActionKey(enterLabel(), view -> handleEnter(), true),
+                    createIconKey(
+                            R.drawable.ic_keyboard_enter,
+                            enterLabel(),
+                            view -> handleEnter(),
+                            true
+                    ),
                     weightedParams(1.6f, keyHeightDp + 2)
             );
             keyboardView.addView(row);
@@ -349,15 +405,18 @@ public final class EspansoInputMethodService extends InputMethodService {
             );
         } else {
             row.addView(
-                    createActionKey(
-                            keyboardMode == MODE_EMOJI ? "?123" : "Emoji",
-                            view -> setKeyboardMode(
-                                    keyboardMode == MODE_EMOJI
-                                            ? MODE_SYMBOLS_PRIMARY
-                                            : MODE_EMOJI
+                    keyboardMode == MODE_EMOJI
+                            ? createActionKey(
+                                    "?123",
+                                    view -> setKeyboardMode(MODE_SYMBOLS_PRIMARY),
+                                    false
+                            )
+                            : createIconKey(
+                                    R.drawable.ic_keyboard_emoji,
+                                    getString(R.string.emoji),
+                                    view -> setKeyboardMode(MODE_EMOJI),
+                                    false
                             ),
-                            false
-                    ),
                     weightedParams(0.9f, keyHeightDp + 2)
             );
         }
@@ -368,8 +427,24 @@ public final class EspansoInputMethodService extends InputMethodService {
                     weightedParams(0.72f, keyHeightDp + 2)
             );
         }
+        if (!showSuggestionBar) {
+            row.addView(
+                    createIconKey(
+                            R.drawable.ic_settings,
+                            getString(R.string.settings),
+                            view -> openKeyboardSettings(),
+                            false
+                    ),
+                    weightedParams(0.9f, keyHeightDp + 2)
+            );
+        }
 
-        TextView space = createActionKey("Space", view -> handleSpace(), false);
+        TextView space = createIconKey(
+                R.drawable.ic_keyboard_space,
+                getString(R.string.space),
+                view -> handleSpace(),
+                false
+        );
         space.setOnLongClickListener(view -> {
             provideFeedback(view);
             showInputMethodPicker();
@@ -381,19 +456,14 @@ public final class EspansoInputMethodService extends InputMethodService {
                 weightedParams(0.8f, keyHeightDp + 2)
         );
         row.addView(
-                createActionKey("Del", view -> handleBackspace(), false),
-                weightedParams(1.05f, keyHeightDp + 2)
-        );
-        row.addView(
-                createActionKey(enterLabel(), view -> handleEnter(), true),
+                createIconKey(
+                        R.drawable.ic_keyboard_enter,
+                        enterLabel(),
+                        view -> handleEnter(),
+                        true
+                ),
                 weightedParams(1.45f, keyHeightDp + 2)
         );
-        if (!showSuggestionBar) {
-            row.addView(
-                    createActionKey("Prefs", view -> openKeyboardSettings(), true),
-                    weightedParams(0.9f, keyHeightDp + 2)
-            );
-        }
         keyboardView.addView(row);
     }
 
@@ -426,6 +496,50 @@ public final class EspansoInputMethodService extends InputMethodService {
         keyboardView.addView(row);
     }
 
+    private void addCharacterKeysWithBackspace(String[] labels) {
+        LinearLayout row = createRow(keyHeightDp);
+        for (String label : labels) {
+            TextView key = createCharacterKey(label);
+            if (keyboardMode == MODE_EMOJI) {
+                key.setTextSize(20);
+            }
+            row.addView(key, weightedParams(1f, keyHeightDp));
+        }
+        TextView delete = createIconKey(
+                R.drawable.ic_keyboard_backspace,
+                getString(R.string.backspace),
+                view -> handleBackspace(),
+                false
+        );
+        delete.setOnLongClickListener(view -> {
+            provideFeedback(view);
+            deleteWord();
+            return true;
+        });
+        row.addView(delete, weightedParams(1.35f, keyHeightDp));
+        keyboardView.addView(row);
+    }
+
+    private void addLetterRow(String letters, String hints, float sideWeight) {
+        LinearLayout row = createRow(keyHeightDp);
+        if (sideWeight > 0) {
+            row.addView(new Space(this), weightedParams(sideWeight, keyHeightDp));
+        }
+        for (int index = 0; index < letters.length(); index++) {
+            row.addView(
+                    createLetterKey(
+                            applyShift(letters.charAt(index)),
+                            String.valueOf(hints.charAt(index))
+                    ),
+                    weightedParams(1f, keyHeightDp)
+            );
+        }
+        if (sideWeight > 0) {
+            row.addView(new Space(this), weightedParams(sideWeight, keyHeightDp));
+        }
+        keyboardView.addView(row);
+    }
+
     private LinearLayout createRow(int heightDp) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -439,6 +553,57 @@ public final class EspansoInputMethodService extends InputMethodService {
 
     private TextView createCharacterKey(String text) {
         return createActionKey(text, view -> handleCharacter(text), false);
+    }
+
+    private TextView createLetterKey(String letter, String symbolHint) {
+        TextView key = createCharacterKey(letter);
+        if (showSymbolHints && !symbolHint.isEmpty()) {
+            SpannableString label = new SpannableString(letter + symbolHint);
+            int hintStart = letter.length();
+            label.setSpan(
+                    new RelativeSizeSpan(0.55f),
+                    hintStart,
+                    label.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            label.setSpan(
+                    new SuperscriptSpan(),
+                    hintStart,
+                    label.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            label.setSpan(
+                    new ForegroundColorSpan(colors.hint),
+                    hintStart,
+                    label.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            key.setText(label);
+            key.setOnLongClickListener(view -> {
+                provideFeedback(view);
+                handleCharacter(symbolHint);
+                return true;
+            });
+        }
+        return key;
+    }
+
+    private TextView createIconKey(
+            int drawableResource,
+            String description,
+            View.OnClickListener listener,
+            boolean accent
+    ) {
+        TextView key = createActionKey("", listener, accent);
+        Drawable icon = getDrawable(drawableResource);
+        if (icon != null) {
+            int size = dp(23);
+            icon.setBounds(0, 0, size, size);
+            icon.setTint(accent ? colors.onAccent : colors.text);
+            key.setCompoundDrawables(icon, null, null, null);
+        }
+        key.setContentDescription(description);
+        return key;
     }
 
     private TextView createActionKey(
@@ -508,13 +673,6 @@ public final class EspansoInputMethodService extends InputMethodService {
         }
         lastShiftTap = now;
         rebuildKeyboard();
-    }
-
-    private String shiftLabel() {
-        if (capsLock) {
-            return "CAPS";
-        }
-        return shifted ? "SHIFT" : "Shift";
     }
 
     private String applyShift(char character) {
@@ -953,6 +1111,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         final int key;
         final int keyBorder;
         final int text;
+        final int hint;
         final int accent;
         final int onAccent;
 
@@ -961,6 +1120,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                 int key,
                 int keyBorder,
                 int text,
+                int hint,
                 int accent,
                 int onAccent
         ) {
@@ -968,6 +1128,7 @@ public final class EspansoInputMethodService extends InputMethodService {
             this.key = key;
             this.keyBorder = keyBorder;
             this.text = text;
+            this.hint = hint;
             this.accent = accent;
             this.onAccent = onAccent;
         }
@@ -981,6 +1142,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                         oled ? Color.rgb(20, 20, 20) : Color.rgb(45, 46, 56),
                         oled ? Color.rgb(48, 48, 48) : Color.rgb(62, 63, 75),
                         Color.rgb(246, 246, 250),
+                        Color.rgb(155, 157, 170),
                         Color.rgb(108, 92, 231),
                         Color.WHITE
                 );
@@ -990,6 +1152,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                     Color.WHITE,
                     Color.rgb(211, 213, 224),
                     Color.rgb(31, 32, 40),
+                    Color.rgb(105, 108, 122),
                     Color.rgb(108, 92, 231),
                     Color.WHITE
             );

@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.accessibility.AccessibilityManager;
 import android.view.inputmethod.InputMethodManager;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ public final class SettingsActivity extends Activity {
         findViewById(R.id.settingsBackButton).setOnClickListener(view -> finish());
         findViewById(R.id.settingsEnableAccessibility).setOnClickListener(view ->
                 openAccessibilitySetup());
+        findViewById(R.id.settingsRestrictedHelp).setOnClickListener(view ->
+                showRestrictedSettingsHelp());
         findViewById(R.id.settingsChooseKeyboard).setOnClickListener(view -> {
             InputMethodManager manager =
                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -53,6 +57,11 @@ public final class SettingsActivity extends Activity {
                 startActivity(new Intent(this, EditorActivity.class)));
         findViewById(R.id.settingsAppearance).setOnClickListener(view ->
                 startActivity(new Intent(this, KeyboardSettingsActivity.class)));
+        findViewById(R.id.settingsDeveloperWebsite).setOnClickListener(view ->
+                startActivity(new Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(getString(R.string.developer_website_url))
+                )));
     }
 
     @Override
@@ -101,14 +110,21 @@ public final class SettingsActivity extends Activity {
         TextView status = findViewById(R.id.settingsExpansionStatus);
         TextView detail = findViewById(R.id.settingsExpansionDetail);
         TextView button = findViewById(R.id.settingsEnableAccessibility);
+        View restrictedHelp = findViewById(R.id.settingsRestrictedHelpCard);
         if (enabled) {
             status.setText(R.string.global_expansion_active);
             detail.setText(R.string.global_expansion_active_detail);
             button.setText(R.string.manage_global_expansion);
+            restrictedHelp.setVisibility(View.GONE);
         } else {
             status.setText(R.string.global_expansion_disabled);
             detail.setText(R.string.global_expansion_disabled_detail);
             button.setText(R.string.enable_global_expansion);
+            restrictedHelp.setVisibility(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                            ? View.VISIBLE
+                            : View.GONE
+            );
         }
     }
 
@@ -126,6 +142,28 @@ public final class SettingsActivity extends Activity {
                     startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
                 })
                 .show();
+    }
+
+    private void showRestrictedSettingsHelp() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.restricted_settings_title)
+                .setMessage(R.string.restricted_settings_message)
+                .setNegativeButton(R.string.cancel, null)
+                .setNeutralButton(R.string.open_accessibility, (dialog, which) ->
+                        openAccessibilitySettings())
+                .setPositiveButton(R.string.open_app_info, (dialog, which) ->
+                        openAppInfo())
+                .show();
+    }
+
+    private void openAppInfo() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+    }
+
+    private void openAccessibilitySettings() {
+        startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
     }
 
     private void openImportPicker() {

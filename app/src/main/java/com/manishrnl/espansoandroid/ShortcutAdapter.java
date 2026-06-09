@@ -11,11 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ShortcutAdapter extends BaseAdapter {
+    private final Context context;
     private final LayoutInflater inflater;
+    private final boolean showFolder;
     private final List<Shortcut> items = new ArrayList<>();
 
     public ShortcutAdapter(Context context) {
+        this(context, false);
+    }
+
+    public ShortcutAdapter(Context context, boolean showFolder) {
+        this.context = context;
         inflater = LayoutInflater.from(context);
+        this.showFolder = showFolder;
     }
 
     public void setItems(List<Shortcut> shortcuts) {
@@ -59,7 +67,15 @@ public final class ShortcutAdapter extends BaseAdapter {
         Shortcut shortcut = getItem(position);
         holder.keyword.setText(shortcut.getKeyword());
         holder.replacement.setText(shortcut.getText());
-        holder.folder.setVisibility(View.GONE);
+        if (showFolder) {
+            String folder = shortcut.getFolder().trim();
+            holder.folder.setText(folder.isEmpty()
+                    ? context.getString(R.string.unfiled)
+                    : folder.replace("\\", " / "));
+            holder.folder.setVisibility(View.VISIBLE);
+        } else {
+            holder.folder.setVisibility(View.GONE);
+        }
         holder.mode.setText(
                 shortcut.isReplaceAfterSpace() ? R.string.after_space : R.string.instant
         );

@@ -13,17 +13,16 @@
         android:paddingTop="18dp"
         android:paddingBottom="34dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:background="@drawable/bg_button_secondary"
-            android:minWidth="0dp"
-            android:paddingHorizontal="14dp"
-            android:text="@string/back"
-            android:textAllCaps="false"
-            android:textColor="?attr/colorTextPrimary"
-            android:textSize="13sp" />
+            android:contentDescription="@string/back"
+            android:padding="11dp"
+            android:src="@drawable/ic_back"
+            android:tint="?attr/colorTextPrimary"
+            android:tooltipText="@string/back" />
 
         <TextView
             android:layout_width="match_parent"
@@ -122,6 +121,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="44dp"
                 android:text="@string/number_row_description"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <Switch
+                android:id="@+id/symbolHintsSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/symbol_hints"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="44dp"
+                android:text="@string/symbol_hints_description"
                 android:textColor="?attr/colorTextSecondary"
                 android:textSize="12sp" />
 
