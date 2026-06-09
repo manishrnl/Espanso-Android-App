@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Espanso Local</string>
+    <string name="keyboard_name">Espanso Local Keyboard</string>
+    <string name="main_title">Espanso Local</string>
+    <string name="main_subtitle">Private text expansion stored only on this device. Enable and select the Espanso Local keyboard to use shortcuts in other apps.</string>
+    <string name="enable_keyboard">Enable keyboard</string>
+    <string name="choose_keyboard">Choose keyboard</string>
+    <string name="import_csv">Import CSV</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="add_shortcut">Add shortcut</string>
+    <string name="search_hint">Search keyword, text, or folder</string>
+    <string name="no_shortcuts">No shortcuts found.</string>
+    <string name="edit_shortcut">Edit shortcut</string>
+    <string name="new_shortcut">New shortcut</string>
+    <string name="keyword">Keyword</string>
+    <string name="replacement_text">Replacement text</string>
+    <string name="replace_after_space">Replace only after typing Space</string>
+    <string name="position">Position</string>
+    <string name="strategy">Multiple Templates Selection Strategy</string>
+    <string name="folder">Folder</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+</resources>
+

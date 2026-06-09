@@ -1,0 +1,170 @@
+Keyword,Text,Replace after Typing Space,Position,Multiple Templates Selection Strategy,Folder
+
+;MAN,MANISH KUMAR,false,1,,Personal Details
+;man,Manish Kumar,false,1,,Personal Details
+;pass,ManishZoho@2009,false,1,,Personal Details
+;user,manishrnl,false,1,,Personal Details
+;id,manishrnl,false,1,,Personal Details
+;team,ManishTeamViewer@2009,false,1,,Personal Details
+950,9501421887,false,1,,Personal Details
+987,9877370875,false,1,,Personal Details
+;iitm,"INTERNATIONAL INSTITUE OF TECHNOLOGY AND MANAGEMENT , MURTHAL",false,1,,Personal Details
+;dcr,"DEENBANDHU CHOTU RAM UNIVERSITY OF SCIENCE AND TECHNOLOGY, MURTHAL",false,1,,Personal Details
+;sphs,"St. Paul's High School, Patna",false,1,,Personal Details
+;gms,"GOVERNMENT MODEL SENIOR SECONDARY SCHOOL SECTOR - 8 CHANDIGARH",false,1,,Personal Details
+
+;git,https://github.com/manishrnl/,false,1,,Social Media
+;link,https://www.linkedin.com/in/manishrnl/,false,1,,Social Media
+;insta,https://www.instagram.com/manishrnl/,false,1,,Social Media
+;face,https://www.facebook.com/manishrnl/,false,1,,Social Media
+;web,https://www.manishrnl.in/projects,false,1,,Social Media
+;portfolio,https://www.manishrnl.in/projects,false,1,,Social Media
+;twi,https://x.com/manishrnl,false,1,,Social Media
+
+;date,"%EE%, %dd% %MMMM%, %yyyy%",false,1,,Date
+;shortdate,%dd%-%MM%-%yyyy%,false,1,,Date
+;time,%HH%:%mm%,false,1,,Date
+;shorttime,%hh%:%mm% %a%,false,1,,Date
+
+;zoho,manishrajrnl@zohomail.in,false,1,,Email
+;rnl,manishrajrnl@zohomail.in,false,1,,Email
+;.rnl,manish.rnl@zohomail.in,false,1,,Email
+;gmail,manishrajrnl@gmail.com,false,1,,Email
+
+;ipv4,100.89.151.171,false,1,,Mobile Details
+;imei1,356709211079997,false,1,,Mobile Details
+;imei2,356709211080003,false,1,,Mobile Details
+;ipv6,2401:4900:b507:ebdf:7f1d:1af4:f0b6:a992,false,1,,Mobile Details
+;build,LAVA_LXX506_SW_U_V07_HW_V1.0_20250717,false,1,,Mobile Details
+
+;resume,https://drive.google.com/file/d/1GGUSocQ7LRALMAnLTy_4BLZEsSuMzbsI/view,false,1,,Resume
+;bio,"Java Backend Developer with experience building scalable microservices and REST APIs using Java and Spring Boot. Skilled in Kafka, Redis, Docker, Kubernetes, and AWS, with strong foundations in DSA, system design, and DBMS. Delivered 5+ production-grade projects with measurable impact (60% latency reduction, 70% uptime). Seeking an entry-level Java Backend Developer role.",false,1,,Resume
+;shortbio,"Java Backend Developer | Spring Boot | Microservices | Kafka, Redis, Docker, K8s, AWS. Built 5+ production systems achieving 60% latency reduction & 70% uptime. Passionate about scalable architecture & clean code. Open to opportunities.",false,1,,Resume
+;about,"🚀 BACKEND ENGINEER ASPIRANT | Java & Spring Boot | Microservices Learner
+
+
+
+ I'm a Computer Science fresher building production-ready backend systems and exploring AI-driven applications. Passionate about distributed systems, cloud infrastructure, and modern software architecture. Eager to learn from exceptional engineers and contribute to impactful projects.
+
+ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ 
+
+🎓 TECHNICAL FOUNDATION
+
+ 
+
+💻 Backend; Java (Advanced), Spring Boot 3, Spring Security 6, Spring Data JPA, RESTful APIs
+
+ 
+
+🤖 AI & ML; Spring AI, LLM Integration, Retrieval-Augmented Generation (RAG)
+
+ 
+
+☁️ DevOps; Docker • Kubernetes • Apache Kafka • AWS (EC2, Elastic Beanstalk, CodePipeline)
+
+ 
+
+📊 Databases; PostgreSQL • MySQL • MongoDB • Neo4j (Graph & Cypher queries)
+
+ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ 
+
+📌 HANDS-ON PROJECTS
+
+ 
+
+🎯 LinkedIn Clone | Microservices + Graph Database Neo4j social platform • Learned Kubernetes orchestration • Explored distributed systems & real-time processing • Implemented microservices patterns
+
+ 
+
+🏠 Airbnb Clone | Event-Driven Booking Platform Spring Boot backend with dynamic pricing • Integrated secure payments • Explored asynchronous operations & scalable business logic
+
+ 
+
+🎓 University Management System | Enterprise App JavaFX + MySQL multi-user platform • Implemented RBAC with multiple permission levels • Learned database design, authentication, enterprise architecture
+
+ 
+
+🚀 Microservice Production-Ready Template | Enterprise Boilerplate Comprehensive starter platform • JWT & OAuth2 with RBAC • Kafka event streaming & Redis caching • Full observability stack (Prometheus, Grafana, Zipkin) • Production-grade architecture patterns
+
+ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ 
+
+🌟 WHAT EXCITES ME
+
+ 
+
+⚡ Scalable system design & microservices architecture ⚡ Integrating AI/LLM into modern applications ⚡ Cloud-native development & containerization ⚡ Clean code, strong fundamentals & continuous learning
+
+ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ 
+
+🎓 CREDENTIALS
+
+ 
+
+✓ Spring Boot Development Certification (Coding Shuttle) ✓ System Design & Microservices Architecture ✓ Cloud-Native Development & DevOps practices ✓ AI/LLM integration & modern backend patterns
+
+ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ 
+
+🎯 LOOKING FOR
+
+ 
+
+🔍 Internship opportunities in backend development 🔍 Entry-level SDE roles 🔍 Remote, Hybrid, or On-site positions
+
+ 
+
+Eager to learn from exceptional engineers and tackle challenging problems. Let's build something amazing!
+
+ 
+
+Passionate • Curious • Ready to Contribute",false,1,,Resume
+;cover,"Manish Kumar
+Madhubani, Bihar, India  |  +91-950-142-1887
+manishrajrnl@gmail.com  |  manishrajrnl@zohomail.in
+linkedin.com/in/manishrnl  |  github.com/manishrnl
+
+June 2026
+
+The Hiring Manager
+Faction Global Infotech
+Mumbai, India
+
+RE; Software Development Engineer Application
+
+Dear Hiring Manager,
+
+I am writing to express my strong interest in the Software Development Engineer position at your organisation. As a final-year B.Tech Computer Science student at the International Institute of Technology and Management, specialising in Artificial Intelligence and System Design, I have built a solid foundation in designing and delivering scalable, high-performance backend systems. My hands-on experience with Java, Spring Boot, Microservices, and cloud-native technologies—combined with a production-oriented mindset—closely aligns with the engineering challenges your team solves.
+
+Through my academic and personal projects, I have consistently applied modern backend and distributed-systems technologies to real-world engineering problems;
+•	Scalable Backend Development; Developed a LinkedIn Clone using Spring Boot and Neo4j, implementing graph-based social relationship traversal that improved connection query performance by 40%, demonstrating expertise in both relational and graph database optimisation.
+•	Distributed Systems & DevOps; Built and deployed containerised microservices using Docker, Kubernetes, Kafka, Redis, and PostgreSQL, achieving 70% service uptime through self-healing cluster configuration. Gained hands-on experience with service orchestration, event-driven communication, and resilient infrastructure design.
+•	AI & Data-Driven Automation; Engineered an AI-powered dynamic pricing system for an Airbnb Clone, processing over 1,000 data points per second and reducing manual inventory overhead by an estimated 30%—demonstrating practical integration of machine learning within backend services.
+
+In addition to my project portfolio, I hold a Spring Boot Development Certification covering Spring AI, Spring Security 6, AWS fundamentals, and CI/CD pipeline implementation. I am passionate about building resilient, production-grade systems and continuously deepening my expertise in distributed architectures, cloud infrastructure, and backend engineering best practices.
+
+I am excited about the opportunity to contribute to your engineering team and apply my technical background to solve challenging business problems. Thank you for your time and consideration. I welcome the chance to discuss how my skills in distributed systems, Java backend development, and AI-driven automation can add value to your organisation.
+
+Sincerely,
+Manish Kumar
+B.Tech CSE (Graduating August 2026)
++91-950-142-1887  |  manishrajrnl@gmail.com
+",false,1,,Resume
