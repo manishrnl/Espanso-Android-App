@@ -57,8 +57,6 @@ public final class SettingsActivity extends Activity {
                 startActivity(new Intent(this, EditorActivity.class)));
         findViewById(R.id.settingsRecycleBin).setOnClickListener(view ->
                 startActivity(new Intent(this, TrashActivity.class)));
-        findViewById(R.id.settingsAppearance).setOnClickListener(view ->
-                startActivity(new Intent(this, KeyboardSettingsActivity.class)));
         findViewById(R.id.settingsDeveloperWebsite).setOnClickListener(view ->
                 startActivity(new Intent(
                         Intent.ACTION_VIEW,

@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="18dp"
-        android:paddingBottom="30dp">
+        android:paddingHorizontal="@dimen/page_horizontal_padding"
+        android:paddingTop="@dimen/page_top_padding"
+        android:paddingBottom="@dimen/page_bottom_padding">
 
         <ImageButton
             android:id="@+id/cancelButton"
@@ -62,12 +62,13 @@
             <EditText
                 android:id="@+id/keywordInput"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/bg_input"
                 android:hint="@string/keyword_hint"
                 android:inputType="text"
                 android:maxLines="1"
+                android:minHeight="52dp"
                 android:paddingHorizontal="14dp"
                 android:textColor="?attr/colorTextPrimary"
                 android:textColorHint="?attr/colorTextSecondary" />
@@ -84,12 +85,13 @@
             <EditText
                 android:id="@+id/replacementInput"
                 android:layout_width="match_parent"
-                android:layout_height="156dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/bg_input"
                 android:gravity="top|start"
                 android:hint="@string/replacement_hint"
                 android:inputType="textMultiLine|textNoSuggestions"
+                android:minHeight="156dp"
                 android:padding="14dp"
                 android:scrollbars="vertical"
                 android:textColor="?attr/colorTextPrimary"
@@ -116,12 +118,13 @@
             <EditText
                 android:id="@+id/folderInput"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/bg_input"
                 android:hint="@string/folder_hint"
                 android:inputType="textCapWords"
                 android:maxLines="1"
+                android:minHeight="52dp"
                 android:paddingHorizontal="14dp"
                 android:textColor="?attr/colorTextPrimary"
                 android:textColorHint="?attr/colorTextSecondary" />
@@ -130,32 +133,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/positionInput"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_input"
                     android:hint="@string/position"
                     android:inputType="number"
                     android:maxLines="1"
+                    android:minHeight="52dp"
                     android:paddingHorizontal="14dp"
                     android:textColor="?attr/colorTextPrimary"
                     android:textColorHint="?attr/colorTextSecondary" />
 
                 <EditText
                     android:id="@+id/strategyInput"
-                    android:layout_width="0dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/bg_input"
                     android:hint="@string/strategy"
                     android:inputType="text"
                     android:maxLines="1"
+                    android:minHeight="52dp"
                     android:paddingHorizontal="14dp"
                     android:textColor="?attr/colorTextPrimary"
                     android:textColorHint="?attr/colorTextSecondary" />
@@ -165,24 +167,26 @@
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_button_primary"
             android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="@color/on_accent"
+            android:minHeight="52dp"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_danger_button"
             android:text="@string/delete"
             android:textAllCaps="false"
             android:textColor="?attr/colorDanger"
+            android:minHeight="50dp"
             android:textStyle="bold"
             android:visibility="gone" />
     </LinearLayout>

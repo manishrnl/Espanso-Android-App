@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="page_horizontal_padding">20dp</dimen>
+    <dimen name="page_top_padding">18dp</dimen>
+    <dimen name="page_bottom_padding">32dp</dimen>
+    <dimen name="brand_logo_width">50dp</dimen>
+    <dimen name="brand_logo_height">44dp</dimen>
+    <dimen name="developer_logo_width">82dp</dimen>
+    <dimen name="developer_logo_height">72dp</dimen>
+</resources>

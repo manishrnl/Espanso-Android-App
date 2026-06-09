@@ -3,7 +3,6 @@ package com.manishrnl.espansoandroid;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.inputmethodservice.InputMethodService;
-import android.media.AudioManager;
 import android.os.Build;
 import android.text.InputType;
 import android.text.Spannable;
@@ -57,13 +55,8 @@ public final class EspansoInputMethodService extends InputMethodService {
     private boolean shifted;
     private boolean capsLock;
     private boolean privateField;
-    private boolean showNumberRow;
-    private boolean showSymbolHints;
-    private boolean showSuggestionBar;
-    private boolean hapticFeedback;
-    private boolean soundFeedback;
     private int keyboardMode = MODE_LETTERS;
-    private int keyHeightDp = 50;
+    private static final int KEY_HEIGHT_DP = 50;
     private int maximumKeywordLength = 1;
     private long lastShiftTap;
     private String undoKeyword = "";
@@ -79,7 +72,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     public View onCreateInputView() {
         keyboardView = new LinearLayout(this);
         keyboardView.setOrientation(LinearLayout.VERTICAL);
-        loadPreferences();
+        colors = KeyboardColors.from(this);
         rebuildKeyboard();
         return keyboardView;
     }
@@ -92,7 +85,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         typedBuffer.setLength(0);
         clearExpansionUndo();
         capsLock = false;
-        loadPreferences();
+        colors = KeyboardColors.from(this);
         loadShortcuts();
         keyboardMode = isNumericEditor(attribute) ? MODE_NUMERIC : MODE_LETTERS;
         shifted = shouldAutoCapitalize();
@@ -102,7 +95,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     @Override
     public void onStartInputView(EditorInfo info, boolean restarting) {
         super.onStartInputView(info, restarting);
-        loadPreferences();
+        colors = KeyboardColors.from(this);
         loadShortcuts();
         rebuildKeyboard();
     }
@@ -150,16 +143,6 @@ public final class EspansoInputMethodService extends InputMethodService {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void loadPreferences() {
-        keyHeightDp = AppPreferences.getKeyHeight(this);
-        showNumberRow = AppPreferences.isNumberRowEnabled(this);
-        showSymbolHints = AppPreferences.areSymbolHintsEnabled(this);
-        showSuggestionBar = AppPreferences.isSuggestionBarEnabled(this);
-        hapticFeedback = AppPreferences.isHapticFeedbackEnabled(this);
-        soundFeedback = AppPreferences.isSoundFeedbackEnabled(this);
-        colors = KeyboardColors.from(this);
-    }
-
     private void loadShortcuts() {
         shortcuts.clear();
         shortcuts.addAll(database.getAll());
@@ -187,9 +170,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         keyboardView.setPadding(dp(4), dp(5), dp(4), dp(7));
         keyboardView.setBackgroundColor(colors.background);
 
-        if (showSuggestionBar) {
-            addSuggestionToolbar();
-        }
+        addSuggestionToolbar();
 
         if (keyboardMode == MODE_NUMERIC) {
             addNumericKeyboard();
@@ -209,15 +190,6 @@ public final class EspansoInputMethodService extends InputMethodService {
     private void addSuggestionToolbar() {
         suggestionRow = createRow(42);
         suggestionRow.setPadding(dp(1), 0, dp(1), dp(3));
-        suggestionRow.addView(
-                createIconKey(
-                        R.drawable.ic_settings,
-                        getString(R.string.settings),
-                        view -> openKeyboardSettings(),
-                        false
-                ),
-                weightedParams(0.85f, 42)
-        );
         suggestionRow.addView(
                 createIconKey(
                         R.drawable.ic_keyboard_left,
@@ -257,13 +229,11 @@ public final class EspansoInputMethodService extends InputMethodService {
     }
 
     private void addLetterKeyboard() {
-        if (showNumberRow) {
-            addCharacterRow("1234567890", 0f);
-        }
+        addCharacterRow("1234567890", 0f);
         addLetterRow("qwertyuiop", "1234567890", 0f);
         addLetterRow("asdfghjkl", "@#$&*()-+", 0.48f);
 
-        LinearLayout row = createRow(keyHeightDp);
+        LinearLayout row = createRow(KEY_HEIGHT_DP);
         row.addView(
                 createIconKey(
                         capsLock
@@ -273,7 +243,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                         view -> handleShift(),
                         shifted
                 ),
-                weightedParams(1.45f, keyHeightDp)
+                weightedParams(1.45f, KEY_HEIGHT_DP)
         );
         String letters = "zxcvbnm";
         String hints = "*\"':;!?";
@@ -284,7 +254,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                             applyShift(character),
                             String.valueOf(hints.charAt(index))
                     ),
-                    weightedParams(1f, keyHeightDp)
+                    weightedParams(1f, KEY_HEIGHT_DP)
             );
         }
         TextView delete = createIconKey(
@@ -298,7 +268,7 @@ public final class EspansoInputMethodService extends InputMethodService {
             deleteWord();
             return true;
         });
-        row.addView(delete, weightedParams(1.45f, keyHeightDp));
+        row.addView(delete, weightedParams(1.45f, KEY_HEIGHT_DP));
         keyboardView.addView(row);
     }
 
@@ -347,11 +317,11 @@ public final class EspansoInputMethodService extends InputMethodService {
     }
 
     private void addControlRow() {
-        LinearLayout row = createRow(keyHeightDp + 2);
+        LinearLayout row = createRow(KEY_HEIGHT_DP + 2);
         if (keyboardMode == MODE_NUMERIC) {
             row.addView(
                     createActionKey(",", view -> handleCharacter(","), false),
-                    weightedParams(1f, keyHeightDp + 2)
+                    weightedParams(1f, KEY_HEIGHT_DP + 2)
             );
             row.addView(
                     createIconKey(
@@ -360,7 +330,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                             view -> handleSpace(),
                             false
                     ),
-                    weightedParams(3f, keyHeightDp + 2)
+                    weightedParams(3f, KEY_HEIGHT_DP + 2)
             );
             row.addView(
                     createIconKey(
@@ -369,7 +339,7 @@ public final class EspansoInputMethodService extends InputMethodService {
                             view -> handleEnter(),
                             true
                     ),
-                    weightedParams(1.6f, keyHeightDp + 2)
+                    weightedParams(1.6f, KEY_HEIGHT_DP + 2)
             );
             keyboardView.addView(row);
             return;
@@ -386,7 +356,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         }
         row.addView(
                 createActionKey(modeLabel, modeAction, false),
-                weightedParams(1.15f, keyHeightDp + 2)
+                weightedParams(1.15f, KEY_HEIGHT_DP + 2)
         );
 
         if (keyboardMode == MODE_SYMBOLS_PRIMARY) {
@@ -394,14 +364,14 @@ public final class EspansoInputMethodService extends InputMethodService {
                     createActionKey("#+=", view -> setKeyboardMode(
                             MODE_SYMBOLS_SECONDARY
                     ), false),
-                    weightedParams(0.9f, keyHeightDp + 2)
+                    weightedParams(0.9f, KEY_HEIGHT_DP + 2)
             );
         } else if (keyboardMode == MODE_SYMBOLS_SECONDARY) {
             row.addView(
                     createActionKey("123", view -> setKeyboardMode(
                             MODE_SYMBOLS_PRIMARY
                     ), false),
-                    weightedParams(0.9f, keyHeightDp + 2)
+                    weightedParams(0.9f, KEY_HEIGHT_DP + 2)
             );
         } else {
             row.addView(
@@ -417,28 +387,16 @@ public final class EspansoInputMethodService extends InputMethodService {
                                     view -> setKeyboardMode(MODE_EMOJI),
                                     false
                             ),
-                    weightedParams(0.9f, keyHeightDp + 2)
+                    weightedParams(0.9f, KEY_HEIGHT_DP + 2)
             );
         }
 
         if (keyboardMode == MODE_LETTERS) {
             row.addView(
                     createCharacterKey(","),
-                    weightedParams(0.72f, keyHeightDp + 2)
+                    weightedParams(0.72f, KEY_HEIGHT_DP + 2)
             );
         }
-        if (!showSuggestionBar) {
-            row.addView(
-                    createIconKey(
-                            R.drawable.ic_settings,
-                            getString(R.string.settings),
-                            view -> openKeyboardSettings(),
-                            false
-                    ),
-                    weightedParams(0.9f, keyHeightDp + 2)
-            );
-        }
-
         TextView space = createIconKey(
                 R.drawable.ic_keyboard_space,
                 getString(R.string.space),
@@ -450,10 +408,10 @@ public final class EspansoInputMethodService extends InputMethodService {
             showInputMethodPicker();
             return true;
         });
-        row.addView(space, weightedParams(3.7f, keyHeightDp + 2));
+        row.addView(space, weightedParams(3.7f, KEY_HEIGHT_DP + 2));
         row.addView(
                 createCharacterKey("."),
-                weightedParams(0.8f, keyHeightDp + 2)
+                weightedParams(0.8f, KEY_HEIGHT_DP + 2)
         );
         row.addView(
                 createIconKey(
@@ -462,48 +420,48 @@ public final class EspansoInputMethodService extends InputMethodService {
                         view -> handleEnter(),
                         true
                 ),
-                weightedParams(1.45f, keyHeightDp + 2)
+                weightedParams(1.45f, KEY_HEIGHT_DP + 2)
         );
         keyboardView.addView(row);
     }
 
     private void addCharacterRow(String characters, float sideWeight) {
-        LinearLayout row = createRow(keyHeightDp);
+        LinearLayout row = createRow(KEY_HEIGHT_DP);
         if (sideWeight > 0) {
-            row.addView(new Space(this), weightedParams(sideWeight, keyHeightDp));
+            row.addView(new Space(this), weightedParams(sideWeight, KEY_HEIGHT_DP));
         }
         for (char character : characters.toCharArray()) {
             row.addView(
                     createCharacterKey(applyShift(character)),
-                    weightedParams(1f, keyHeightDp)
+                    weightedParams(1f, KEY_HEIGHT_DP)
             );
         }
         if (sideWeight > 0) {
-            row.addView(new Space(this), weightedParams(sideWeight, keyHeightDp));
+            row.addView(new Space(this), weightedParams(sideWeight, KEY_HEIGHT_DP));
         }
         keyboardView.addView(row);
     }
 
     private void addCharacterKeys(String[] labels) {
-        LinearLayout row = createRow(keyHeightDp);
+        LinearLayout row = createRow(KEY_HEIGHT_DP);
         for (String label : labels) {
             TextView key = createCharacterKey(label);
             if (keyboardMode == MODE_EMOJI) {
                 key.setTextSize(20);
             }
-            row.addView(key, weightedParams(1f, keyHeightDp));
+            row.addView(key, weightedParams(1f, KEY_HEIGHT_DP));
         }
         keyboardView.addView(row);
     }
 
     private void addCharacterKeysWithBackspace(String[] labels) {
-        LinearLayout row = createRow(keyHeightDp);
+        LinearLayout row = createRow(KEY_HEIGHT_DP);
         for (String label : labels) {
             TextView key = createCharacterKey(label);
             if (keyboardMode == MODE_EMOJI) {
                 key.setTextSize(20);
             }
-            row.addView(key, weightedParams(1f, keyHeightDp));
+            row.addView(key, weightedParams(1f, KEY_HEIGHT_DP));
         }
         TextView delete = createIconKey(
                 R.drawable.ic_keyboard_backspace,
@@ -516,14 +474,14 @@ public final class EspansoInputMethodService extends InputMethodService {
             deleteWord();
             return true;
         });
-        row.addView(delete, weightedParams(1.35f, keyHeightDp));
+        row.addView(delete, weightedParams(1.35f, KEY_HEIGHT_DP));
         keyboardView.addView(row);
     }
 
     private void addLetterRow(String letters, String hints, float sideWeight) {
-        LinearLayout row = createRow(keyHeightDp);
+        LinearLayout row = createRow(KEY_HEIGHT_DP);
         if (sideWeight > 0) {
-            row.addView(new Space(this), weightedParams(sideWeight, keyHeightDp));
+            row.addView(new Space(this), weightedParams(sideWeight, KEY_HEIGHT_DP));
         }
         for (int index = 0; index < letters.length(); index++) {
             row.addView(
@@ -531,11 +489,11 @@ public final class EspansoInputMethodService extends InputMethodService {
                             applyShift(letters.charAt(index)),
                             String.valueOf(hints.charAt(index))
                     ),
-                    weightedParams(1f, keyHeightDp)
+                    weightedParams(1f, KEY_HEIGHT_DP)
             );
         }
         if (sideWeight > 0) {
-            row.addView(new Space(this), weightedParams(sideWeight, keyHeightDp));
+            row.addView(new Space(this), weightedParams(sideWeight, KEY_HEIGHT_DP));
         }
         keyboardView.addView(row);
     }
@@ -557,7 +515,7 @@ public final class EspansoInputMethodService extends InputMethodService {
 
     private TextView createLetterKey(String letter, String symbolHint) {
         TextView key = createCharacterKey(letter);
-        if (showSymbolHints && !symbolHint.isEmpty()) {
+        if (!symbolHint.isEmpty()) {
             SpannableString label = new SpannableString(letter + symbolHint);
             int hintStart = letter.length();
             label.setSpan(
@@ -651,13 +609,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     }
 
     private void provideFeedback(View view) {
-        if (hapticFeedback) {
-            view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-        }
-        if (soundFeedback) {
-            AudioManager manager = (AudioManager) getSystemService(AUDIO_SERVICE);
-            manager.playSoundEffect(AudioManager.FX_KEY_CLICK, 0.35f);
-        }
+        view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
     }
 
     private void handleShift() {
@@ -1038,12 +990,6 @@ public final class EspansoInputMethodService extends InputMethodService {
         updateSuggestionBar();
     }
 
-    private void openKeyboardSettings() {
-        Intent intent = new Intent(this, KeyboardSettingsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
     private void showInputMethodPicker() {
         InputMethodManager manager =
                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -1134,13 +1080,12 @@ public final class EspansoInputMethodService extends InputMethodService {
         }
 
         static KeyboardColors from(Context context) {
-            boolean dark = AppPreferences.isKeyboardDark(context);
-            boolean oled = AppPreferences.isKeyboardOled(context);
+            boolean dark = AppPreferences.isAppDark(context);
             if (dark) {
                 return new KeyboardColors(
-                        oled ? Color.BLACK : Color.rgb(24, 25, 31),
-                        oled ? Color.rgb(20, 20, 20) : Color.rgb(45, 46, 56),
-                        oled ? Color.rgb(48, 48, 48) : Color.rgb(62, 63, 75),
+                        Color.rgb(24, 25, 31),
+                        Color.rgb(45, 46, 56),
+                        Color.rgb(62, 63, 75),
                         Color.rgb(246, 246, 250),
                         Color.rgb(155, 157, 170),
                         Color.rgb(108, 92, 231),

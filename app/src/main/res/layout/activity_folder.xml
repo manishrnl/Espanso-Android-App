@@ -6,6 +6,6 @@
     android:clipToPadding="false"
     android:divider="@android:color/transparent"
     android:dividerHeight="9dp"
-    android:paddingHorizontal="20dp"
-    android:paddingBottom="24dp"
+    android:paddingHorizontal="@dimen/page_horizontal_padding"
+    android:paddingBottom="@dimen/page_bottom_padding"
     android:scrollbars="vertical" />

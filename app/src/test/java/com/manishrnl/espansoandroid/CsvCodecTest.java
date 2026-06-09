@@ -14,7 +14,7 @@ public class CsvCodecTest {
     @Test
     public void roundTripsQuotedAndMultilineText() throws Exception {
         List<Shortcut> source = Arrays.asList(
-                new Shortcut(";git", "https://github.com/manishrnl/", false, 1, "", "Social Media"),
+                new Shortcut(";email", "support@example.com", false, 1, "", "Contact"),
                 new Shortcut(";cover", "Hello, \"team\"\nSecond line", true, 2, "First", "Resume")
         );
 
@@ -30,4 +30,3 @@ public class CsvCodecTest {
         assertFalse(parsed.get(0).isReplaceAfterSpace());
     }
 }
-

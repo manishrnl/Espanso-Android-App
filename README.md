@@ -1,32 +1,21 @@
-# Espanso Local for Android
+# rnl espanso for Android
 
 A Java Android app that expands local text shortcuts while you use Gboard,
 Samsung Keyboard, or another installed keyboard. It has no backend, no account,
-no analytics, and no internet permission.
-
-Typing `;git` in a supported field immediately inserts:
-
-```text
-https://github.com/manishrnl/
-```
+no analytics, no predefined shortcuts, and no internet permission.
 
 ## Features
 
-- Premium light, dark, and system-matched app themes
+- System-matched light and dark interface
 - Direct accessibility editor integration with Gboard and other keyboards on
   Android 13+
 - Accessibility-event compatibility mode on Android 8-12
 - Optional custom keyboard fallback
 - Gboard-style fallback layout with icon controls and backspace above Enter
-- Optional symbol hints inside letter keys with long-press symbol entry
 - Popup shortcut suggestions beside the active text field
 - First-backspace undo restores the original shortcut
-- Light, dark, OLED, and app-matched keyboard themes
-- Adjustable compact, standard, and tall key layouts
-- Optional number row, key sounds, and haptic feedback
 - Fallback-keyboard suggestion toolbar with paste and cursor controls
 - Caps lock, adaptive action keys, two symbol pages, and common emoji
-- Keyboard preferences shortcut directly in the suggestion toolbar
 - SQLite storage inside the app's private device storage
 - Alphabetical folder-only home screen
 - Persistent empty folders with a dedicated home-screen add-folder action
@@ -44,7 +33,7 @@ Imports and exports use these columns in this exact format:
 
 ```csv
 Keyword,Text,Replace after Typing Space,Position,Multiple Templates Selection Strategy,Folder
-;git,https://github.com/manishrnl/,false,1,,Social Media
+;email,hello@example.com,false,1,,Personal
 ```
 
 The included `Clipboard content.csv` can be selected with the app's **Import
@@ -134,10 +123,9 @@ adb shell am start -n com.manishrnl.espansoandroid/.MainActivity
 
 1. Install and open the app.
 2. Open **Settings** and tap **Enable global expansion**.
-3. In Android Accessibility settings, enable **Espanso expansion with any
-   keyboard**.
+3. In Android Accessibility settings, enable **rnl espanso expansion**.
    - On Android 13 or newer, a manually installed APK may show **Restricted
-     setting**. Open Espanso **Settings > Fix restricted setting > Open App
+     setting**. Open rnl espanso **Settings > Fix restricted setting > Open App
      info**, tap the three-dot menu, choose **Allow restricted settings**, then
      return to Accessibility. Android intentionally requires this user action.
 4. After an app update, turn this accessibility service off and on once so
@@ -145,7 +133,7 @@ adb shell am start -n com.manishrnl.espansoandroid/.MainActivity
 5. Return to the app and tap **Choose keyboard** if you want to select Gboard,
    Samsung Keyboard, or another installed keyboard.
 6. Import `Clipboard content.csv`, or add shortcuts manually.
-7. In a supported text field, type a shortcut such as `;git`.
+7. In a supported text field, type one of your own shortcut keywords.
 
 Android does not let one app modify Gboard itself. On Android 13 and newer, the
 app requests the Accessibility input-method-editor capability and receives a
@@ -156,7 +144,7 @@ retained as history or sent off device.
 
 Some games, terminal emulators, and custom text editors do not expose a
 compatible editor connection or editable accessibility node. Expansion and
-popup suggestions cannot work in those fields. The included Espanso Local
+popup suggestions cannot work in those fields. The included rnl espanso
 Keyboard remains available as an optional fallback input method.
 
 ## Local data

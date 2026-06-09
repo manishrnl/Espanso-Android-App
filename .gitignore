@@ -5,3 +5,6 @@ build/
 app/build/
 *.iml
 gradle-9.4.1-bin.zip
+keystore.properties
+*.jks
+*.keystore

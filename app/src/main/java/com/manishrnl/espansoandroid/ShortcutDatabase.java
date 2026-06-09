@@ -12,7 +12,7 @@ import java.util.List;
 
 public final class ShortcutDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "shortcuts.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String SHORTCUT_TABLE = "shortcuts";
     private static final String FOLDER_TABLE = "folders";
     private static final String TRASH_FOLDER_TABLE = "trash_folders";
@@ -42,17 +42,6 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
         );
         createFolderTable(db);
         createTrashTables(db);
-
-        ContentValues initial = valuesFor(new Shortcut(
-                ";git",
-                "https://github.com/",
-                false,
-                1,
-                "",
-                "Social Media"
-        ));
-        db.insertOrThrow(SHORTCUT_TABLE, null, initial);
-        insertFolder(db, "Social Media");
     }
 
     @Override
@@ -69,6 +58,9 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
         }
         if (oldVersion < 3) {
             createTrashTables(db);
+        }
+        if (oldVersion < 4) {
+            removePredefinedShortcut(db);
         }
     }
 
@@ -431,6 +423,37 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
                 + TRASH_SHORTCUT_TABLE + "(deleted_at)");
         db.execSQL("CREATE INDEX IF NOT EXISTS trash_folder_deleted_idx ON "
                 + TRASH_FOLDER_TABLE + "(deleted_at)");
+    }
+
+    private static void removePredefinedShortcut(SQLiteDatabase db) {
+        String exactSeed = "keyword = ?"
+                + " AND replacement IN (?, ?)"
+                + " AND replace_after_space = 0"
+                + " AND position = 1"
+                + " AND selection_strategy = ''"
+                + " AND folder = ? COLLATE NOCASE";
+        String[] seedValues = {
+                ";git",
+                "https://github.com/",
+                "https://github.com/manishrnl/",
+                "Social Media"
+        };
+        db.delete(SHORTCUT_TABLE, exactSeed, seedValues);
+        db.delete(TRASH_SHORTCUT_TABLE, exactSeed, seedValues);
+        db.execSQL(
+                "DELETE FROM " + FOLDER_TABLE
+                        + " WHERE name = ? COLLATE NOCASE"
+                        + " AND NOT EXISTS (SELECT 1 FROM " + SHORTCUT_TABLE
+                        + " WHERE TRIM(folder) = ? COLLATE NOCASE)",
+                new Object[]{"Social Media", "Social Media"}
+        );
+        db.execSQL(
+                "DELETE FROM " + TRASH_FOLDER_TABLE
+                        + " WHERE name = ? COLLATE NOCASE"
+                        + " AND NOT EXISTS (SELECT 1 FROM " + TRASH_SHORTCUT_TABLE
+                        + " WHERE trash_folder_id = " + TRASH_FOLDER_TABLE + "._id)",
+                new Object[]{"Social Media"}
+        );
     }
 
     private static boolean moveFolderToTrash(

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="18dp"
+    android:paddingTop="@dimen/page_top_padding"
     android:paddingBottom="8dp">
 
     <ImageButton
@@ -29,7 +29,7 @@
     <EditText
         android:id="@+id/searchInput"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:background="@drawable/bg_input"
         android:drawableStart="@drawable/ic_search"
@@ -40,6 +40,7 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLines="1"
+        android:minHeight="54dp"
         android:paddingHorizontal="15dp"
         android:textColor="?attr/colorTextPrimary"
         android:textColorHint="?attr/colorTextSecondary" />

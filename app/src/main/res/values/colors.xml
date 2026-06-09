@@ -1,5 +1,6 @@
 <resources>
     <color name="accent">#6C5CE7</color>
+    <color name="logo_background">#FFFFFF</color>
     <color name="accent_pressed">#5848CF</color>
     <color name="on_accent">#FFFFFF</color>
 

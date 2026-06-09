@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="18dp"
+    android:paddingTop="@dimen/page_top_padding"
     android:paddingBottom="8dp">
 
     <LinearLayout
@@ -17,7 +17,7 @@
         <ImageButton
             android:id="@+id/trashBackButton"
             android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_button_secondary"
             android:contentDescription="@string/back"
             android:padding="11dp"
@@ -36,6 +36,7 @@
             android:layout_height="44dp"
             android:background="@drawable/bg_danger_button"
             android:minWidth="0dp"
+            android:minHeight="44dp"
             android:paddingHorizontal="14dp"
             android:text="@string/empty_recycle_bin"
             android:textAllCaps="false"
