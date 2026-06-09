@@ -59,6 +59,8 @@ public final class EspansoInputMethodService extends InputMethodService {
     private int keyHeightDp = 50;
     private int maximumKeywordLength = 1;
     private long lastShiftTap;
+    private String undoKeyword = "";
+    private String undoCommittedText = "";
 
     @Override
     public void onCreate() {
@@ -81,6 +83,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         editorInfo = attribute;
         privateField = isPrivateField(attribute);
         typedBuffer.setLength(0);
+        clearExpansionUndo();
         capsLock = false;
         loadPreferences();
         loadShortcuts();
@@ -100,6 +103,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     @Override
     public void onFinishInput() {
         typedBuffer.setLength(0);
+        clearExpansionUndo();
         super.onFinishInput();
     }
 
@@ -534,6 +538,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        clearExpansionUndo();
         connection.commitText(text, 1);
         appendToBuffer(text);
         expandImmediateShortcut(connection);
@@ -551,6 +556,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        clearExpansionUndo();
         Shortcut match = findMatchingShortcut(true);
         if (match != null) {
             replaceShortcut(connection, match, true);
@@ -574,6 +580,9 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        if (undoLastExpansion(connection)) {
+            return;
+        }
         connection.deleteSurroundingText(1, 0);
         if (typedBuffer.length() > 0) {
             typedBuffer.deleteCharAt(typedBuffer.length() - 1);
@@ -586,6 +595,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        clearExpansionUndo();
         CharSequence before = connection.getTextBeforeCursor(64, 0);
         if (before == null || before.length() == 0) {
             return;
@@ -613,6 +623,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        clearExpansionUndo();
         int action = editorInfo == null
                 ? EditorInfo.IME_ACTION_NONE
                 : editorInfo.imeOptions & EditorInfo.IME_MASK_ACTION;
@@ -686,12 +697,43 @@ public final class EspansoInputMethodService extends InputMethodService {
             boolean appendSpace
     ) {
         String replacement = render(shortcut);
+        String committed = appendSpace ? replacement + " " : replacement;
         connection.beginBatchEdit();
         connection.deleteSurroundingText(shortcut.getKeyword().length(), 0);
-        connection.commitText(appendSpace ? replacement + " " : replacement, 1);
+        connection.commitText(committed, 1);
         connection.endBatchEdit();
+        undoKeyword = shortcut.getKeyword();
+        undoCommittedText = committed;
         typedBuffer.setLength(0);
         updateSuggestionBar();
+    }
+
+    private boolean undoLastExpansion(InputConnection connection) {
+        if (undoCommittedText.isEmpty()) {
+            return false;
+        }
+        CharSequence before = connection.getTextBeforeCursor(
+                undoCommittedText.length(),
+                0
+        );
+        if (before == null || !before.toString().endsWith(undoCommittedText)) {
+            clearExpansionUndo();
+            return false;
+        }
+        connection.beginBatchEdit();
+        connection.deleteSurroundingText(undoCommittedText.length(), 0);
+        connection.commitText(undoKeyword, 1);
+        connection.endBatchEdit();
+        typedBuffer.setLength(0);
+        appendToBuffer(undoKeyword);
+        clearExpansionUndo();
+        updateSuggestionBar();
+        return true;
+    }
+
+    private void clearExpansionUndo() {
+        undoKeyword = "";
+        undoCommittedText = "";
     }
 
     private String render(Shortcut shortcut) {
@@ -790,12 +832,15 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        String replacement = render(shortcut);
         connection.beginBatchEdit();
         if (!fragment.isEmpty()) {
             connection.deleteSurroundingText(fragment.length(), 0);
         }
-        connection.commitText(render(shortcut), 1);
+        connection.commitText(replacement, 1);
         connection.endBatchEdit();
+        undoKeyword = fragment;
+        undoCommittedText = replacement;
         typedBuffer.setLength(0);
         updateSuggestionBar();
     }
@@ -804,6 +849,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (privateField) {
             return;
         }
+        clearExpansionUndo();
         ClipboardManager clipboard =
                 (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         if (!clipboard.hasPrimaryClip()) {
@@ -827,6 +873,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         if (connection == null) {
             return;
         }
+        clearExpansionUndo();
         connection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyCode));
         connection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyCode));
         typedBuffer.setLength(0);

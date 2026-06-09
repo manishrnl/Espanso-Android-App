@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 public final class EditorActivity extends Activity {
     public static final String EXTRA_SHORTCUT_ID = "shortcut_id";
+    public static final String EXTRA_DEFAULT_FOLDER = "default_folder";
 
     private ShortcutDatabase database;
     private long shortcutId = -1;
@@ -41,6 +42,9 @@ public final class EditorActivity extends Activity {
         TextView title = findViewById(R.id.editorTitle);
         title.setText(shortcutId >= 0 ? R.string.edit_shortcut : R.string.new_shortcut);
         positionInput.setText("1");
+        if (shortcutId < 0) {
+            folderInput.setText(getIntent().getStringExtra(EXTRA_DEFAULT_FOLDER));
+        }
 
         View deleteButton = findViewById(R.id.deleteButton);
         if (shortcutId >= 0) {

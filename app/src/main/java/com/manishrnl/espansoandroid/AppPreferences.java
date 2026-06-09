@@ -25,6 +25,8 @@ public final class AppPreferences {
     private static final String SUGGESTION_BAR = "suggestion_bar";
     private static final String HAPTIC_FEEDBACK = "haptic_feedback";
     private static final String SOUND_FEEDBACK = "sound_feedback";
+    private static final String ACCESSIBILITY_DISCLOSURE_ACCEPTED =
+            "accessibility_disclosure_accepted";
 
     private AppPreferences() {
     }
@@ -132,6 +134,23 @@ public final class AppPreferences {
 
     public static void setSoundFeedbackEnabled(Context context, boolean value) {
         preferences(context).edit().putBoolean(SOUND_FEEDBACK, value).apply();
+    }
+
+    public static boolean isAccessibilityDisclosureAccepted(Context context) {
+        return preferences(context).getBoolean(
+                ACCESSIBILITY_DISCLOSURE_ACCEPTED,
+                false
+        );
+    }
+
+    public static void setAccessibilityDisclosureAccepted(
+            Context context,
+            boolean value
+    ) {
+        preferences(context)
+                .edit()
+                .putBoolean(ACCESSIBILITY_DISCLOSURE_ACCEPTED, value)
+                .apply();
     }
 
     public static String appThemeLabel(Context context) {

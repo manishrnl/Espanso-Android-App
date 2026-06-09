@@ -59,10 +59,7 @@ public final class ShortcutAdapter extends BaseAdapter {
         Shortcut shortcut = getItem(position);
         holder.keyword.setText(shortcut.getKeyword());
         holder.replacement.setText(shortcut.getText());
-        holder.folder.setText(shortcut.getFolder());
-        holder.folder.setVisibility(
-                shortcut.getFolder().trim().isEmpty() ? View.GONE : View.VISIBLE
-        );
+        holder.folder.setVisibility(View.GONE);
         holder.mode.setText(
                 shortcut.isReplaceAfterSpace() ? R.string.after_space : R.string.instant
         );

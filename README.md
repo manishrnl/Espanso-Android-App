@@ -1,9 +1,10 @@
 # Espanso Local for Android
 
-A Java Android app that expands local text shortcuts through a custom keyboard.
-It has no backend, no account, no analytics, and no internet permission.
+A Java Android app that expands local text shortcuts while you use Gboard,
+Samsung Keyboard, or another installed keyboard. It has no backend, no account,
+no analytics, and no internet permission.
 
-Typing `;git` with the Espanso Local keyboard immediately inserts:
+Typing `;git` in a supported field immediately inserts:
 
 ```text
 https://github.com/manishrnl/
@@ -12,16 +13,23 @@ https://github.com/manishrnl/
 ## Features
 
 - Premium light, dark, and system-matched app themes
-- Custom Android keyboard for app-wide text expansion
+- Direct accessibility editor integration with Gboard and other keyboards on
+  Android 13+
+- Accessibility-event compatibility mode on Android 8-12
+- Optional custom keyboard fallback
+- Popup shortcut suggestions beside the active text field
+- First-backspace undo restores the original shortcut
 - Light, dark, OLED, and app-matched keyboard themes
 - Adjustable compact, standard, and tall key layouts
 - Optional number row, key sounds, and haptic feedback
-- Shortcut suggestion toolbar with paste and cursor controls
+- Fallback-keyboard suggestion toolbar with paste and cursor controls
 - Caps lock, adaptive action keys, two symbol pages, and common emoji
 - Keyboard preferences shortcut directly in the suggestion toolbar
 - SQLite storage inside the app's private device storage
-- Add, edit, search, and delete shortcuts
+- Alphabetical folder-only home screen
+- Open a folder to add, edit, and delete its shortcuts
 - CSV import and export through Android's system document picker
+- CSV folder structure preserved as navigable folders
 - Support for quoted commas, quotes, and multiline replacement text
 - Optional replacement only after pressing Space
 - Dynamic date/time tokens such as `%dd%`, `%MM%`, `%yyyy%`, `%HH%`, and `%mm%`
@@ -119,19 +127,30 @@ adb devices
 adb shell am start -n com.manishrnl.espansoandroid/.MainActivity
 ```
 
-## Set up the keyboard
+## Set up expansion with Gboard or another keyboard
 
 1. Install and open the app.
-2. Tap **Enable keyboard** and enable **Espanso Local Keyboard**.
-3. Return to the app and tap **Choose keyboard**.
-4. Select **Espanso Local Keyboard**.
-5. Import `Clipboard content.csv`, or add shortcuts manually.
-6. In any text field, type a shortcut such as `;git`.
+2. Open **Settings** and tap **Enable global expansion**.
+3. In Android Accessibility settings, enable **Espanso expansion with any
+   keyboard**.
+4. After an app update, turn this accessibility service off and on once so
+   Android reloads its editor capability.
+5. Return to the app and tap **Choose keyboard** if you want to select Gboard,
+   Samsung Keyboard, or another installed keyboard.
+6. Import `Clipboard content.csv`, or add shortcuts manually.
+7. In a supported text field, type a shortcut such as `;git`.
 
-Android does not permit a regular foreground app to rewrite text typed through
-another keyboard. This project therefore provides its own input method instead
-of using an accessibility service. It cannot add Espanso expansion behavior to
-Gboard, Samsung Keyboard, or another system keyboard.
+Android does not let one app modify Gboard itself. On Android 13 and newer, the
+app requests the Accessibility input-method-editor capability and receives a
+direct connection to the active text editor while Gboard remains selected. On
+older supported Android versions, it falls back to editable accessibility
+events and set-text actions. Password fields are ignored, and typed text is not
+retained as history or sent off device.
+
+Some games, terminal emulators, and custom text editors do not expose a
+compatible editor connection or editable accessibility node. Expansion and
+popup suggestions cannot work in those fields. The included Espanso Local
+Keyboard remains available as an optional fallback input method.
 
 ## Local data
 

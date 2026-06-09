@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="18dp"
+    android:paddingBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/folderBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_button_secondary"
+            android:minWidth="0dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorTextPrimary"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/folderAddButton"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_button_primary"
+            android:minWidth="0dp"
+            android:paddingHorizontal="15dp"
+            android:text="@string/add_shortcut"
+            android:textAllCaps="false"
+            android:textColor="@color/on_accent"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/folderTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:textColor="?attr/colorTextPrimary"
+        android:textSize="29sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/folderShortcutSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="?attr/colorTextSecondary"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/emptyShortcuts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_card"
+        android:gravity="center"
+        android:padding="28dp"
+        android:text="@string/no_shortcuts_in_folder"
+        android:textColor="?attr/colorTextSecondary"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>
