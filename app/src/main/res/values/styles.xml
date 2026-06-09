@@ -1,11 +1,43 @@
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
-        <item name="android:fontFamily">sans</item>
+    <style name="AppThemeLight" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:colorAccent">@color/accent</item>
-        <item name="android:navigationBarColor">@color:primary_dark</item>
-        <item name="android:statusBarColor">@color:primary_dark</item>
+        <item name="android:windowBackground">@color/light_background</item>
+        <item name="android:navigationBarColor">@color/light_surface</item>
+        <item name="android:statusBarColor">@color/light_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:textColorPrimary">@color/light_text_primary</item>
+        <item name="android:textColorSecondary">@color/light_text_secondary</item>
+        <item name="colorAppBackground">@color/light_background</item>
+        <item name="colorCardSurface">@color/light_surface</item>
+        <item name="colorElevatedSurface">@color/light_surface_elevated</item>
+        <item name="colorTextPrimary">@color/light_text_primary</item>
+        <item name="colorTextSecondary">@color/light_text_secondary</item>
+        <item name="colorBorder">@color/light_border</item>
+        <item name="colorAccentSoft">@color/light_accent_soft</item>
+        <item name="colorSuccess">@color/success</item>
+        <item name="colorDanger">@color/danger</item>
+    </style>
+
+    <style name="AppThemeDark" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="android:navigationBarColor">@color/dark_surface</item>
+        <item name="android:statusBarColor">@color/dark_background</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:textColorPrimary">@color/dark_text_primary</item>
+        <item name="android:textColorSecondary">@color/dark_text_secondary</item>
+        <item name="colorAppBackground">@color/dark_background</item>
+        <item name="colorCardSurface">@color/dark_surface</item>
+        <item name="colorElevatedSurface">@color/dark_surface_elevated</item>
+        <item name="colorTextPrimary">@color/dark_text_primary</item>
+        <item name="colorTextSecondary">@color/dark_text_secondary</item>
+        <item name="colorBorder">@color/dark_border</item>
+        <item name="colorAccentSoft">@color/dark_accent_soft</item>
+        <item name="colorSuccess">@color/success</item>
+        <item name="colorDanger">@color/danger</item>
     </style>
 </resources>
-

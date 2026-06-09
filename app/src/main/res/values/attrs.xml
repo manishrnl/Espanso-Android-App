@@ -1,0 +1,11 @@
+<resources>
+    <attr name="colorAppBackground" format="color" />
+    <attr name="colorCardSurface" format="color" />
+    <attr name="colorElevatedSurface" format="color" />
+    <attr name="colorTextPrimary" format="color" />
+    <attr name="colorTextSecondary" format="color" />
+    <attr name="colorBorder" format="color" />
+    <attr name="colorAccentSoft" format="color" />
+    <attr name="colorSuccess" format="color" />
+    <attr name="colorDanger" format="color" />
+</resources>

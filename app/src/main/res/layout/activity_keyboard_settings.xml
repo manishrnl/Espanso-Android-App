@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="34dp">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_button_secondary"
+            android:minWidth="0dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorTextPrimary"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/keyboard_settings"
+            android:textColor="?attr/colorTextPrimary"
+            android:textSize="29sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/keyboard_settings_subtitle"
+            android:textColor="?attr/colorTextSecondary"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/appearance"
+                android:textColor="@color/accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/appThemeButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_button_secondary"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTextPrimary" />
+
+            <Button
+                android:id="@+id/keyboardThemeButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_secondary"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTextPrimary" />
+
+            <Button
+                android:id="@+id/keyHeightButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_secondary"
+                android:gravity="start|center_vertical"
+                android:paddingHorizontal="15dp"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorTextPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/keyboard_settings"
+                android:textColor="@color/accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/numberRowSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/number_row"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="44dp"
+                android:text="@string/number_row_description"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <Switch
+                android:id="@+id/suggestionBarSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/suggestion_bar"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="44dp"
+                android:text="@string/suggestion_bar_description"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <Switch
+                android:id="@+id/hapticSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/haptic_feedback"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="44dp"
+                android:text="@string/haptic_feedback_description"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <Switch
+                android:id="@+id/soundSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/sound_feedback"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="44dp"
+                android:text="@string/sound_feedback_description"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/keyboard_changes_note"
+            android:textColor="?attr/colorTextSecondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</ScrollView>

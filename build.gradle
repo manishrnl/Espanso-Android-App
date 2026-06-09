@@ -1,4 +1,14 @@
 plugins {
-    id "com.android.application" version "8.7.3" apply false
+    id "com.android.application" version "9.0.0" apply false
 }
 
+def localAppData = System.getenv("LOCALAPPDATA")
+def localBuildRoot = localAppData
+        ? new File(localAppData, "EspansoAndroid/build")
+        : new File(rootProject.projectDir, "build")
+
+allprojects {
+    layout.buildDirectory.set(
+            new File(localBuildRoot, project == rootProject ? "root" : project.name)
+    )
+}

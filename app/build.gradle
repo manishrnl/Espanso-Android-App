@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace "com.manishrnl.espansoandroid"
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.manishrnl.espansoandroid"
         minSdk 26
-        targetSdk 35
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
@@ -24,12 +24,20 @@ android {
     }
 
     compileOptions {
+        // Android emits DEX, so keep device bytecode at Android's supported
+        // Java level even though Gradle itself runs on JDK 26.
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+java {
+    toolchain {
+        // AGP 9.0's JDK image transform is not compatible with JDK 26 jlink.
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 dependencies {
     testImplementation "junit:junit:4.13.2"
 }
-

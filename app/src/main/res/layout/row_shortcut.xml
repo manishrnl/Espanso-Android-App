@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="72dp"
+    android:background="@drawable/bg_row"
+    android:minHeight="84dp"
     android:orientation="vertical"
-    android:paddingHorizontal="12dp"
-    android:paddingVertical="10dp">
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="13dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,26 +19,39 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/text_primary"
+            android:fontFamily="monospace"
+            android:textColor="@color/accent"
             android:textSize="17sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/folderText"
+            android:id="@+id/modeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_accent_chip"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="4dp"
             android:textColor="@color/accent"
-            android:textSize="12sp" />
+            android:textSize="11sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/replacementText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textColor="@color/text_secondary"
+        android:textColor="?attr/colorTextPrimary"
         android:textSize="14sp" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/folderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="?attr/colorTextSecondary"
+        android:textSize="11sp" />
 
+</LinearLayout>

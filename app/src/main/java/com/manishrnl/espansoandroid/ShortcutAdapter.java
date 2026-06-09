@@ -48,7 +48,8 @@ public final class ShortcutAdapter extends BaseAdapter {
             holder = new ViewHolder(
                     view.findViewById(R.id.keywordText),
                     view.findViewById(R.id.replacementText),
-                    view.findViewById(R.id.folderText)
+                    view.findViewById(R.id.folderText),
+                    view.findViewById(R.id.modeText)
             );
             view.setTag(holder);
         } else {
@@ -59,6 +60,12 @@ public final class ShortcutAdapter extends BaseAdapter {
         holder.keyword.setText(shortcut.getKeyword());
         holder.replacement.setText(shortcut.getText());
         holder.folder.setText(shortcut.getFolder());
+        holder.folder.setVisibility(
+                shortcut.getFolder().trim().isEmpty() ? View.GONE : View.VISIBLE
+        );
+        holder.mode.setText(
+                shortcut.isReplaceAfterSpace() ? R.string.after_space : R.string.instant
+        );
         return view;
     }
 
@@ -66,12 +73,18 @@ public final class ShortcutAdapter extends BaseAdapter {
         final TextView keyword;
         final TextView replacement;
         final TextView folder;
+        final TextView mode;
 
-        ViewHolder(TextView keyword, TextView replacement, TextView folder) {
+        ViewHolder(
+                TextView keyword,
+                TextView replacement,
+                TextView folder,
+                TextView mode
+        ) {
             this.keyword = keyword;
             this.replacement = replacement;
             this.folder = folder;
+            this.mode = mode;
         }
     }
 }
-

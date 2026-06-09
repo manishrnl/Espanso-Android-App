@@ -24,7 +24,9 @@ public final class EditorActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppPreferences.applyTheme(this);
         super.onCreate(savedInstanceState);
+        AppPreferences.applySystemBarAppearance(this);
         setContentView(R.layout.activity_editor);
 
         database = new ShortcutDatabase(this);
@@ -121,4 +123,3 @@ public final class EditorActivity extends Activity {
                 .show();
     }
 }
-

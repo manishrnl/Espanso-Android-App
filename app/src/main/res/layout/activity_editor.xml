@@ -2,102 +2,190 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface">
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:importantForAutofill="noExcludeDescendants">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="30dp">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_button_secondary"
+            android:minWidth="0dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorTextPrimary"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/editorTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
-            android:textSize="26sp"
+            android:layout_marginTop="18dp"
+            android:textColor="?attr/colorTextPrimary"
+            android:textSize="29sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/keywordInput"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/keyword"
-            android:inputType="text"
-            android:maxLines="1" />
-
-        <EditText
-            android:id="@+id/replacementInput"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:gravity="top|start"
-            android:hint="@string/replacement_text"
-            android:inputType="textMultiLine|textNoSuggestions"
-            android:padding="12dp"
-            android:scrollbars="vertical" />
-
-        <CheckBox
-            android:id="@+id/replaceAfterSpaceInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/replace_after_space" />
-
-        <EditText
-            android:id="@+id/positionInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/position"
-            android:inputType="number"
-            android:maxLines="1" />
-
-        <EditText
-            android:id="@+id/strategyInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/strategy"
-            android:inputType="text"
-            android:maxLines="1" />
-
-        <EditText
-            android:id="@+id/folderInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/folder"
-            android:inputType="textCapWords"
-            android:maxLines="1" />
+            android:layout_marginTop="4dp"
+            android:text="@string/editor_subtitle"
+            android:textColor="?attr/colorTextSecondary"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_card"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:text="@string/cancel" />
+                android:text="@string/keyword"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/keywordInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_input"
+                android:hint="@string/keyword_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="14dp"
+                android:textColor="?attr/colorTextPrimary"
+                android:textColorHint="?attr/colorTextSecondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:text="@string/save" />
+                android:layout_marginTop="16dp"
+                android:text="@string/replacement_text"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/replacementInput"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_input"
+                android:gravity="top|start"
+                android:hint="@string/replacement_hint"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:padding="14dp"
+                android:scrollbars="vertical"
+                android:textColor="?attr/colorTextPrimary"
+                android:textColorHint="?attr/colorTextSecondary" />
+
+            <CheckBox
+                android:id="@+id/replaceAfterSpaceInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:buttonTint="@color/accent"
+                android:text="@string/replace_after_space"
+                android:textColor="?attr/colorTextPrimary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/folder"
+                android:textColor="?attr/colorTextPrimary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/folderInput"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/bg_input"
+                android:hint="@string/folder_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingHorizontal="14dp"
+                android:textColor="?attr/colorTextPrimary"
+                android:textColorHint="?attr/colorTextSecondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/positionInput"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_input"
+                    android:hint="@string/position"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="?attr/colorTextPrimary"
+                    android:textColorHint="?attr/colorTextSecondary" />
+
+                <EditText
+                    android:id="@+id/strategyInput"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/bg_input"
+                    android:hint="@string/strategy"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="?attr/colorTextPrimary"
+                    android:textColorHint="?attr/colorTextSecondary" />
+            </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/on_accent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_danger_button"
             android:text="@string/delete"
-            android:textColor="#B91C1C"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorDanger"
+            android:textStyle="bold"
             android:visibility="gone" />
     </LinearLayout>
 
 </ScrollView>
-

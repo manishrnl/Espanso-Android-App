@@ -2,6 +2,7 @@ package com.manishrnl.espansoandroid;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -36,7 +38,9 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppPreferences.applyTheme(this);
         super.onCreate(savedInstanceState);
+        AppPreferences.applySystemBarAppearance(this);
         setContentView(R.layout.activity_main);
 
         database = new ShortcutDatabase(this);
@@ -60,6 +64,9 @@ public final class MainActivity extends Activity {
         findViewById(R.id.buttonImport).setOnClickListener(view -> openImportPicker());
         findViewById(R.id.buttonExport).setOnClickListener(view -> openExportPicker());
         findViewById(R.id.buttonAdd).setOnClickListener(view -> openEditor(-1));
+        findViewById(R.id.buttonTheme).setOnClickListener(view -> showThemeDialog());
+        findViewById(R.id.buttonKeyboardSettings).setOnClickListener(view ->
+                startActivity(new Intent(this, KeyboardSettingsActivity.class)));
 
         EditText searchInput = findViewById(R.id.searchInput);
         searchInput.addTextChangedListener(new TextWatcher() {
@@ -83,6 +90,8 @@ public final class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         reloadShortcuts();
+        updateKeyboardStatus();
+        updateThemeButton();
     }
 
     @Override
@@ -127,6 +136,83 @@ public final class MainActivity extends Activity {
             }
         }
         adapter.setItems(filtered);
+        TextView count = findViewById(R.id.shortcutCount);
+        count.setText(getResources().getQuantityString(
+                R.plurals.shortcut_count,
+                filtered.size(),
+                filtered.size()
+        ));
+    }
+
+    private void showThemeDialog() {
+        String[] labels = {
+                getString(R.string.theme_system),
+                getString(R.string.theme_light),
+                getString(R.string.theme_dark)
+        };
+        String[] values = {
+                AppPreferences.THEME_SYSTEM,
+                AppPreferences.THEME_LIGHT,
+                AppPreferences.THEME_DARK
+        };
+        String current = AppPreferences.getAppTheme(this);
+        int selected = 0;
+        for (int index = 0; index < values.length; index++) {
+            if (values[index].equals(current)) {
+                selected = index;
+                break;
+            }
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.theme)
+                .setSingleChoiceItems(labels, selected, (dialog, which) -> {
+                    AppPreferences.setAppTheme(this, values[which]);
+                    dialog.dismiss();
+                    recreate();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void updateThemeButton() {
+        TextView button = findViewById(R.id.buttonTheme);
+        button.setText(AppPreferences.appThemeLabel(this));
+    }
+
+    private void updateKeyboardStatus() {
+        InputMethodManager manager =
+                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        ComponentName component = new ComponentName(this, EspansoInputMethodService.class);
+        boolean enabled = false;
+        for (android.view.inputmethod.InputMethodInfo info
+                : manager.getEnabledInputMethodList()) {
+            if (getPackageName().equals(info.getPackageName())
+                    && EspansoInputMethodService.class.getName()
+                    .equals(info.getServiceName())) {
+                enabled = true;
+                break;
+            }
+        }
+
+        String current = Settings.Secure.getString(
+                getContentResolver(),
+                Settings.Secure.DEFAULT_INPUT_METHOD
+        );
+        boolean active = component.flattenToShortString().equals(current)
+                || component.flattenToString().equals(current);
+
+        TextView status = findViewById(R.id.keyboardStatusText);
+        TextView detail = findViewById(R.id.keyboardStatusDetail);
+        if (active) {
+            status.setText(R.string.keyboard_status_active);
+            detail.setText(R.string.keyboard_status_active_detail);
+        } else if (enabled) {
+            status.setText(R.string.keyboard_status_enabled);
+            detail.setText(R.string.keyboard_status_enabled_detail);
+        } else {
+            status.setText(R.string.keyboard_status_disabled);
+            detail.setText(R.string.keyboard_status_disabled_detail);
+        }
     }
 
     private void openImportPicker() {
@@ -206,4 +292,3 @@ public final class MainActivity extends Activity {
                 .show();
     }
 }
-
