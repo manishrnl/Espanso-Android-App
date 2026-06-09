@@ -8,3 +8,5 @@ gradle-9.4.1-bin.zip
 keystore.properties
 *.jks
 *.keystore
+*.apk
+*.aab

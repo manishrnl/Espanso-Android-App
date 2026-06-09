@@ -4,38 +4,32 @@
 
 - App title and launcher label: `rnl espanso`
 - Package name: `com.manishrnl.espansoandroid`
-- Version: `1.6.0` (`versionCode 7`)
+- Version: `1.6.1` (`versionCode 8`)
 - Target SDK: 36
 - Minimum SDK: 26
 - 1:1 vector logo source: `logo.svg`
 - No internet, analytics, advertising, account, or cloud-backup functionality
 - Accessibility disclosure shown before opening Android Accessibility settings
 - Privacy policy draft: `PRIVACY_POLICY.md`
-- Release signing can be configured through an ignored `keystore.properties`
+- Release signing is configured through an ignored `keystore.properties`
 
 Do not change the package name or release signing key after the first public
 upload. Future updates must use a higher version code and the same signing key.
 
-## Create the permanent release key
+## Permanent release key
 
-Use the JDK `keytool` and store the key outside source control:
+The release key was generated on June 9, 2026:
 
-```powershell
-New-Item -ItemType Directory -Force release
-
-& "C:\Users\MANISH\.jdks\openjdk-26.0.1\bin\keytool.exe" `
-  -genkeypair `
-  -v `
-  -keystore release\rnl-espanso-upload.jks `
-  -alias rnl-espanso `
-  -keyalg RSA `
-  -keysize 4096 `
-  -validity 10000
+```text
+Keystore: release\rnl-espanso-release.jks
+Alias: rnl-espanso
+Certificate owner: Manish RNL
+SHA-256: DB:53:44:55:B7:60:B8:03:34:5B:C6:33:C0:A7:07:79:A4:AA:91:18:F4:DE:3D:F9:7B:6E:35:23:41:5F:A9:3C
 ```
 
-Copy `keystore.properties.example` to `keystore.properties`, enter the actual
-passwords, and keep secure backups of both files. Losing this key prevents
-updates to the existing store listing.
+The passwords are stored only in the ignored `keystore.properties` file. Make
+secure offline backups of both that file and the keystore before publishing.
+Losing them prevents updates to the existing store listing.
 
 ## Build upload files
 
