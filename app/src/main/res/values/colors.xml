@@ -24,4 +24,15 @@
     <color name="danger">#D64B5F</color>
     <color name="warning">#B7791F</color>
     <color name="warning_border">#E9C46A</color>
+    <color name="info_blue">#2D7FF9</color>
+    <color name="rose">#D9467B</color>
+    <color name="instagram">#D62976</color>
+    <color name="facebook">#1877F2</color>
+
+    <color name="badge_accent">#1F6C5CE7</color>
+    <color name="badge_blue">#1F2D7FF9</color>
+    <color name="badge_green">#1F1A9B69</color>
+    <color name="badge_rose">#1FD9467B</color>
+    <color name="badge_amber">#24B7791F</color>
+    <color name="badge_neutral">#176B6D79</color>
 </resources>

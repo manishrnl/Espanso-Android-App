@@ -4,12 +4,14 @@
 
 - App title and launcher label: `rnl espanso`
 - Package name: `com.manishrnl.espansoandroid`
-- Version: `1.6.1` (`versionCode 8`)
+- Version: `1.7.0` (`versionCode 9`)
 - Target SDK: 36
 - Minimum SDK: 26
 - 1:1 vector logo source: `logo.svg`
 - No internet, analytics, advertising, account, or cloud-backup functionality
 - Accessibility disclosure shown before opening Android Accessibility settings
+- Guided restricted-setting setup and in-app troubleshooting guide
+- Optional password-field expansion through the bundled keyboard
 - Privacy policy draft: `PRIVACY_POLICY.md`
 - Release signing is configured through an ignored `keystore.properties`
 
@@ -34,7 +36,7 @@ Losing them prevents updates to the existing store listing.
 ## Build upload files
 
 ```powershell
-.\gradlew.bat clean testReleaseUnitTest lintRelease bundleRelease assembleRelease
+.\gradlew.bat clean test lintRelease bundleRelease assembleRelease
 ```
 
 With `keystore.properties` configured, expected signed outputs are:
@@ -48,6 +50,10 @@ Without `keystore.properties`, Gradle instead creates
 `app-release-unsigned.apk`; the AAB is also unsigned. Do not upload either
 unsigned artifact. Verify the selected release APK or AAB with your permanent
 release key before uploading it. Never upload a debug APK to the public store.
+
+Indus Appstore accepts Android App Bundles. For an AAB, configure the upload
+key in the developer dashboard before uploading the release. Keep the app
+package name and permanent signing identity unchanged for future updates.
 
 ## Store listing
 
@@ -78,7 +84,9 @@ so add one before submission.
 - Local shortcut storage: Yes, app-private device storage
 - Accessibility service: Yes, required for the core expansion feature with
   third-party keyboards
-- Password fields: Ignored
+- Password fields through Accessibility: Ignored
+- Password fields through bundled keyboard: Optional, disabled by default,
+  local trigger matching only, with no secure-field replacement previews
 - User deletion: Individual deletion, recycle bin, permanent deletion, and
   automatic deletion after 90 days
 
@@ -94,9 +102,10 @@ Long description:
 > shortcuts, type a keyword in a supported text field, and insert your local
 > replacement without switching away from Gboard, SwiftKey, or your preferred
 > keyboard. The app supports popup suggestions, immediate undo, CSV import and
-> export, folder organization, search, and a 90-day recycle bin. Password fields
-> are ignored. The app has no account, ads, analytics, or internet permission,
-> and shortcut processing remains on the device.
+> export, folder organization, search, themes, and a 90-day recycle bin. For
+> password fields, users can explicitly enable the bundled local keyboard. The
+> app has no account, ads, analytics, or internet permission, and shortcut
+> processing remains on the device.
 
 ## Manual review before submission
 
@@ -105,5 +114,9 @@ Long description:
 - Capture screenshots without personal shortcut data.
 - Test accessibility setup from the Indus-installed build.
 - Confirm expansion and popup suggestions in Gboard and SwiftKey.
+- Confirm password-field expansion with the bundled keyboard and opt-in enabled.
 - Confirm import, export, recycle-bin restore, and permanent deletion.
 - Keep the signing key and passwords in at least two secure backup locations.
+
+Official submission reference:
+https://developer.indusappstore.com/app-submission/app-upload

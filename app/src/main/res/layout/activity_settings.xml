@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:ignore="ContentDescription,TooManyViews">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,38 +15,100 @@
         android:paddingTop="@dimen/page_top_padding"
         android:paddingBottom="@dimen/page_bottom_padding">
 
-        <ImageButton
-            android:id="@+id/settingsBackButton"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:background="@drawable/bg_button_secondary"
-            android:contentDescription="@string/back"
-            android:padding="11dp"
-            android:src="@drawable/ic_back"
-            android:tint="?attr/colorTextPrimary"
-            android:tooltipText="@string/back" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/settings"
-            android:textColor="?attr/colorTextPrimary"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/settings_subtitle"
-            android:textColor="?attr/colorTextSecondary"
-            android:textSize="14sp" />
+            <ImageButton
+                android:id="@+id/settingsBackButton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_button_secondary"
+                android:contentDescription="@string/back"
+                android:padding="11dp"
+                android:src="@drawable/ic_back"
+                android:tint="?attr/colorTextPrimary"
+                android:tooltipText="@string/back" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.12"
+                    android:text="@string/settings_eyebrow"
+                    android:textColor="@color/accent"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/settings"
+                    android:textColor="?attr/colorTextPrimary"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_hero"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <ImageView
+                android:layout_width="58dp"
+                android:layout_height="52dp"
+                android:contentDescription="@string/company_logo_description"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_app" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_control_center"
+                    android:textColor="?attr/colorTextPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/settings_subtitle"
+                    android:textColor="?attr/colorTextSecondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/SettingsSectionLabel"
+            android:layout_marginTop="26dp"
+            android:text="@string/expansion_and_keyboard" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
             android:background="@drawable/bg_card"
             android:orientation="vertical"
             android:padding="17dp">
@@ -53,35 +116,52 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:ignore="UseCompoundDrawables">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/global_expansion"
-                    android:textColor="?attr/colorTextPrimary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icon_badge_accent"
+                    android:contentDescription="@null"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_shortcut"
+                    android:tint="@color/accent" />
 
-                <TextView
-                    android:id="@+id/settingsExpansionStatus"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_accent_chip"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="5dp"
-                    android:textColor="@color/accent"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:layout_marginStart="13dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/global_expansion"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/settingsExpansionStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_accent_chip"
+                        android:paddingHorizontal="9dp"
+                        android:paddingVertical="4dp"
+                        android:textColor="@color/accent"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/settingsExpansionDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="12dp"
                 android:textColor="?attr/colorTextSecondary"
                 android:textSize="13sp" />
 
@@ -93,221 +173,745 @@
                 android:textColor="?attr/colorTextSecondary"
                 android:textSize="12sp" />
 
-            <Button
+            <LinearLayout
                 android:id="@+id/settingsEnableAccessibility"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:background="@drawable/bg_button_primary"
-                android:text="@string/enable_global_expansion"
-                android:textAllCaps="false"
-                android:textColor="@color/on_accent"
-                android:minHeight="50dp"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_action_row_accent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="58dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="9dp">
 
-            <Button
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_shield"
+                    android:tint="@color/on_accent" />
+
+                <TextView
+                    android:id="@+id/settingsEnableAccessibilityText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/enable_global_expansion"
+                    android:textColor="@color/on_accent"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="@color/on_accent" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/settingsChooseKeyboard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_button_secondary"
-                android:text="@string/choose_keyboard"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorTextPrimary"
-                android:minHeight="50dp"
-                android:textSize="13sp" />
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_blue"
+                    android:src="@drawable/ic_keyboard"
+                    android:tint="@color/info_blue" />
+
+                <LinearLayout
+                    style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/choose_keyboard" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/choose_keyboard_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/settingsRestrictedHelpCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/bg_warning_card"
             android:orientation="vertical"
-            android:padding="17dp"
+            android:padding="18dp"
             android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                tools:ignore="UseCompoundDrawables">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icon_badge_amber"
                     android:contentDescription="@null"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:src="@drawable/ic_lock"
                     android:tint="@color/warning" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="13dp"
                     android:layout_weight="1"
-                    android:text="@string/restricted_settings_title"
-                    android:textColor="?attr/colorTextPrimary"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/restricted_settings_title"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_icon_badge_amber"
+                        android:paddingHorizontal="9dp"
+                        android:paddingVertical="3dp"
+                        android:text="@string/restricted_settings_short_detail"
+                        android:textColor="@color/warning"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:text="@string/restricted_settings_card_detail"
+                android:layout_marginTop="14dp"
+                android:lineSpacingExtra="3dp"
+                android:text="@string/restricted_settings_intro"
                 android:textColor="?attr/colorTextSecondary"
                 android:textSize="13sp" />
 
-            <Button
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GuideStepNumber"
+                        android:text="@string/step_one" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/restricted_step_one"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View style="@style/GuideDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GuideStepNumber"
+                        android:text="@string/step_two" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/restricted_step_two"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View style="@style/GuideDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GuideStepNumber"
+                        android:text="@string/step_three" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/restricted_step_three"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <View style="@style/GuideDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/GuideStepNumber"
+                        android:text="@string/step_four" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:text="@string/restricted_step_four"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_info_note"
+                android:lineSpacingExtra="2dp"
+                android:padding="12dp"
+                android:text="@string/restricted_settings_note"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+
+            <LinearLayout
                 android:id="@+id/settingsRestrictedHelp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/bg_button_secondary"
-                android:text="@string/fix_restricted_settings"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorTextPrimary"
-                android:minHeight="50dp"
-                android:textStyle="bold" />
+                android:background="@drawable/bg_action_row_accent"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="58dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_shield"
+                    android:tint="@color/on_accent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/start_guided_setup"
+                        android:textColor="@color/on_accent"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/start_guided_setup_detail"
+                        android:textColor="#DDEEFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_chevron_right"
+                    android:tint="@color/on_accent" />
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            style="@style/SettingsSectionLabel"
+            android:layout_marginTop="26dp"
+            android:text="@string/appearance_and_privacy" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="9dp"
             android:background="@drawable/bg_card"
             android:orientation="vertical"
             android:padding="17dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/data_and_shortcuts"
-                android:textColor="?attr/colorTextPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/settingsImport"
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icon_badge_rose"
+                    android:contentDescription="@null"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_palette"
+                    android:tint="@color/rose" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_theme"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/settingsThemeSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textColor="?attr/colorTextSecondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/settingsThemeGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/bg_button_secondary"
-                android:text="@string/import_csv"
-                android:textAllCaps="false"
-                android:minHeight="50dp"
-                android:textColor="?attr/colorTextPrimary" />
-
-            <Button
-                android:id="@+id/settingsExport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_button_secondary"
-                android:text="@string/export_csv"
-                android:textAllCaps="false"
-                android:minHeight="50dp"
-                android:textColor="?attr/colorTextPrimary" />
-
-            <Button
-                android:id="@+id/settingsNewShortcut"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_button_secondary"
-                android:text="@string/add_unfiled_shortcut"
-                android:textAllCaps="false"
-                android:minHeight="50dp"
-                android:textColor="?attr/colorTextPrimary" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/recycle_bin_settings_detail"
-                android:textColor="?attr/colorTextSecondary"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/settingsRecycleBin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:background="@drawable/bg_button_secondary"
-                android:drawableStart="@drawable/ic_delete"
-                android:drawablePadding="9dp"
-                android:drawableTint="?attr/colorTextPrimary"
+                android:background="@drawable/bg_segment"
                 android:gravity="center"
-                android:minHeight="50dp"
-                android:text="@string/recycle_bin"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorTextPrimary" />
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <RadioButton
+                    android:id="@+id/settingsThemeSystem"
+                    style="@style/ThemeRadioButton"
+                    android:text="@string/theme_system" />
+
+                <RadioButton
+                    android:id="@+id/settingsThemeLight"
+                    style="@style/ThemeRadioButton"
+                    android:text="@string/theme_light" />
+
+                <RadioButton
+                    android:id="@+id/settingsThemeDark"
+                    style="@style/ThemeRadioButton"
+                    android:text="@string/theme_dark" />
+            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="13dp"
             android:background="@drawable/bg_card"
-            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="18dp">
+            android:padding="17dp">
 
-            <ImageView
-                android:layout_width="@dimen/developer_logo_width"
-                android:layout_height="@dimen/developer_logo_height"
-                android:contentDescription="@string/company_logo_description"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logo_rnl" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/company_name"
-                android:textColor="?attr/colorTextPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="@string/developer_name"
-                android:textColor="@color/accent"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icon_badge_green"
+                    android:contentDescription="@null"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_lock"
+                    android:tint="@color/success" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_field_expansion"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/password_field_expansion_detail"
+                        android:textColor="?attr/colorTextSecondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/settingsPasswordExpansion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:buttonTint="@color/accent"
+                    android:showText="false"
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:gravity="center"
-                android:text="@string/developer_detail"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_info_note"
+                android:padding="12dp"
+                android:text="@string/password_field_limitation"
                 android:textColor="?attr/colorTextSecondary"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/settingsDeveloperWebsite"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="17dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_button_secondary"
-                android:drawableStart="@drawable/ic_web"
-                android:drawablePadding="9dp"
-                android:drawableTint="?attr/colorTextPrimary"
-                android:gravity="center"
-                android:minHeight="50dp"
-                android:text="@string/view_developer_projects"
-                android:textAllCaps="false"
-                android:textColor="?attr/colorTextPrimary"
-                android:textStyle="bold" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_icon_badge_amber"
+                    android:contentDescription="@null"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_shield"
+                    android:tint="@color/warning" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_app_auto_pause"
+                        android:textColor="?attr/colorTextPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/payment_app_auto_pause_detail"
+                        android:textColor="?attr/colorTextSecondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/settingsAutoPausePayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:buttonTint="@color/accent"
+                    android:showText="false"
+                    android:thumbTint="@color/switch_thumb"
+                    android:trackTint="@color/switch_track" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsManageExcludedApps"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="12dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_neutral"
+                    android:src="@drawable/ic_settings"
+                    android:tint="?attr/colorTextSecondary" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/manage_excluded_apps" />
+
+                    <TextView
+                        android:id="@+id/settingsManageExcludedAppsDetail"
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/manage_excluded_apps_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            style="@style/SettingsSectionLabel"
+            android:layout_marginTop="26dp"
+            android:text="@string/data_and_shortcuts" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:id="@+id/settingsImport"
+                style="@style/SettingsActionRow">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_blue"
+                    android:src="@drawable/ic_import"
+                    android:tint="@color/info_blue" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/import_csv" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/import_csv_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsExport"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_green"
+                    android:src="@drawable/ic_export"
+                    android:tint="@color/success" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/export_csv" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/export_csv_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsNewShortcut"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_accent"
+                    android:src="@drawable/ic_template_add"
+                    android:tint="@color/accent" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/add_unfiled_shortcut" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/add_unfiled_shortcut_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsRecycleBin"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_rose"
+                    android:src="@drawable/ic_delete"
+                    android:tint="@color/danger" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        android:id="@+id/settingsRecycleBinText"
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/recycle_bin" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/recycle_bin_settings_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/SettingsSectionLabel"
+            android:layout_marginTop="26dp"
+            android:text="@string/about_and_support" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:id="@+id/settingsGuide"
+                style="@style/SettingsActionRow">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_blue"
+                    android:src="@drawable/ic_help"
+                    android:tint="@color/info_blue" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/setup_and_troubleshooting" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/setup_and_troubleshooting_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsPrivacy"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_green"
+                    android:src="@drawable/ic_privacy"
+                    android:tint="@color/success" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/privacy_policy" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/privacy_policy_preview_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsDeveloper"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_accent"
+                    android:src="@drawable/ic_person"
+                    android:tint="@color/accent" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/developer_and_social" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/developer_and_social_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="@string/settings_footer"
+            android:textColor="?attr/colorTextSecondary"
+            android:textSize="11sp" />
 
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/infoScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    tools:ignore="ContentDescription">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/page_horizontal_padding"
+        android:paddingTop="@dimen/page_top_padding"
+        android:paddingBottom="@dimen/page_bottom_padding">
+
+        <ImageButton
+            android:id="@+id/infoBackButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_button_secondary"
+            android:contentDescription="@string/back"
+            android:padding="11dp"
+            android:src="@drawable/ic_back"
+            android:tint="?attr/colorTextPrimary"
+            android:tooltipText="@string/back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_hero"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <ImageView
+                android:id="@+id/infoHeroLogo"
+                android:layout_width="66dp"
+                android:layout_height="58dp"
+                android:contentDescription="@string/company_logo_description"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_rnl" />
+
+            <ImageView
+                android:id="@+id/infoHeroIcon"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_icon_badge_green"
+                android:contentDescription="@null"
+                android:padding="12dp"
+                android:src="@drawable/ic_shield"
+                android:tint="@color/success"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/infoEyebrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.12"
+                    android:textColor="@color/accent"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/infoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="?attr/colorTextPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/infoSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="?attr/colorTextSecondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- PRIVACY POLICY CONTAINER -->
+        <LinearLayout
+            android:id="@+id/infoPrivacyContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Section 1: Core Principles -->
+            <TextView
+                style="@style/SettingsSectionLabel"
+                android:layout_marginTop="24dp"
+                android:text="@string/privacy_section_principles" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_offline_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_offline_detail" />
+
+                <View style="@style/GuideDivider" />
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_storage_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_storage_detail" />
+
+                <View style="@style/GuideDivider" />
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_csv_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_csv_detail" />
+            </LinearLayout>
+
+            <!-- Section 2: Accessibility & Financial Protection -->
+            <TextView
+                style="@style/SettingsSectionLabel"
+                android:layout_marginTop="24dp"
+                android:text="@string/privacy_section_accessibility" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_accessibility_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_accessibility_detail" />
+
+                <View style="@style/GuideDivider" />
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_payment_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_payment_detail" />
+
+                <View style="@style/GuideDivider" />
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_password_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_password_detail" />
+            </LinearLayout>
+
+            <!-- Section 3: Data Retention & Deletion -->
+            <TextView
+                style="@style/SettingsSectionLabel"
+                android:layout_marginTop="24dp"
+                android:text="@string/privacy_section_retention" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_recycle_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_recycle_detail" />
+
+                <View style="@style/GuideDivider" />
+
+                <TextView
+                    style="@style/GuideIssueTitle"
+                    android:text="@string/privacy_deletion_title" />
+
+                <TextView
+                    style="@style/GuideIssueDetail"
+                    android:text="@string/privacy_deletion_detail" />
+            </LinearLayout>
+
+            <!-- Section 4: Links & Policy Box -->
+            <TextView
+                style="@style/SettingsSectionLabel"
+                android:layout_marginTop="24dp"
+                android:text="@string/privacy_section_links" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:id="@+id/infoPrivacyWebsite"
+                    style="@style/SettingsActionRow">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_blue"
+                        android:src="@drawable/ic_web"
+                        android:tint="@color/info_blue" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/privacy_link_website_title" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/developer_website_display" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoPrivacyGithub"
+                    style="@style/SettingsActionRow"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_neutral"
+                        android:src="@drawable/ic_github"
+                        android:tint="?attr/colorTextPrimary" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/privacy_link_github_title" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/social_handle" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoPrivacyDeveloper"
+                    style="@style/SettingsActionRow"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_accent"
+                        android:src="@drawable/ic_person"
+                        android:tint="@color/accent" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/privacy_link_developer_title" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/privacy_link_developer_detail" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bottom Privacy Guarantee Note Box -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_info_note"
+                android:lineSpacingExtra="3dp"
+                android:padding="15dp"
+                android:text="@string/privacy_guarantee_note"
+                android:textColor="?attr/colorTextSecondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- DEVELOPER PAGE CONTAINER -->
+        <LinearLayout
+            android:id="@+id/infoDeveloperContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/infoContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:lineSpacingExtra="4dp"
+                android:padding="19dp"
+                android:textColor="?attr/colorTextPrimary"
+                android:textIsSelectable="true"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/infoDeveloperLinks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    style="@style/SettingsSectionLabel"
+                    android:paddingHorizontal="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/connect" />
+
+                <LinearLayout
+                    android:id="@+id/infoWebsite"
+                    style="@style/SettingsActionRow">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_blue"
+                        android:src="@drawable/ic_web"
+                        android:tint="@color/info_blue" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/website" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/developer_website_display" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoInstagram"
+                    style="@style/SettingsActionRow"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_rose"
+                        android:src="@drawable/ic_instagram"
+                        android:tint="@color/instagram" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/instagram" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/social_handle" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoFacebook"
+                    style="@style/SettingsActionRow"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_blue"
+                        android:src="@drawable/ic_facebook"
+                        android:tint="@color/facebook" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/facebook" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/social_handle" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoGithub"
+                    style="@style/SettingsActionRow"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_neutral"
+                        android:src="@drawable/ic_github"
+                        android:tint="?attr/colorTextPrimary" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/github" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/social_handle" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/infoPhone"
+                    style="@style/SettingsActionRow"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        style="@style/SettingsActionIcon"
+                        android:background="@drawable/bg_icon_badge_green"
+                        android:src="@drawable/ic_phone"
+                        android:tint="@color/success" />
+
+                    <LinearLayout style="@style/SettingsActionTextContainer">
+
+                        <TextView
+                            style="@style/SettingsActionTitle"
+                            android:text="@string/call_developer" />
+
+                        <TextView
+                            style="@style/SettingsActionDetail"
+                            android:text="@string/developer_phone_display" />
+                    </LinearLayout>
+
+                    <ImageView style="@style/SettingsActionChevron" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

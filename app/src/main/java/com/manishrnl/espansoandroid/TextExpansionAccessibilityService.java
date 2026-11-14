@@ -4,6 +4,12 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.InputMethod;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -13,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -58,6 +65,8 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
     private DirectInputMethod directInputMethod;
     private boolean directInputActive;
     private boolean directPrivateField;
+    private boolean directOwnPackage;
+    private boolean directPaymentPackage;
     private DirectExpansionRecord lastDirectExpansion;
     private String suppressedDirectSuffix = "";
     private long suppressedDirectUntil;
@@ -88,6 +97,46 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             return;
         }
         CharSequence packageName = event.getPackageName();
+        boolean isExcluded = AppPreferences.isPackageExcludedForPaymentSafety(this, packageName);
+        if (!isExcluded) {
+            AccessibilityNodeInfo source = event.getSource();
+            if (source != null && AppPreferences.isPackageExcludedForPaymentSafety(this, source.getPackageName())) {
+                isExcluded = true;
+            }
+        }
+        if (!isExcluded) {
+            AccessibilityNodeInfo root = getRootInActiveWindow();
+            if (root != null && AppPreferences.isPackageExcludedForPaymentSafety(this, root.getPackageName())) {
+                isExcluded = true;
+            }
+        }
+        if (isExcluded) {
+            hideSuggestions();
+            activeFieldKey = "";
+            expectedFieldKey = "";
+            expectedText = "";
+            lastLegacyExpansion = null;
+            if (AppPreferences.isAutoPauseForPaymentAppsEnabled(this)) {
+                String mode = AppPreferences.getAutoPauseMode(this);
+                if (AppPreferences.AUTO_PAUSE_MODE_SYSTEM.equals(mode)) {
+                    String pkgStr = packageName != null ? packageName.toString() : "";
+                    if (AppPreferences.hasWriteSecureSettings(this)) {
+                        AppPreferences.setAccessibilityServiceEnabled(this, false);
+                    } else {
+                        showPaymentSafetyNotification(pkgStr);
+                        disableSelf();
+                    }
+                    AutoResumeMonitorService.startMonitoring(this, pkgStr);
+                    return;
+                }
+                // Smart In-App Pause:
+                // Text expansion and suggestions are paused only while inside this excluded app.
+                // As soon as the user exits or switches to another app, isExcluded is false
+                // and expansion automatically works without touching Android Settings!
+                return;
+            }
+            return;
+        }
         if (packageName != null && getPackageName().contentEquals(packageName)) {
             // Adding the accessibility overlay emits an event from this package.
             // An app Activity has this package as its class too, so still dismiss
@@ -107,6 +156,63 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             return;
         }
         processLegacyEvent(event);
+    }
+
+    @SuppressLint("MissingPermission")
+    private void showPaymentSafetyNotification(String pkgName) {
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            return;
+        }
+        String channelId = "payment_safety_channel";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    getString(R.string.app_name),
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        String appLabel = (pkgName != null && !pkgName.isEmpty()) ? pkgName : getString(R.string.app_name);
+        try {
+            if (pkgName != null && !pkgName.isEmpty()) {
+                android.content.pm.ApplicationInfo info = getPackageManager().getApplicationInfo(pkgName, 0);
+                CharSequence label = getPackageManager().getApplicationLabel(info);
+                if (label != null) {
+                    appLabel = label.toString();
+                }
+            }
+        } catch (Exception ignored) {
+        }
+
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, channelId);
+        } else {
+            builder = new Notification.Builder(this);
+        }
+        builder.setSmallIcon(R.mipmap.rnl_espanso_icon)
+                .setContentTitle(getString(R.string.payment_safety_notification_title))
+                .setContentText(getString(R.string.payment_safety_notification_text, appLabel))
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        try {
+            notificationManager.notify(1001, builder.build());
+        } catch (RuntimeException ignored) {
+            // Permission or notification issue
+        }
     }
 
     @Override
@@ -146,7 +252,10 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
 
     private void processLegacyEvent(AccessibilityEvent event) {
         AccessibilityNodeInfo node = editableNode(event);
-        if (event.isPassword() || (node != null && node.isPassword())) {
+        boolean privateField = event.isPassword()
+                || (node != null && node.isPassword());
+        if (privateField
+                && !AppPreferences.isPasswordExpansionEnabled(this)) {
             hideSuggestions();
             return;
         }
@@ -163,7 +272,11 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
         if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_FOCUSED) {
             loadShortcuts();
             lastLegacyExpansion = null;
-            updateSuggestions(node, text, cursor, false);
+            if (privateField) {
+                hideSuggestions();
+            } else {
+                updateSuggestions(node, text, cursor, false);
+            }
             return;
         }
         if (event.getEventType() != AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED
@@ -177,7 +290,11 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
                 && text.equals(expectedText)
                 && now <= expectedUntil) {
             clearExpectedEvent();
-            updateSuggestions(node, text, cursor, false);
+            if (privateField) {
+                hideSuggestions();
+            } else {
+                updateSuggestions(node, text, cursor, false);
+            }
             return;
         }
         clearExpectedEvent();
@@ -185,7 +302,11 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
         if (lastLegacyExpansion != null
                 && lastLegacyExpansion.fieldKey.equals(fieldKey)) {
             if (text.equals(lastLegacyExpansion.afterText)) {
-                updateSuggestions(node, text, cursor, false);
+                if (privateField) {
+                    hideSuggestions();
+                } else {
+                    updateSuggestions(node, text, cursor, false);
+                }
                 return;
             }
             if (text.equals(lastLegacyExpansion.afterSingleBackspaceText)
@@ -209,11 +330,18 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
                 return;
             }
         }
-        updateSuggestions(node, text, cursor, false);
+        if (privateField) {
+            hideSuggestions();
+        } else {
+            updateSuggestions(node, text, cursor, false);
+        }
     }
 
     private AccessibilityNodeInfo editableNode(AccessibilityEvent event) {
         AccessibilityNodeInfo source = event.getSource();
+        if (isPaymentOrBankingApp(source != null ? source.getPackageName() : null)) {
+            return null;
+        }
         if (isEditableTextNode(source)) {
             return source;
         }
@@ -222,16 +350,23 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
 
     private AccessibilityNodeInfo focusedEditableNode() {
         AccessibilityNodeInfo root = getRootInActiveWindow();
-        if (root == null) {
+        if (root == null || isPaymentOrBankingApp(root.getPackageName())) {
             return null;
         }
         AccessibilityNodeInfo focused =
                 root.findFocus(AccessibilityNodeInfo.FOCUS_INPUT);
+        if (focused != null && isPaymentOrBankingApp(focused.getPackageName())) {
+            return null;
+        }
         return isEditableTextNode(focused) ? focused : null;
     }
 
+    private boolean isPaymentOrBankingApp(CharSequence packageName) {
+        return AppPreferences.isPackageExcludedForPaymentSafety(this, packageName);
+    }
+
     private static boolean isEditableTextNode(AccessibilityNodeInfo node) {
-        return node != null && node.isEditable() && !node.isPassword();
+        return node != null && node.isEditable();
     }
 
     private static boolean supportsSetText(AccessibilityNodeInfo node) {
@@ -386,7 +521,13 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
 
     @TargetApi(33)
     private void processDirectInput() {
-        if (!directInputActive || directPrivateField || directInputMethod == null) {
+        boolean passwordExpansionEnabled =
+                AppPreferences.isPasswordExpansionEnabled(this);
+        if (!directInputActive
+                || directOwnPackage
+                || directPaymentPackage
+                || (directPrivateField && !passwordExpansionEnabled)
+                || directInputMethod == null) {
             hideSuggestions();
             return;
         }
@@ -397,8 +538,10 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             return;
         }
 
-        int requestedBefore = 4096;
-        if (lastDirectExpansion != null) {
+        int requestedBefore = directPrivateField
+                ? Math.max(2, maximumKeywordLength + 1)
+                : 4096;
+        if (!directPrivateField && lastDirectExpansion != null) {
             requestedBefore = Math.min(
                     32768,
                     Math.max(
@@ -410,7 +553,11 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             );
         }
         SurroundingText surrounding =
-                connection.getSurroundingText(requestedBefore, 128, 0);
+                connection.getSurroundingText(
+                        requestedBefore,
+                        directPrivateField ? 0 : 128,
+                        0
+                );
         if (surrounding == null) {
             hideSuggestions();
             return;
@@ -476,15 +623,29 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             String context = directContext(beforeCursor, match.start);
             connection.deleteSurroundingText(match.end - match.start, 0);
             connection.commitText(committed, 1, null);
-            lastDirectExpansion = directExpansionRecord(
-                    context,
-                    committed,
-                    match.shortcut.getKeyword()
-            );
+            if (directPrivateField) {
+                int suffixStart = Math.max(
+                        0,
+                        committed.length() - maximumKeywordLength - 1
+                );
+                suppressedDirectSuffix = committed.substring(suffixStart);
+                suppressedDirectUntil = now + EXPECTED_EVENT_TIMEOUT_MS;
+                lastDirectExpansion = null;
+            } else {
+                lastDirectExpansion = directExpansionRecord(
+                        context,
+                        committed,
+                        match.shortcut.getKeyword()
+                );
+            }
             hideSuggestions();
             return;
         }
 
+        if (directPrivateField) {
+            hideSuggestions();
+            return;
+        }
         updateSuggestions(
                 focusedEditableNode(),
                 beforeCursor,
@@ -499,6 +660,11 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             int cursor,
             boolean direct
     ) {
+        if ((node != null && node.isPassword())
+                || (direct && directPrivateField)) {
+            hideSuggestions();
+            return;
+        }
         String fragment = ExpansionMatcher.findSuggestionFragment(
                 shortcuts,
                 text,
@@ -600,7 +766,10 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
 
     private void applyLegacySuggestion(Shortcut shortcut, String fragment) {
         AccessibilityNodeInfo node = focusedEditableNode();
-        if (node == null || node.getText() == null || !supportsSetText(node)) {
+        if (node == null
+                || node.isPassword()
+                || node.getText() == null
+                || !supportsSetText(node)) {
             hideSuggestions();
             return;
         }
@@ -813,10 +982,15 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
         @Override
         public void onStartInput(EditorInfo attribute, boolean restarting) {
             directInputActive = true;
-            directPrivateField = isPrivateEditor(attribute)
-                    || getPackageName().equals(attribute.packageName);
+            directPrivateField = isPrivateEditor(attribute);
+            directOwnPackage = getPackageName().equals(attribute != null ? attribute.packageName : null);
+            directPaymentPackage = attribute != null && isPaymentOrBankingApp(attribute.packageName);
             lastDirectExpansion = null;
             suppressedDirectSuffix = "";
+            if (directPaymentPackage) {
+                hideSuggestions();
+                return;
+            }
             loadShortcuts();
             scheduleDirectInputProcessing();
         }
@@ -830,6 +1004,10 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
                 int candidatesStart,
                 int candidatesEnd
         ) {
+            if (directPaymentPackage) {
+                hideSuggestions();
+                return;
+            }
             scheduleDirectInputProcessing();
         }
 
@@ -837,6 +1015,8 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
         public void onFinishInput() {
             directInputActive = false;
             directPrivateField = false;
+            directOwnPackage = false;
+            directPaymentPackage = false;
             lastDirectExpansion = null;
             suppressedDirectSuffix = "";
             handler.removeCallbacks(directInputProcessor);

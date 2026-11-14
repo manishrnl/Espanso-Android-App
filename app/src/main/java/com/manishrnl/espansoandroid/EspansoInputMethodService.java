@@ -55,6 +55,7 @@ public final class EspansoInputMethodService extends InputMethodService {
     private boolean shifted;
     private boolean capsLock;
     private boolean privateField;
+    private boolean passwordExpansionEnabled;
     private int keyboardMode = MODE_LETTERS;
     private static final int KEY_HEIGHT_DP = 50;
     private int maximumKeywordLength = 1;
@@ -82,6 +83,7 @@ public final class EspansoInputMethodService extends InputMethodService {
         super.onStartInput(attribute, restarting);
         editorInfo = attribute;
         privateField = isPrivateField(attribute);
+        passwordExpansionEnabled = AppPreferences.isPasswordExpansionEnabled(this);
         typedBuffer.setLength(0);
         clearExpansionUndo();
         capsLock = false;
@@ -651,7 +653,9 @@ public final class EspansoInputMethodService extends InputMethodService {
         clearExpansionUndo();
         connection.commitText(text, 1);
         appendToBuffer(text);
-        expandImmediateShortcut(connection);
+        if (!privateField || passwordExpansionEnabled) {
+            expandImmediateShortcut(connection);
+        }
 
         if (shifted && !capsLock && isSingleLetter(text)) {
             shifted = false;
@@ -667,7 +671,9 @@ public final class EspansoInputMethodService extends InputMethodService {
             return;
         }
         clearExpansionUndo();
-        Shortcut match = findMatchingShortcut(true);
+        Shortcut match = privateField && !passwordExpansionEnabled
+                ? null
+                : findMatchingShortcut(true);
         if (match != null) {
             replaceShortcut(connection, match, true);
         } else {
@@ -867,7 +873,14 @@ public final class EspansoInputMethodService extends InputMethodService {
             return;
         }
         if (privateField) {
-            configureSuggestion(suggestionButtons.get(0), "Private field", null, "");
+            configureSuggestion(
+                    suggestionButtons.get(0),
+                    passwordExpansionEnabled
+                            ? getString(R.string.secure_expansion_keyboard_on)
+                            : getString(R.string.secure_expansion_keyboard_off),
+                    null,
+                    ""
+            );
             configureSuggestion(suggestionButtons.get(1), "", null, "");
             configureSuggestion(suggestionButtons.get(2), "", null, "");
             return;

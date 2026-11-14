@@ -25,7 +25,7 @@
                 android:layout_marginEnd="10dp"
                 android:contentDescription="@string/company_logo_description"
                 android:scaleType="fitCenter"
-                android:src="@drawable/logo_rnl" />
+                android:src="@drawable/logo_app" />
 
             <LinearLayout
                 android:layout_width="0dp"

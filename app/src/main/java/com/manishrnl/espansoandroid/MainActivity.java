@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,9 +21,11 @@ public final class MainActivity extends Activity {
     private FolderAdapter adapter;
     private TextView folderSummary;
     private TextView emptyFolders;
+    private String appliedThemeMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        appliedThemeMode = AppPreferences.getThemeMode(this);
         AppPreferences.applyTheme(this);
         super.onCreate(savedInstanceState);
         AppPreferences.applySystemBarAppearance(this);
@@ -61,6 +65,10 @@ public final class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (!appliedThemeMode.equals(AppPreferences.getThemeMode(this))) {
+            recreate();
+            return;
+        }
         reloadFolders();
     }
 
@@ -92,20 +100,18 @@ public final class MainActivity extends Activity {
     }
 
     private void showCreateFolderDialog() {
-        EditText input = new EditText(this);
-        input.setHint(R.string.folder_name_hint);
-        input.setSingleLine(true);
-
+        View content = LayoutInflater.from(this).inflate(
+                R.layout.dialog_create_folder,
+                null,
+                false
+        );
+        EditText input = content.findViewById(R.id.folderNameInput);
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.create_folder)
-                .setMessage(R.string.create_folder_detail)
-                .setView(input)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.create, null)
+                .setView(content)
                 .create();
-        dialog.setOnShowListener(ignored -> dialog.getButton(
-                AlertDialog.BUTTON_POSITIVE
-        ).setOnClickListener(view -> {
+        content.findViewById(R.id.folderCancelButton).setOnClickListener(view ->
+                dialog.dismiss());
+        content.findViewById(R.id.folderCreateButton).setOnClickListener(view -> {
             String folderName = input.getText().toString().trim();
             if (TextUtils.isEmpty(folderName)) {
                 input.setError(getString(R.string.folder_name_required));
@@ -121,8 +127,19 @@ public final class MainActivity extends Activity {
             }
             dialog.dismiss();
             reloadFolders();
-        }));
+        });
         dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawableResource(android.R.color.transparent);
+            window.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT
+            );
+            window.setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE
+            );
+        }
         input.requestFocus();
     }
 }

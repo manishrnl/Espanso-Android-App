@@ -13,6 +13,12 @@ for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
 
+if exist "C:\Program Files\Java\jdk-21.0.7+6" (
+    set "JAVA_HOME=C:\Program Files\Java\jdk-21.0.7+6"
+) else if exist "C:\Program Files\Android\Android Studio\jbr" (
+    set "JAVA_HOME=C:\Program Files\Android\Android Studio\jbr"
+)
+
 if defined JAVA_HOME goto findJavaFromJavaHome
 
 set JAVA_EXE=java.exe

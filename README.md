@@ -1,155 +1,203 @@
-# rnl espanso for Android
+# RNL ESPANSO for Android
 
-A Java Android app that expands local text shortcuts while you use Gboard,
-Samsung Keyboard, or another installed keyboard. It has no backend, no account,
-no analytics, no predefined shortcuts, and no internet permission.
+Offline text expansion for Android with folder organization, CSV portability,
+global light/dark themes, and an optional keyboard for secure fields.
 
-## Features
+Current release: **1.7.0** (`versionCode 9`)
 
-- System-matched light and dark interface
-- Direct accessibility editor integration with Gboard and other keyboards on
-  Android 13+
-- Accessibility-event compatibility mode on Android 8-12
-- Optional custom keyboard fallback
-- Gboard-style fallback layout with icon controls and backspace above Enter
-- Popup shortcut suggestions beside the active text field
-- First-backspace undo restores the original shortcut
-- Fallback-keyboard suggestion toolbar with paste and cursor controls
-- Caps lock, adaptive action keys, two symbol pages, and common emoji
-- SQLite storage inside the app's private device storage
-- Alphabetical folder-only home screen
-- Persistent empty folders with a dedicated home-screen add-folder action
-- Open a folder to add, edit, and delete its shortcuts
-- CSV import and export through Android's system document picker
-- CSV folder structure preserved as navigable folders
-- Support for quoted commas, quotes, and multiline replacement text
-- Optional replacement only after pressing Space
-- Dynamic date/time tokens such as `%dd%`, `%MM%`, `%yyyy%`, `%HH%`, and `%mm%`
-- No storage permission and no network permission
+## What it does
+
+- Expands local shortcuts while Gboard, SwiftKey, Samsung Keyboard, or another
+  keyboard remains selected in supported non-password fields.
+- Provides an optional bundled keyboard for password-field expansion.
+- Stores all shortcuts and settings in app-private device storage.
+- Includes no account, backend, ads, analytics, tracking SDK, cloud backup, or
+  internet permission.
+
+## Main features
+
+- Android 13+ direct accessibility editor integration
+- Android 8-12 accessibility compatibility mode
+- Optional secure-field expansion through the bundled keyboard
+- Popup suggestions and first-backspace undo
+- Folder-based shortcut organization and global search
+- Premium System, Light, and Dark themes
+- Premium folder creation and shortcut editor interfaces
+- Dynamic tokens such as `%dd%`, `%MM%`, `%yyyy%`, `%HH%`, and `%mm%`
+- CSV import/export through Android's system document picker
+- Quoted commas, quotes, and multiline replacement support
+- 90-day recycle bin for deleted folders and shortcuts
+- In-app privacy policy, developer profile, setup guide, and troubleshooting
+- Guided App info to Accessibility flow for Android restricted settings
+- Automatic exclusion of payment, banking, and financial apps (Paytm, PhonePe, GPay, SBI, etc.) for device security compliance
+
+## Required setup
+
+1. Install and open `rnl espanso`.
+2. Create a folder and shortcut, or import a compatible CSV from Settings.
+3. Open **Settings > Enable global expansion**.
+4. Accept the in-app accessibility disclosure.
+5. Enable **rnl espanso expansion** in Android Accessibility settings.
+6. Type a shortcut keyword in a supported editable field.
+
+### Android "Restricted setting"
+
+Android 13 and newer may block Accessibility for manually installed APK files.
+An app cannot silently bypass or approve this security control.
+
+Use **Settings > Fix restricted setting > Start guided setup**:
+
+1. The app opens its Android App info page.
+2. Open the three-dot menu.
+3. Select **Allow restricted settings** and confirm.
+4. Return to the app.
+5. The app automatically continues to Accessibility settings.
+
+The same workflow is available under **Settings > Setup & troubleshooting**.
+
+## Password fields
+
+Android hides password text from accessibility services. Expansion in password
+fields therefore cannot work reliably while Gboard, SwiftKey, or another
+external keyboard is selected.
+
+To enable secure-field expansion:
+
+1. Open **Settings > Setup & troubleshooting**.
+2. Tap **Enable the bundled keyboard** and enable `rnl espanso`.
+3. Select the `rnl espanso` keyboard for the password field.
+4. Enable **Settings > Password-field expansion** and confirm the warning.
+
+Password-field expansion is disabled by default. In secure fields, the bundled
+keyboard keeps only the current trigger buffer in memory, hides shortcut
+suggestions and replacement previews, and clears the buffer when input ends.
+
+## Shortcut editor fields
+
+- **Keyword:** trigger text, for example `;email`.
+- **Replacement text:** local text inserted after a match.
+- **Replace after Space:** waits until Space is typed before expanding.
+- **Folder:** organizational folder shown on the home page.
+- **Position:** match priority; lower numbers are checked first.
+- **Template strategy:** compatibility metadata preserved for desktop espanso
+  CSV import/export. Android 1.7.0 does not use it to select a replacement, so
+  leave it blank for normal shortcuts.
 
 ## CSV format
 
-Imports and exports use these columns in this exact format:
+Imports and exports use these exact headers:
 
 ```csv
 Keyword,Text,Replace after Typing Space,Position,Multiple Templates Selection Strategy,Folder
 ;email,hello@example.com,false,1,,Personal
 ```
 
-The included `Clipboard content.csv` can be selected with the app's **Import
-CSV** button. Importing asks for confirmation before replacing the current
-local database.
+Import replaces the current local shortcut database only after confirmation.
+Export a backup first when the current shortcuts must be preserved.
 
-## Build
+## Known limits and fixes
 
-Requirements:
+- **Expansion stops after updating the app:** turn `rnl espanso expansion` off
+  and on again in Accessibility settings.
+- **A game, terminal, or custom editor does not expand:** that app may not
+  expose a compatible editor connection. Try the bundled keyboard.
+- **Password expansion does not work:** select the bundled keyboard and enable
+  Password-field expansion in app Settings.
+- **Payment & Banking apps (Paytm, PhonePe, GPay, etc.):** payment apps perform
+  security checks on active accessibility services. Open **Settings > Auto-pause & excluded apps**
+  to configure apps where Espanso automatically pauses text expansion.
+  - **Smart In-App Pause (Default):** Text expansion and suggestions are completely
+    paused while in excluded apps, and automatically re-enabled the moment you exit
+    back to your home screen or another app. No manual switching required!
+  - **Full System Disable (Optional):** For strict banking apps requiring the service
+    to be turned off in Android Settings, you can grant `WRITE_SECURE_SETTINGS` via ADB
+    (`adb shell pm grant com.manishrnl.espansoandroid android.permission.WRITE_SECURE_SETTINGS`)
+    for 100% automated OS-level toggle and automatic re-enable upon app exit.
+- **Restricted setting appears:** use the guided App info flow described above.
+
+These instructions are also included inside the app under
+**Settings > Setup & troubleshooting**.
+
+## Build requirements
 
 - JDK 26 for Gradle
-- JDK 21 for the Android Java compiler toolchain
+- JDK 21 toolchain for Android compilation
 - Android SDK Platform 36
 - Android SDK Build-Tools 36.0.0
 
-Gradle is pinned to the locally installed JDK:
+### Build an APK into the project root
 
-```text
-C:\Users\MANISH\.jdks\openjdk-26.0.1
-```
-
-Gradle runs with Java 26. AGP 9.0 uses the installed JDK 21 toolchain for
-Android compilation, and generated bytecode uses Java 17 compatibility because
-Android devices execute DEX on ART rather than Java 26 class files.
-
-Install the SDK components from Android Studio's **SDK Manager**, set
-`ANDROID_HOME` to the SDK directory, then run:
+From PowerShell or Command Prompt in the repository root:
 
 ```powershell
-.\gradlew.bat --version
-.\gradlew.bat assembleDebug
+.\build-apk.bat
 ```
 
-The first command should report Java 26 for both the launcher and daemon JVM.
-
-The APK is generated at:
+This runs unit tests, Android lint, and the debug build, then creates:
 
 ```text
-%LOCALAPPDATA%\EspansoAndroid\build\app\outputs\apk\debug\app-debug.apk
+.\rnl-espanso-debug.apk
 ```
 
-## Run from IntelliJ IDEA
-
-`MainActivity.java` is an Android activity, not a standalone Java program with
-a `public static void main` method. Run the `app` Android configuration instead
-of running `MainActivity.java` directly.
-
-1. Open the repository root as a Gradle project.
-2. Open the Gradle tool window and click **Reload All Gradle Projects**.
-3. Set the Gradle JVM to JDK `26`.
-4. Connect a phone with USB debugging enabled, or select an Android emulator.
-5. Select the `app` Android run configuration and click **Run**.
-
-IntelliJ IDEA 2026.1 supports this project with AGP 9.0.0. Android Studio is
-optional, but provides the most complete Android emulator and SDK management
-interface.
-
-## Run from Android Studio
-
-1. Open this project in Android Studio.
-2. Open **Tools > SDK Manager**.
-3. Install **Android SDK Platform 36**, **Android SDK Build-Tools 36.0.0**,
-   **Android SDK Platform-Tools**, and **Android SDK Command-line Tools**.
-4. Open **File > Settings > Build, Execution, Deployment > Build Tools >
-   Gradle** and select JDK `26`.
-5. Connect an Android phone with USB debugging enabled, or create an emulator.
-6. Select the `app` run configuration and the device.
-7. Click **Run**.
-
-## Run from PowerShell
-
-With a phone connected and visible in `adb devices`, run:
+For a signed release APK, configure `keystore.properties` first, then run:
 
 ```powershell
-$env:JAVA_HOME = "C:\Users\MANISH\.jdks\openjdk-26.0.1"
-$env:ANDROID_HOME = "C:\Users\MANISH\AppData\Local\Android\Sdk"
-$env:Path = "$env:JAVA_HOME\bin;$env:ANDROID_HOME\platform-tools;$env:Path"
-
-.\gradlew.bat --version
-.\gradlew.bat testDebugUnitTest assembleDebug
-adb devices
-.\gradlew.bat installDebug
-adb shell am start -n com.manishrnl.espansoandroid/.MainActivity
+.\build-apk.bat release
 ```
 
-## Set up expansion with Gboard or another keyboard
+The signed output is copied to:
 
-1. Install and open the app.
-2. Open **Settings** and tap **Enable global expansion**.
-3. In Android Accessibility settings, enable **rnl espanso expansion**.
-   - On Android 13 or newer, a manually installed APK may show **Restricted
-     setting**. Open rnl espanso **Settings > Fix restricted setting > Open App
-     info**, tap the three-dot menu, choose **Allow restricted settings**, then
-     return to Accessibility. Android intentionally requires this user action.
-4. After an app update, turn this accessibility service off and on once so
-   Android reloads its editor capability.
-5. Return to the app and tap **Choose keyboard** if you want to select Gboard,
-   Samsung Keyboard, or another installed keyboard.
-6. Import `Clipboard content.csv`, or add shortcuts manually.
-7. In a supported text field, type one of your own shortcut keywords.
+```text
+.\rnl-espanso-release.apk
+```
 
-Android does not let one app modify Gboard itself. On Android 13 and newer, the
-app requests the Accessibility input-method-editor capability and receives a
-direct connection to the active text editor while Gboard remains selected. On
-older supported Android versions, it falls back to editable accessibility
-events and set-text actions. Password fields are ignored, and typed text is not
-retained as history or sent off device.
+## Signed release build
 
-Some games, terminal emulators, and custom text editors do not expose a
-compatible editor connection or editable accessibility node. Expansion and
-popup suggestions cannot work in those fields. The included rnl espanso
-Keyboard remains available as an optional fallback input method.
+Release signing reads the ignored `keystore.properties` file:
 
-## Local data
+```properties
+storeFile=release/rnl-espanso-release.jks
+storePassword=...
+keyAlias=rnl-espanso
+keyPassword=...
+```
 
-Shortcut records are stored in the app-private SQLite database
-`shortcuts.db`. Android cloud backup is disabled. Exported CSV files are written
-only to the location selected in Android's document picker. Uninstalling the app
-removes its private database.
+Build the signed APK and Android App Bundle:
+
+```powershell
+.\gradlew.bat clean test lintRelease bundleRelease assembleRelease
+```
+
+Outputs:
+
+```text
+%LOCALAPPDATA%\EspansoAndroid\build\app\outputs\apk\release\app-release.apk
+%LOCALAPPDATA%\EspansoAndroid\build\app\outputs\bundle\release\app-release.aab
+```
+
+Never upload a debug or unsigned APK. Keep permanent offline backups of the
+release keystore and its passwords; future store updates require the same key
+and a higher `versionCode`.
+
+See [docs/INDUS_APPSTORE_RELEASE.md](docs/INDUS_APPSTORE_RELEASE.md) for the
+store checklist and [docs/RELEASE_NOTES_1.7.0.md](docs/RELEASE_NOTES_1.7.0.md)
+for this release.
+
+## Privacy
+
+The app has no internet permission. Shortcuts, settings, and matching remain on
+the device. CSV files are accessed only through Android's system document
+picker. Android cloud backup is disabled.
+
+The complete policy is available in [PRIVACY_POLICY.md](PRIVACY_POLICY.md) and
+inside the app under **Settings > Privacy policy**.
+
+## Developer
+
+Manish Kumar / Manish rnl
+
+- Website: https://www.manishrnl.in/projects
+- Instagram: https://www.instagram.com/manishrnl/
+- Facebook: https://www.facebook.com/manishrnl/
+- GitHub: https://github.com/manishrnl/
+- Phone: +91 95014 21887

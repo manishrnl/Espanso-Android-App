@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    tools:ignore="ContentDescription">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/page_horizontal_padding"
+        android:paddingTop="@dimen/page_top_padding"
+        android:paddingBottom="@dimen/page_bottom_padding">
+
+        <ImageButton
+            android:id="@+id/guideBackButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_button_secondary"
+            android:contentDescription="@string/back"
+            android:padding="11dp"
+            android:src="@drawable/ic_back"
+            android:tint="?attr/colorTextPrimary"
+            android:tooltipText="@string/back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_hero"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_icon_badge_blue"
+                android:contentDescription="@null"
+                android:padding="13dp"
+                android:src="@drawable/ic_help"
+                android:tint="@color/info_blue" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.1"
+                    android:text="@string/guide_eyebrow"
+                    android:textColor="@color/accent"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/setup_guide_title"
+                    android:textColor="?attr/colorTextPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/setup_guide_subtitle"
+                    android:textColor="?attr/colorTextSecondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/SettingsSectionLabel"
+            android:layout_marginTop="24dp"
+            android:text="@string/quick_setup" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:id="@+id/guideCreateShortcut"
+                style="@style/SettingsActionRow">
+
+                <TextView
+                    style="@style/GuideStepNumber"
+                    android:text="@string/step_one" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/guide_create_shortcut" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/guide_create_shortcut_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/guideAccessibility"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    style="@style/GuideStepNumber"
+                    android:text="@string/step_two" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/guide_enable_accessibility" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/guide_enable_accessibility_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/guideRestrictedSetup"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    style="@style/GuideStepNumber"
+                    android:text="@string/step_three" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/guide_fix_restricted" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/guide_fix_restricted_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/guideKeyboardSettings"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    style="@style/GuideStepNumber"
+                    android:text="@string/step_four" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/guide_enable_keyboard" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/guide_enable_keyboard_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/guideChooseKeyboard"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    style="@style/GuideStepNumber"
+                    android:text="@string/step_five" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/guide_choose_keyboard" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/guide_choose_keyboard_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/SettingsSectionLabel"
+            android:layout_marginTop="24dp"
+            android:text="@string/known_limits_and_fixes" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                style="@style/GuideIssueTitle"
+                android:text="@string/issue_restricted_title" />
+
+            <TextView
+                style="@style/GuideIssueDetail"
+                android:text="@string/issue_restricted_detail" />
+
+            <View style="@style/GuideDivider" />
+
+            <TextView
+                style="@style/GuideIssueTitle"
+                android:text="@string/issue_password_title" />
+
+            <TextView
+                style="@style/GuideIssueDetail"
+                android:text="@string/issue_password_detail" />
+
+            <View style="@style/GuideDivider" />
+
+            <TextView
+                style="@style/GuideIssueTitle"
+                android:text="@string/issue_payment_title" />
+
+            <TextView
+                style="@style/GuideIssueDetail"
+                android:text="@string/issue_payment_detail" />
+
+            <View style="@style/GuideDivider" />
+
+            <TextView
+                style="@style/GuideIssueTitle"
+                android:text="@string/issue_update_title" />
+
+            <TextView
+                style="@style/GuideIssueDetail"
+                android:text="@string/issue_update_detail" />
+
+            <View style="@style/GuideDivider" />
+
+            <TextView
+                style="@style/GuideIssueTitle"
+                android:text="@string/issue_custom_editor_title" />
+
+            <TextView
+                style="@style/GuideIssueDetail"
+                android:text="@string/issue_custom_editor_detail" />
+
+            <View style="@style/GuideDivider" />
+
+            <TextView
+                style="@style/GuideIssueTitle"
+                android:text="@string/issue_csv_title" />
+
+            <TextView
+                style="@style/GuideIssueDetail"
+                android:text="@string/issue_csv_detail" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_info_note"
+            android:lineSpacingExtra="3dp"
+            android:padding="15dp"
+            android:text="@string/guide_privacy_note"
+            android:textColor="?attr/colorTextSecondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>

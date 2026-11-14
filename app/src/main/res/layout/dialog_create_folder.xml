@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="22dp"
+    android:background="@drawable/bg_dialog_surface"
+    android:orientation="vertical"
+    android:padding="22dp"
+    tools:ignore="ButtonStyle">
+
+    <ImageView
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:background="@drawable/bg_icon_badge_accent"
+        android:contentDescription="@null"
+        android:padding="13dp"
+        android:src="@drawable/ic_folder_add"
+        android:tint="@color/accent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_folder"
+        android:textColor="?attr/colorTextPrimary"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/create_folder_detail"
+        android:textColor="?attr/colorTextSecondary"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/folder_name"
+        android:textColor="?attr/colorTextPrimary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/folderNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_input"
+        android:hint="@string/folder_name_hint"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="textCapWords"
+        android:maxLines="1"
+        android:paddingHorizontal="15dp"
+        android:selectAllOnFocus="true"
+        android:textColor="?attr/colorTextPrimary"
+        android:textColorHint="?attr/colorTextSecondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/folderCancelButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_secondary"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorTextPrimary"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/folderCreateButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_primary"
+            android:text="@string/create"
+            android:textAllCaps="false"
+            android:textColor="@color/on_accent"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>
