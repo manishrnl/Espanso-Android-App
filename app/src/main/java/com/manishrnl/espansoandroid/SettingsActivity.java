@@ -231,6 +231,8 @@ public final class SettingsActivity extends Activity {
 
         findViewById(R.id.settingsManageExcludedApps).setOnClickListener(v ->
                 startActivity(new Intent(this, ExcludedAppsActivity.class)));
+        findViewById(R.id.settingsManagePermissions).setOnClickListener(v ->
+                PermissionsDialogHelper.show(this));
         updateAutoPauseSummary();
     }
 
@@ -332,15 +334,15 @@ public final class SettingsActivity extends Activity {
         }
 
         new AlertDialog.Builder(this)
-                .setTitle(R.string.replace_shortcuts_title)
+                .setTitle(R.string.import_shortcuts_title)
                 .setMessage(getResources().getQuantityString(
-                        R.plurals.replace_shortcuts_message,
+                        R.plurals.import_shortcuts_message,
                         imported.size(),
                         imported.size()
                 ))
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.import_csv, (dialog, which) -> {
-                    database.replaceAll(imported);
+                    database.importShortcuts(imported); // Import new shortcuts
                     Toast.makeText(
                             this,
                             getResources().getQuantityString(

@@ -10,14 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public final class TrashAdapter extends BaseAdapter {
     private final Context context;
     private final LayoutInflater inflater;
-    private final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
     private final List<TrashEntry> items = new ArrayList<>();
 
     public TrashAdapter(Context context) {
@@ -66,10 +67,7 @@ public final class TrashAdapter extends BaseAdapter {
 
         TrashEntry entry = getItem(position);
         holder.title.setText(entry.getTitle().replace("\\", " / "));
-        holder.date.setText(context.getString(
-                R.string.deleted_on,
-                dateFormat.format(new Date(entry.getDeletedAt()))
-        ));
+        holder.date.setText(formatDeletionDetails(context, entry.getDeletedAt()));
         if (entry.isFolder()) {
             holder.icon.setImageResource(R.drawable.ic_folder);
             holder.kind.setText(R.string.folder);
@@ -95,6 +93,28 @@ public final class TrashAdapter extends BaseAdapter {
             ));
         }
         return view;
+    }
+
+    public static String formatDeletionDetails(Context context, long deletedAt) {
+        DateFormat dateTimeFormat = new SimpleDateFormat("EEE, MMM d, yyyy 'at' HH:mm", Locale.getDefault());
+        String formattedDate = dateTimeFormat.format(new Date(deletedAt));
+
+        long expiresAt = deletedAt + ShortcutDatabase.TRASH_RETENTION_MILLIS;
+        long diffMillis = expiresAt - System.currentTimeMillis();
+
+        String autoDeleteText;
+        if (diffMillis <= 0) {
+            autoDeleteText = context.getString(R.string.auto_delete_today);
+        } else {
+            long daysLeft = (long) Math.ceil((double) diffMillis / (24L * 60L * 60L * 1000L));
+            autoDeleteText = context.getResources().getQuantityString(
+                    R.plurals.auto_delete_days,
+                    (int) daysLeft,
+                    (int) daysLeft
+            );
+        }
+
+        return context.getString(R.string.trash_deletion_details, formattedDate, autoDeleteText);
     }
 
     private static final class ViewHolder {

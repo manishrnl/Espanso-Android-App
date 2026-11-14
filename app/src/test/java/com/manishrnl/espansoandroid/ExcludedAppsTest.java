@@ -23,7 +23,7 @@ public class ExcludedAppsTest {
         assertTrue(set.contains("net.one97.paytm"));
         assertTrue(set.contains("com.phonepe.app"));
         assertTrue(set.contains("com.google.android.apps.nbu.paisa.user"));
-        assertTrue(set.contains("com.navi.passport"));
+        assertTrue(set.contains("com.naviapp"));
         assertTrue(set.contains("com.sbi.yono"));
         assertTrue(set.contains("com.dreamplug.android.cred"));
     }
@@ -36,6 +36,6 @@ public class ExcludedAppsTest {
 
         // Mutating returned array does not mutate internal array
         first[0] = "mutated.package";
-        assertEquals("com.navi.passport", second[0]);
+        assertEquals("com.naviapp", second[0]);
     }
 }

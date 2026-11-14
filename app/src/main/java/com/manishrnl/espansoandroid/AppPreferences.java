@@ -29,16 +29,17 @@ public final class AppPreferences {
     public static final String THEME_DARK = "dark";
 
     private static final String[] DEFAULT_EXCLUDED_PACKAGES = {
-            "com.navi.passport",
+            "com.naviapp",
             "net.one97.paytm",
             "com.phonepe.app",
             "com.google.android.apps.nbu.paisa.user",
             "in.org.npci.upiapp",
             "com.dreamplug.android.cred",
             "money.jupiter",
+            "com.drivetrackplusrefuel",
             "com.fi.money",
             "com.goniyo.pay",
-            "com.slicepay",
+            "indwin.c3.shareapp",
             "com.super.money",
             "com.getsimpl.app",
             "com.lazypay.android",
@@ -197,10 +198,20 @@ public final class AppPreferences {
     }
 
     public static boolean isPackageExcluded(Context context, CharSequence packageName) {
-        if (packageName == null || !isAutoPauseForPaymentAppsEnabled(context)) {
+        if (packageName == null) {
             return false;
         }
         String pkg = packageName.toString().trim().toLowerCase(Locale.US);
+
+        // Navi app package variants always match
+        if (pkg.contains("navi") || pkg.equals("com.naviapp") || pkg.equals("com.navi.passport")) {
+            return isAutoPauseForPaymentAppsEnabled(context);
+        }
+
+        if (!isAutoPauseForPaymentAppsEnabled(context)) {
+            return false;
+        }
+
         Set<String> excluded = getExcludedPaymentApps(context);
         if (excluded.contains(pkg)) {
             return true;

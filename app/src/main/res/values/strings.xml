@@ -89,9 +89,25 @@
     <string name="shortcut">Shortcut</string>
     <string name="empty_replacement">Empty replacement</string>
     <string name="trash_shortcut_detail">%1$s\nFolder: %2$s</string>
-    <string name="deleted_on">Deleted %1$s</string>
+    <string name="deleted_on">Deleted on %1$s</string>
+    <string name="trash_deletion_details">Deleted on %1$s. %2$s</string>
+    <plurals name="auto_delete_days">
+        <item quantity="one">♻️ %1$d days left until it gets deleted permanently.</item>
+        <item quantity="other">♻️ %1$d days left until it gets deleted permanently.</item>
+    </plurals>
+    <string name="auto_delete_today">Will automatically be deleted today.</string>
     <string name="restore">Restore</string>
+    <string name="restore_all">Restore all</string>
+    <string name="restore_all_trash_title">Restore all items?</string>
+    <string name="restore_all_trash_message">All deleted folders and shortcuts in the recycle bin will be restored back to your active library.</string>
     <string name="restored">Restored.</string>
+    <string name="restored_all">All items restored.</string>
+    <string name="merge_duplicates">Merge Duplicates</string>
+    <plurals name="merged_duplicates_toast">
+        <item quantity="one">Merged %1$d duplicate shortcut.</item>
+        <item quantity="other">Merged %1$d duplicate shortcuts.</item>
+    </plurals>
+    <string name="no_duplicates_found">No duplicate shortcuts found.</string>
     <plurals name="restore_folder_message">
         <item quantity="one">Restore "%1$s" and its %2$d shortcut? If the folder already exists, the shortcut will be merged into it.</item>
         <item quantity="other">Restore "%1$s" and its %2$d shortcuts? If the folder already exists, the shortcuts will be merged into it.</item>
@@ -161,13 +177,13 @@
     <string name="password_expansion_warning_message">Shortcut replacement text may contain sensitive information and will be inserted directly into password fields when you type a matching trigger. Secure matching may use the accessibility editor connection or the bundled rnl espanso keyboard. Suggestions and replacement previews stay hidden.</string>
 
     <string name="payment_app_auto_pause">Auto-pause in excluded apps</string>
-    <string name="payment_app_auto_pause_detail">Automatically pause text expansion in selected apps and resume upon exit.</string>
+    <string name="payment_app_auto_pause_detail">Automatically pause text expansion in selected apps and resume upon exit.Keep it OFF if you finds it frustrating</string>
     <string name="manage_excluded_apps">Auto-pause &amp; excluded apps</string>
     <string name="manage_excluded_apps_detail">Choose apps where accessibility automatically pauses and resumes.</string>
     <string name="excluded_apps_dialog_title">Auto-Pause &amp; Excluded Apps</string>
     <string name="add_package_button">Add Package Name</string>
     <string name="reset_defaults_button">Reset Defaults</string>
-    <string name="enter_package_hint">e.g. com.navi.passport</string>
+    <string name="enter_package_hint">e.g. com.naviapp</string>
     <string name="package_added_toast">App added to auto-pause list</string>
     <string name="package_removed_toast">App removed from auto-pause list</string>
     <string name="payment_safety_notification_title">RNL ESPANSO Paused</string>
@@ -210,10 +226,28 @@
     <string name="badge_installed">Installed</string>
     <string name="badge_default">Banking</string>
     <string name="badge_added">Added</string>
+
+    <!-- Permissions Prompt Strings -->
+    <string name="permissions_dialog_title">App Permissions &amp; Setup</string>
+    <string name="permissions_dialog_subtitle">Grant recommended permissions to ensure reliable text expansion, timely auto-resume notifications, and seamless backups.</string>
+    <string name="permission_notifications_title">Notifications (Recommended)</string>
+    <string name="permission_notifications_desc">Required on Android 13+ to send instant 1-tap alerts when text expansion is paused and when you exit a banking app so you can resume immediately.</string>
+    <string name="permission_usage_title">Usage Access (Optional for Auto-Resume)</string>
+    <string name="permission_usage_desc">Enables Espanso to accurately detect when you exit strict apps like Navi or banking apps to resume expansion automatically.</string>
+    <string name="permission_grant_button">Grant</string>
+    <string name="permission_granted_badge">Granted ✓</string>
+    <string name="permission_dialog_done">Done</string>
+    <string name="permissions_card_title">Permissions &amp; System Access</string>
+    <string name="permissions_card_detail">Manage notification alerts, usage access for auto-resume, and ADB permissions.</string>
     <string name="enable">Enable</string>
     <string name="secure_expansion_keyboard_on">Secure expansion on</string>
     <string name="secure_expansion_keyboard_off">Private field protected</string>
-    <string name="import_csv_detail">Replace local shortcuts from a selected CSV file.</string>
+    <string name="import_shortcuts_title">Import Shortcuts</string>
+    <plurals name="import_shortcuts_message">
+        <item quantity="one">Do you want to import %d shortcut? Matching shortcuts will be updated, and new ones added to your library.</item>
+        <item quantity="other">Do you want to import %d shortcuts? Matching shortcuts will be updated, and new ones added to your library.</item>
+    </plurals>
+    <string name="import_csv_detail">Import and merge shortcuts from a CSV file into your local library without deleting your existing shortcuts.</string>
     <string name="export_csv_detail">Create a portable backup with the system file picker.</string>
     <string name="add_unfiled_shortcut_detail">Create a new local trigger and replacement.</string>
     <string name="about_and_support">ABOUT &amp; SUPPORT</string>
@@ -304,7 +338,7 @@
     <string name="issue_update_detail">Open Accessibility settings, turn rnl espanso expansion off, then on again so Android reconnects the updated service.</string>
     <string name="issue_custom_editor_title">A specific game, terminal, or custom editor does not expand</string>
     <string name="issue_custom_editor_detail">Some apps do not expose a compatible editor connection. Use the bundled keyboard as a fallback; fields that block both accessibility and input-method replacement cannot be modified by another app.</string>
-    <string name="issue_csv_title">CSV import replaced existing shortcuts</string>
-    <string name="issue_csv_detail">Import intentionally replaces the current local shortcut database after confirmation. Export a backup first when you need to preserve the current set.</string>
+    <string name="issue_csv_title">CSV import behavior</string>
+    <string name="issue_csv_detail">CSV import updates matching shortcuts and adds new ones from your file while preserving all your local shortcuts.</string>
     <string name="guide_privacy_note">Privacy: shortcut matching is local. The app has no internet permission, account, ads, analytics, or cloud backup. Password expansion is off by default and shows no replacement previews in secure fields.</string>
 </resources>

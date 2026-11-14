@@ -116,23 +116,40 @@ public final class TextExpansionAccessibilityService extends AccessibilityServic
             expectedFieldKey = "";
             expectedText = "";
             lastLegacyExpansion = null;
+
             if (AppPreferences.isAutoPauseForPaymentAppsEnabled(this)) {
-                String mode = AppPreferences.getAutoPauseMode(this);
-                if (AppPreferences.AUTO_PAUSE_MODE_SYSTEM.equals(mode)) {
-                    String pkgStr = packageName != null ? packageName.toString() : "";
-                    if (AppPreferences.hasWriteSecureSettings(this)) {
-                        AppPreferences.setAccessibilityServiceEnabled(this, false);
-                    } else {
-                        showPaymentSafetyNotification(pkgStr);
-                        disableSelf();
+                String pkgStr = packageName != null ? packageName.toString() : "";
+                if (pkgStr.isEmpty()) {
+                    AccessibilityNodeInfo src = event.getSource();
+                    if (src != null && src.getPackageName() != null) {
+                        pkgStr = src.getPackageName().toString();
                     }
+                }
+
+                // If Write Secure Settings permission is granted, we can silently
+                // disable the accessibility service in Android OS and auto re-enable
+                // it immediately when exiting the app.
+                if (AppPreferences.hasWriteSecureSettings(this)) {
+                    AppPreferences.setAccessibilityServiceEnabled(this, false);
                     AutoResumeMonitorService.startMonitoring(this, pkgStr);
                     return;
                 }
-                // Smart In-App Pause:
-                // Text expansion and suggestions are paused only while inside this excluded app.
-                // As soon as the user exits or switches to another app, isExcluded is false
-                // and expansion automatically works without touching Android Settings!
+
+                // For strict apps like Navi or when system-level disable is chosen,
+                // we disable the service and start the monitor so the user is alerted
+                // with a 1-tap re-enable notification the instant they leave the app!
+                String mode = AppPreferences.getAutoPauseMode(this);
+                boolean isStrictApp = pkgStr.contains("navi") || AppPreferences.AUTO_PAUSE_MODE_SYSTEM.equals(mode);
+
+                if (isStrictApp) {
+                    showPaymentSafetyNotification(pkgStr);
+                    disableSelf();
+                    AutoResumeMonitorService.startMonitoring(this, pkgStr);
+                    return;
+                }
+
+                // For other apps (Smart In-App Pause):
+                // Text expansion is paused while in the app, and resumes automatically upon exit.
                 return;
             }
             return;

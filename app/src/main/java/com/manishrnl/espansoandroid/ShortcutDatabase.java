@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public final class ShortcutDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "shortcuts.db";
@@ -17,7 +20,7 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
     private static final String FOLDER_TABLE = "folders";
     private static final String TRASH_FOLDER_TABLE = "trash_folders";
     private static final String TRASH_SHORTCUT_TABLE = "trash_shortcuts";
-    private static final long TRASH_RETENTION_MILLIS =
+    public static final long TRASH_RETENTION_MILLIS =
             90L * 24L * 60L * 60L * 1000L;
 
     public ShortcutDatabase(Context context) {
@@ -219,6 +222,31 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
         return entries;
     }
 
+    public List<TrashEntry> getTrashShortcutsForFolder(long trashFolderId) {
+        List<TrashEntry> entries = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        try (Cursor cursor = db.query(
+                TRASH_SHORTCUT_TABLE,
+                new String[]{"_id", "keyword", "replacement", "folder", "deleted_at"},
+                "trash_folder_id = ?",
+                new String[]{String.valueOf(trashFolderId)},
+                null,
+                null,
+                "keyword COLLATE NOCASE"
+        )) {
+            while (cursor.moveToNext()) {
+                entries.add(TrashEntry.shortcut(
+                        cursor.getLong(cursor.getColumnIndexOrThrow("_id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("keyword")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("replacement")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("folder")),
+                        cursor.getLong(cursor.getColumnIndexOrThrow("deleted_at"))
+                ));
+            }
+        }
+        return entries;
+    }
+
     public int getTrashEntryCount() {
         SQLiteDatabase db = getReadableDatabase();
         int folderCount = countRows(db, TRASH_FOLDER_TABLE, null, null);
@@ -263,11 +291,15 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
                         new String[]{String.valueOf(id)}
                 );
             } else {
+                Long trashFolderId = getTrashFolderIdForShortcut(db, id);
                 db.delete(
                         TRASH_SHORTCUT_TABLE,
-                        "_id = ? AND trash_folder_id IS NULL",
+                        "_id = ?",
                         new String[]{String.valueOf(id)}
                 );
+                if (trashFolderId != null) {
+                    cleanUpEmptyTrashFolder(db, trashFolderId);
+                }
             }
             db.setTransactionSuccessful();
         } finally {
@@ -285,6 +317,92 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+
+    public void restoreAllTrash() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            List<Long> trashFolderIds = new ArrayList<>();
+            try (Cursor cursor = db.query(
+                    TRASH_FOLDER_TABLE,
+                    new String[]{"_id"},
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            )) {
+                while (cursor.moveToNext()) {
+                    trashFolderIds.add(cursor.getLong(0));
+                }
+            }
+            for (long folderId : trashFolderIds) {
+                restoreFolder(db, folderId);
+            }
+
+            List<Long> trashShortcutIds = new ArrayList<>();
+            try (Cursor cursor = db.query(
+                    TRASH_SHORTCUT_TABLE,
+                    new String[]{"_id"},
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            )) {
+                while (cursor.moveToNext()) {
+                    trashShortcutIds.add(cursor.getLong(0));
+                }
+            }
+            for (long shortcutId : trashShortcutIds) {
+                restoreShortcut(db, shortcutId);
+            }
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public int mergeDuplicates() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        int mergedCount = 0;
+        try {
+            List<Shortcut> allShortcuts = getAll();
+            Map<String, Map<String, List<Shortcut>>> grouped = new HashMap<>();
+
+            for (Shortcut s : allShortcuts) {
+                String folderKey = s.getFolder() == null ? "" : s.getFolder().trim().toLowerCase(Locale.ROOT);
+                String kwKey = s.getKeyword() == null ? "" : s.getKeyword().trim().toLowerCase(Locale.ROOT);
+
+                grouped.computeIfAbsent(folderKey, k -> new HashMap<>())
+                       .computeIfAbsent(kwKey, k -> new ArrayList<>())
+                       .add(s);
+            }
+
+            for (Map<String, List<Shortcut>> folderGroup : grouped.values()) {
+                for (List<Shortcut> duplicates : folderGroup.values()) {
+                    if (duplicates.size() > 1) {
+                        for (int i = 1; i < duplicates.size(); i++) {
+                            Shortcut duplicate = duplicates.get(i);
+                            db.delete(
+                                    SHORTCUT_TABLE,
+                                    "_id = ?",
+                                    new String[]{String.valueOf(duplicate.getId())}
+                            );
+                            mergedCount++;
+                        }
+                    }
+                }
+            }
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return mergedCount;
     }
 
     public List<String> getFolders() {
@@ -313,20 +431,34 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
         return insertFolder(getWritableDatabase(), normalized) != -1;
     }
 
-    public void replaceAll(List<Shortcut> shortcuts) {
+    public void importShortcuts(List<Shortcut> importedShortcuts) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
-            archiveAllActiveData(db, System.currentTimeMillis());
-            for (Shortcut shortcut : shortcuts) {
-                ensureFolder(db, shortcut.getFolder());
-                long id = db.insertOrThrow(
-                        SHORTCUT_TABLE,
-                        null,
-                        valuesFor(shortcut)
-                );
-                shortcut.setId(id);
+            List<Shortcut> existingShortcuts = getAll();
+
+            for (Shortcut importedShortcut : importedShortcuts) {
+                boolean found = false;
+                String impKw = importedShortcut.getKeyword() == null ? "" : importedShortcut.getKeyword().trim();
+                String impFolder = importedShortcut.getFolder() == null ? "" : importedShortcut.getFolder().trim();
+
+                for (Shortcut existingShortcut : existingShortcuts) {
+                    String exKw = existingShortcut.getKeyword() == null ? "" : existingShortcut.getKeyword().trim();
+                    String exFolder = existingShortcut.getFolder() == null ? "" : existingShortcut.getFolder().trim();
+
+                    if (exKw.equalsIgnoreCase(impKw) && exFolder.equalsIgnoreCase(impFolder)) {
+                        found = true;
+                        importedShortcut.setId(existingShortcut.getId());
+                        update(importedShortcut);
+                        break;
+                    }
+                }
+                if (!found) {
+                    insert(importedShortcut);
+                    existingShortcuts = getAll();
+                }
             }
+
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -567,11 +699,7 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
                 "_id"
         )) {
             while (cursor.moveToNext()) {
-                db.insertOrThrow(
-                        SHORTCUT_TABLE,
-                        null,
-                        valuesForRestoredShortcut(cursor)
-                );
+                insertOrReplaceRestoredShortcut(db, cursor);
             }
         }
         db.delete(
@@ -588,10 +716,11 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
     }
 
     private static boolean restoreShortcut(SQLiteDatabase db, long id) {
+        Long trashFolderId = null;
         try (Cursor cursor = db.query(
                 TRASH_SHORTCUT_TABLE,
                 null,
-                "_id = ? AND trash_folder_id IS NULL",
+                "_id = ?",
                 new String[]{String.valueOf(id)},
                 null,
                 null,
@@ -600,20 +729,74 @@ public final class ShortcutDatabase extends SQLiteOpenHelper {
             if (!cursor.moveToFirst()) {
                 return false;
             }
-            String folder = cursor.getString(cursor.getColumnIndexOrThrow("folder"));
-            ensureFolder(db, folder);
-            db.insertOrThrow(
-                    SHORTCUT_TABLE,
-                    null,
-                    valuesForRestoredShortcut(cursor)
-            );
+            if (!cursor.isNull(cursor.getColumnIndexOrThrow("trash_folder_id"))) {
+                trashFolderId = cursor.getLong(cursor.getColumnIndexOrThrow("trash_folder_id"));
+            }
+            insertOrReplaceRestoredShortcut(db, cursor);
         }
         db.delete(
                 TRASH_SHORTCUT_TABLE,
-                "_id = ? AND trash_folder_id IS NULL",
+                "_id = ?",
                 new String[]{String.valueOf(id)}
         );
+        if (trashFolderId != null) {
+            cleanUpEmptyTrashFolder(db, trashFolderId);
+        }
         return true;
+    }
+
+    private static void insertOrReplaceRestoredShortcut(SQLiteDatabase db, Cursor cursor) {
+        String keyword = cursor.getString(cursor.getColumnIndexOrThrow("keyword"));
+        String folder = cursor.getString(cursor.getColumnIndexOrThrow("folder"));
+        ensureFolder(db, folder);
+
+        String trimmedKw = keyword == null ? "" : keyword.trim();
+        String trimmedFolder = folder == null ? "" : folder.trim();
+
+        long existingId = -1;
+        try (Cursor exCursor = db.query(
+                SHORTCUT_TABLE,
+                new String[]{"_id"},
+                "TRIM(keyword) = ? COLLATE NOCASE AND TRIM(folder) = ? COLLATE NOCASE",
+                new String[]{trimmedKw, trimmedFolder},
+                null,
+                null,
+                null
+        )) {
+            if (exCursor.moveToFirst()) {
+                existingId = exCursor.getLong(0);
+            }
+        }
+
+        ContentValues values = valuesForRestoredShortcut(cursor);
+        if (existingId != -1) {
+            db.update(SHORTCUT_TABLE, values, "_id = ?", new String[]{String.valueOf(existingId)});
+        } else {
+            db.insertOrThrow(SHORTCUT_TABLE, null, values);
+        }
+    }
+
+    private static Long getTrashFolderIdForShortcut(SQLiteDatabase db, long shortcutId) {
+        try (Cursor cursor = db.query(
+                TRASH_SHORTCUT_TABLE,
+                new String[]{"trash_folder_id"},
+                "_id = ?",
+                new String[]{String.valueOf(shortcutId)},
+                null,
+                null,
+                null
+        )) {
+            if (cursor.moveToFirst() && !cursor.isNull(0)) {
+                return cursor.getLong(0);
+            }
+        }
+        return null;
+    }
+
+    private static void cleanUpEmptyTrashFolder(SQLiteDatabase db, long trashFolderId) {
+        if (countRows(db, TRASH_SHORTCUT_TABLE, "trash_folder_id = ?", new String[]{String.valueOf(trashFolderId)}) == 0) {
+            db.delete(TRASH_FOLDER_TABLE, "_id = ?", new String[]{String.valueOf(trashFolderId)});
+        }
     }
 
     private static boolean folderExists(SQLiteDatabase db, String folder) {

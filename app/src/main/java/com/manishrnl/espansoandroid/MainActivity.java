@@ -48,6 +48,27 @@ public final class MainActivity extends Activity {
                 startActivity(new Intent(this, SearchActivity.class)));
         header.findViewById(R.id.settingsButton).setOnClickListener(view ->
                 startActivity(new Intent(this, SettingsActivity.class)));
+        header.findViewById(R.id.mergeDuplicatesButton).setOnClickListener(view -> {
+            int merged = database.mergeDuplicates();
+            if (merged > 0) {
+                Toast.makeText(
+                        this,
+                        getResources().getQuantityString(
+                                R.plurals.merged_duplicates_toast,
+                                merged,
+                                merged
+                        ),
+                        Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                Toast.makeText(
+                        this,
+                        R.string.no_duplicates_found,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+            reloadFolders();
+        });
 
         folderList.addHeaderView(header, null, false);
         folderList.setAdapter(adapter);
@@ -60,6 +81,8 @@ public final class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        PermissionsDialogHelper.checkAndPromptInitial(this);
     }
 
     @Override
