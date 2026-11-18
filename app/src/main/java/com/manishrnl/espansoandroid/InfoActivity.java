@@ -40,7 +40,9 @@ public final class InfoActivity extends Activity {
         findViewById(R.id.infoDeveloperContainer).setVisibility(View.GONE);
         findViewById(R.id.infoPrivacyContainer).setVisibility(View.VISIBLE);
 
+        bindLink(R.id.infoPrivacyPolicyWeb, R.string.privacy_policy_web_url);
         bindLink(R.id.infoPrivacyWebsite, R.string.developer_website_url);
+        bindLink(R.id.infoPrivacyContact, R.string.developer_contact_url);
         bindLink(R.id.infoPrivacyGithub, R.string.github_url);
         findViewById(R.id.infoPrivacyDeveloper).setOnClickListener(view -> showDeveloperPage());
 
@@ -69,6 +71,8 @@ public final class InfoActivity extends Activity {
                         Intent.ACTION_DIAL,
                         Uri.parse(getString(R.string.developer_phone_uri))
                 )));
+        findViewById(R.id.infoDonate).setOnClickListener(view ->
+                startActivity(new Intent(this, DonateActivity.class)));
 
         scrollToTop();
     }

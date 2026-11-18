@@ -70,6 +70,8 @@ public final class SettingsActivity extends Activity {
                 openInfoPage(InfoActivity.PAGE_PRIVACY));
         findViewById(R.id.settingsDeveloper).setOnClickListener(view ->
                 openInfoPage(InfoActivity.PAGE_DEVELOPER));
+        findViewById(R.id.settingsDonate).setOnClickListener(view ->
+                startActivity(new Intent(this, DonateActivity.class)));
         setupThemeControls();
         setupPasswordExpansion();
         setupAutoPauseControls();

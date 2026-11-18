@@ -1,5 +1,7 @@
 # Indus Appstore release checklist
 
+> **Note:** For copy-paste ready console metadata, reviewer test instructions, and permission justifications, see the complete [Indus Appstore Submission Guide](INDUS_APPSTORE_SUBMISSION_GUIDE.md).
+
 ## Already prepared in the project
 
 - App title and launcher label: `rnl espanso`

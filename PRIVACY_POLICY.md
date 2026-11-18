@@ -1,119 +1,96 @@
 # Privacy Policy for RNL ESPANSO
 
-Effective date: November 13, 2026
+**Effective Date:** November 18, 2026  
+**Last Updated:** November 18, 2026  
+**Application:** RNL ESPANSO (Package: `com.manishrnl.espansoandroid`)  
+**Developer / Data Fiduciary:** Manish Kumar (Manish rnl)  
+**Applicable Legal Framework:** Digital Personal Data Protection Act, 2023 (DPDP Act, India) & Information Technology Act, 2000 (India)
 
-RNL ESPANSO is an offline text-expansion application developed by Manish rnl.
-It does not require an account and does not include advertising, analytics, tracking SDKs, or internet access.
+---
 
-## Data processed
+## 1. Introduction & Core Privacy Philosophy
 
-The app stores shortcut keywords, replacement text, folder names, and app
-settings in private storage on the user's device. CSV data is read or written
-only when the user selects a file through Android's system document picker.
+RNL ESPANSO is a privacy-first, 100% offline text-expansion utility designed to expand shortcuts and text templates locally on Android devices.
 
-## Accessibility service
+We believe that your personal data, keystrokes, and text belongs solely to you. RNL ESPANSO operates under a strict **Zero-Data-Collection Architecture**:
+- **No Internet Access:** The application does not request the `android.permission.INTERNET` permission in its manifest and is physically incapable of transmitting any data off your device.
+- **No User Account:** No signup, email registration, phone verification, or authentication is required.
+- **No Third-Party Trackers or Ads:** The app contains zero analytics libraries, zero advertising SDKs, and zero telemetry software.
+- **App-Private Local Storage:** All shortcuts, snippets, folder structures, and settings are stored exclusively in private SQLite database storage within your device sandbox. Android Cloud Backup is explicitly disabled.
 
-The optional accessibility service is required for the app's core text
-expansion feature when the user types with Gboard, SwiftKey, Samsung Keyboard, or another
-keyboard. It processes text in the currently focused editable field to:
+---
 
-- match locally stored shortcut keywords;
-- insert the selected local replacement;
-- show local shortcut suggestions; and
-- restore the typed keyword when the user immediately undoes an expansion.
+## 2. Android Device Permissions & Explicit Disclosures
 
-Password fields are ignored by the accessibility service by default. Typed text is not
-retained as typing history, collected for profiling, shared with third parties,
-or transmitted off the device.
+To operate seamlessly while respecting device integrity and store policies (including the **Indus Appstore Developer Guidelines**), RNL ESPANSO requests only the permissions strictly required for its core text expansion and auto-pause features:
 
-## Payment & Banking App Protection
+### A. Accessibility Service (`android.permission.BIND_ACCESSIBILITY_SERVICE`)
+- **Purpose:** Used strictly to detect user-configured shortcut keywords (e.g., `;email`, `!date`) in active text input fields across standard external keyboards (such as Gboard, SwiftKey, Samsung Keyboard) and substitute them with the user's defined text snippet.
+- **Safeguards:** 
+  - Keystrokes are **never logged, saved to typing history, or profiled**.
+  - Password and secure PIN fields are ignored by default.
+  - No background surveillance or audio/visual monitoring is performed.
 
-rnl espanso automatically detects and excludes payment, UPI, banking, and financial applications (including Paytm, PhonePe, Google Pay, YONO SBI, BHIM, CRED, and mobile banking apps). Accessibility events and window content from payment apps are completely bypassed and ignored, ensuring payment applications operate securely without security flags or vulnerability warnings.
+### B. Input Method Service (`android.permission.BIND_INPUT_METHOD`)
+- **Purpose:** Powers an optional bundled input method (keyboard) that allows users to trigger expansions in specialized environments where external accessibility access is restricted.
+- **Safeguards:** Only the temporary trigger buffer is held in volatile memory to match shortcut patterns. It is purged as soon as text is expanded or focus changes.
 
-## Optional fallback keyboard
+### C. Package Visibility (`android.permission.QUERY_ALL_PACKAGES`)
+- **Purpose:** Used exclusively for the user-facing **"Auto-pause & Excluded Apps"** feature. This allows users to view a list of installed applications and select specific apps where Espanso must automatically pause text expansion.
+- **Safeguards:** The device package inventory is used only in real time to populate the on-device selection list. Your installed app list is never stored permanently, profiled, or shared.
 
-The app includes an optional fallback input method. Text entered through it is
-processed locally for shortcut matching and is not transmitted or stored as
-typing history.
+### D. Post Notifications (`android.permission.POST_NOTIFICATIONS`)
+- **Purpose:** Used solely on Android 13+ to display the optional foreground service notification and Quick Settings tile status indicator so users know whether text expansion is currently active or paused.
+- **Safeguards:** The application will never send marketing, promotional, or unrequested push notifications.
 
-Password-field expansion through the bundled keyboard is disabled by default
-and requires explicit confirmation in Settings. When enabled, only the current
-trigger buffer is held temporarily in memory for local matching. Replacement
-previews are not shown in secure fields.
+### E. Advanced Automation Permissions (Optional)
+- **`PACKAGE_USAGE_STATS`:** Optional permission used strictly to detect when an excluded app opens in the foreground to pause expansion.
+- **`WRITE_SECURE_SETTINGS`:** Optional advanced toggle granting users complete OS-level automated service pausing for high-security applications via ADB.
 
-## Data sharing and collection
+---
 
-rnl espanso does not collect or share personal data. It has no internet
-permission and contains no third-party advertising or analytics SDK.
+## 3. Financial, Banking & UPI App Protection
 
-## Retention and deletion
+RNL ESPANSO is designed to ensure complete safety and compliance when using Indian financial and banking applications:
+- **Automatic Payment App Exclusion:** The application automatically detects and bypasses payment and UPI applications (including PhonePe, Paytm, Google Pay, BHIM, YONO SBI, CRED, and major Indian banking apps).
+- **Zero Interception:** Accessibility window events and input content within financial apps are immediately bypassed, ensuring banking apps operate without security warnings or interference.
 
-Active shortcuts remain in local app storage until the user edits, deletes, or
-replaces them. Deleted folders and shortcuts remain in the local recycle bin
-for up to 90 days unless restored or permanently deleted earlier. Uninstalling
-the app removes its private local data.
+---
 
-## Security
+## 4. Data Storage, Retention & Deletion
 
-Android application-private storage is used for the local database. Android
-cloud backup is disabled.
+- **Local Storage:** All shortcut keywords, replacements, and folder categories are stored in an app-private SQLite database (`/data/data/com.manishrnl.espansoandroid/databases/`).
+- **Recycle Bin (Trash):** When shortcuts or folders are deleted, they are moved to a local 90-day recycle bin, allowing users to restore them or permanently purge them manually.
+- **User-Initiated Deletion:** 
+  - Users can delete individual shortcuts, folders, or purge the recycle bin at any time.
+  - Clearing application data via Android Settings (`Settings > Apps > RNL ESPANSO > Storage > Clear Data`) immediately erases all stored data.
+  - Uninstalling RNL ESPANSO permanently removes all local app data from the device.
 
-# Version
+---
 
-Current release: **1.7.0** (`versionCode 9`)
+## 5. Compliance with the Indian Digital Personal Data Protection Act, 2023 (DPDP Act)
 
-## What it does
+In accordance with the DPDP Act, 2023:
+1. **Right to Access Information:** All data stored by the app is visible to you within the app UI (folders, shortcut list, trash).
+2. **Right to Correction & Erasure:** You have direct tools to edit, update, or permanently delete any shortcut or preference.
+3. **Right of Grievance Redressal:** You have direct access to our designated Grievance Officer for questions or concerns regarding data processing.
+4. **Children's Privacy:** RNL ESPANSO does not collect personal data from anyone, including children under 18 years of age.
 
-- Expands local shortcuts while Gboard, SwiftKey, Samsung Keyboard, or another
-  keyboard remains selected in supported non-password fields.
-- Provides an optional bundled keyboard for password-field expansion.
-- Stores all shortcuts and settings in app-private device storage.
-- Includes no account, backend, ads, analytics, tracking SDK, cloud backup, or
-  internet permission.
+---
 
-## Main features
+## 6. Grievance Redressal & Contact Information
 
-- Android 13+ direct accessibility editor integration
-- Android 8-12 accessibility compatibility mode
-- Optional secure-field expansion through the bundled keyboard
-- Popup suggestions and first-backspace undo
-- Folder-based shortcut organization and global search
-- Premium System, Light, and Dark themes
-- Premium folder creation and shortcut editor interfaces
-- Dynamic tokens such as `%dd%`, `%MM%`, `%yyyy%`, `%HH%`, and `%mm%`
-- CSV import/export through Android's system document picker
-- Quoted commas, quotes, and multiline replacement support
-- 90-day recycle bin for deleted folders and shortcuts
-- In-app privacy policy, developer profile, setup guide, and troubleshooting
-- Guided App info to Accessibility flow for Android restricted settings
-- Automatic exclusion of payment, banking, and financial apps (Paytm, PhonePe, GPay, SBI, etc.) for device security compliance
+In compliance with Rule 3(2) of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 and the DPDP Act, 2023, the details of our Grievance Officer are as follows:
 
-## Shortcut editor fields
+- **Grievance / Data Protection Officer:** Manish Kumar
+- **Email:** `manish.rnl@zohomail.in`
+- **Official Website:** [https://www.manishrnl.in/contact-us](https://www.manishrnl.in/contact-us)
+- **Direct Phone:** +91 95014 21887
+- **Jurisdiction:** India
+- **Redressal Timeline:** Any grievances or inquiries will be acknowledged within 48 hours and resolved within 30 days from receipt.
 
-- **Keyword:** trigger text, for example `;email`.
-- **Replacement text:** local text inserted after a match.
-- **Replace after Space:** waits until Space is typed before expanding.
-- **Folder:** organizational folder shown on the home page.
-- **Position:** match priority; lower numbers are checked first.
-- **Template strategy:** compatibility metadata preserved for desktop espanso
-  CSV import/export. Android 1.7.0 does not use it to select a replacement, so
-  leave it blank for normal shortcuts.
+---
 
-## Privacy
+## 7. Updates to this Policy
 
-The app has no internet permission. Shortcuts, settings, and matching remain on
-the device. CSV files are accessed only through Android's system document
-picker. Android cloud backup is disabled.
-
-The complete policy is available in [PRIVACY_POLICY.md](PRIVACY_POLICY.md) and
-inside the app under **Settings > Privacy policy**.
-
-## Developer
-
-Manish Kumar
-
-- Website: https://www.manishrnl.in/projects
-- Instagram: https://www.instagram.com/manishrnl/
-- Facebook: https://www.facebook.com/manishrnl/
-- GitHub: https://github.com/manishrnl/
-- Phone: +91 95014 21887
+Any updates to this Privacy Policy will be reflected with a revised "Effective Date" at the top of this document and will be included in subsequent application releases within the app under **Settings > Privacy policy**.

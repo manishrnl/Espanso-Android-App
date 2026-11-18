@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <!-- Cyan top half of the rounded square -->
+  <path
+      android:fillColor="#00B9F1"
+      android:pathData="M4,24V13Q4,4 13,4H35Q44,4 44,13V24Z" />
+  <!-- Navy bottom half of the rounded square -->
+  <path
+      android:fillColor="#002970"
+      android:pathData="M4,24H44V35Q44,44 35,44H13Q4,44 4,35Z" />
+  <!-- White center circle -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M24,10A13,13 0 1,1 24,36A13,13 0 1,1 24,10Z" />
+  <!-- Navy "pay" -->
+  <path
+      android:strokeColor="#002970"
+      android:strokeWidth="1.7"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:pathData="M13.2,21V27.5 M13.2,21H15.8Q18.3,21 18.3,23.3Q18.3,25.6 15.8,25.6H13.2 M21.4,21Q19.3,21 19.3,23.3Q19.3,25.6 21.4,25.6Q23.5,25.6 23.5,23.3Q23.5,21 21.4,21 M23.5,21V25.6 M24.4,21L26.3,25.8L28.2,21 M26.3,25.8L25.4,27.8" />
+  <!-- Cyan "t" and "m" -->
+  <path
+      android:strokeColor="#00B9F1"
+      android:strokeWidth="1.7"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:pathData="M29.4,19V24.6Q29.4,25.6 30.4,25.6H31.0 M28.6,21.2H31.0 M31.5,21V25.6 M31.5,22.8Q31.5,21 32.6,21Q33.7,21 33.7,22.8V25.6 M33.7,22.8Q33.7,21 34.8,21Q35.9,21 35.9,22.8V25.6" />
+</vector>

@@ -257,6 +257,35 @@
     <string name="privacy_policy_preview_detail">Read the complete offline-data and accessibility policy in app.</string>
     <string name="developer_and_social">Developer &amp; social</string>
     <string name="developer_and_social_detail">Profile, projects, social accounts, and contact number.</string>
+    <string name="support_and_donate">Support &amp; Donate</string>
+    <string name="support_and_donate_detail">Support development via UPI payment or buy me a coffee.</string>
+    <string name="donate_eyebrow">SUPPORT US</string>
+    <string name="donate_title">Support Developer</string>
+    <string name="donate_subtitle">To Keep it 100% offline, private &amp; free for everyone, we need your support.Donations of any Amount would keep this app runs smoothly and free.</string>
+    <string name="donate_section_qr">UPI PAYMENT QR CODE</string>
+    <string name="donate_scan_instructions">Scan this QR code with any UPI app</string>
+    <string name="donate_supported_apps">PhonePe • Google Pay • Paytm • BHIM • Cred • Any Banking App</string>
+    <string name="donate_save_qr_button">Save QR to Gallery</string>
+    <string name="donate_qr_saved_toast">QR Code saved to Gallery! You can scan it from Gallery in your UPI app.</string>
+    <string name="donate_section_actions">DIRECT PAYMENT &amp; UPI ID</string>
+    <string name="donate_pay_via_upi_button">Pay via Any UPI App</string>
+    <string name="donate_app_phonepe">PhonePe</string>
+    <string name="donate_app_gpay">Google Pay</string>
+    <string name="donate_app_paytm">Paytm</string>
+    <string name="donate_app_navi">Navi</string>
+    <string name="donate_app_not_installed">%s is not installed on this device.</string>
+    <string name="donate_upi_id_label">DEVELOPER UPI ID</string>
+    <string name="donate_upi_id">9501421887@nyes</string>
+    <string name="donate_upi_name">Manish Kumar</string>
+    <string name="donate_phone_number_label">DEVELOPER MOBILE NUMBER</string>
+    <string name="donate_developer_phone">9501421887</string>
+    <string name="donate_phone_copied_toast">Mobile number copied! Paste in PhonePe, GPay, or Paytm to pay directly.</string>
+    <string name="donate_copy_button">Copy</string>
+    <string name="donate_copied_toast">UPI ID copied to clipboard!</string>
+    <string name="donate_no_upi_app">No UPI app found. You can copy the UPI ID and pay via your banking app.</string>
+    <string name="donate_pay_tip_title">UPI Payment Notice</string>
+    <string name="donate_pay_tip_desc">If your payment app (like Paytm) displays a safety alert for direct links, you can tap \"Pay via Mobile Number\" in that alert, pay via PhonePe / Google Pay, or scan the saved QR from Gallery.</string>
+    <string name="donate_thank_you_note">Thank you for supporting independent software development! 100% of your contributions go directly toward maintaining and enhancing RNL ESPANSO.</string>
     <string name="settings_footer">RNL ESPANSO 1.7.0 | Offline by design. No ads, analytics, account, or internet permission.</string>
 
     <string name="privacy_eyebrow">PRIVACY POLICY</string>
@@ -284,9 +313,31 @@
     <string name="privacy_deletion_title">Complete Data Removal</string>
     <string name="privacy_deletion_detail">Uninstalling the application immediately and permanently deletes all local databases, settings, and recycle bin data from your device.</string>
 
+    <string name="privacy_section_permissions">PERMISSIONS DISCLOSURE &amp; USAGE</string>
+    <string name="privacy_perm_accessibility_title">Accessibility Service (BIND_ACCESSIBILITY_SERVICE)</string>
+    <string name="privacy_perm_accessibility_detail">Required solely to match user-configured shortcut triggers and expand replacement snippets in active text fields across keyboards. Typed characters are never logged, recorded, stored as history, or transmitted.</string>
+    <string name="privacy_perm_query_packages_title">Package Visibility (QUERY_ALL_PACKAGES)</string>
+    <string name="privacy_perm_query_packages_detail">Used strictly to list installed applications in \"Auto-pause &amp; Excluded Apps\" so you can choose which apps (such as banking, UPI, or work apps) should bypass text expansion. Device app inventory is never collected, tracked, or shared.</string>
+    <string name="privacy_perm_notifications_title">Notifications (POST_NOTIFICATIONS)</string>
+    <string name="privacy_perm_notifications_detail">Used exclusively to show background service status and quick tile indicators. RNL ESPANSO does not send promotional, marketing, or advertising alerts.</string>
+
+    <string name="privacy_section_dpdp">INDIAN DPDP ACT, 2023 &amp; REGULATORY COMPLIANCE</string>
+    <string name="privacy_dpdp_title">Digital Personal Data Protection Act Compliance</string>
+    <string name="privacy_dpdp_detail">RNL ESPANSO complies fully with India\'s Digital Personal Data Protection (DPDP) Act, 2023 and the Information Technology Act, 2000. All operations and processing occur 100% locally on your device with zero cloud synchronization, no ads, and no trackers.</string>
+    <string name="privacy_dpdp_rights_title">User Rights under Indian Law</string>
+    <string name="privacy_dpdp_rights_detail">You hold complete ownership and sovereignty over your data. Under the DPDP Act, you have the right to access, rectify, and completely erase your shortcuts and configuration at any time by clearing app data or uninstalling the app.</string>
+    <string name="privacy_grievance_title">Grievance Redressal Officer</string>
+    <string name="privacy_grievance_detail">In compliance with the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 and DPDP Act, 2023:\n\n• Officer: Manish Kumar\n• Designation: Data Protection &amp; Grievance Officer\n• Email: manish.rnl@zohomail.in\n• Phone: +91 95014 21887\n• Address / Jurisdiction: India\n• Resolution Time: Grievances are acknowledged within 48 hours and resolved within 30 days.</string>
+
     <string name="privacy_section_links">LINKS &amp; POLICY RESOURCES</string>
+    <string name="privacy_link_policy_web_title">Public Web Privacy Policy URL</string>
+    <string name="privacy_link_policy_web_detail">Open live policy on manishrnl.in</string>
+    <string name="privacy_policy_web_url">https://www.manishrnl.in/projects</string>
     <string name="privacy_link_website_title">Official Website &amp; Projects</string>
     <string name="privacy_link_github_title">GitHub Open Source &amp; Profile</string>
+    <string name="privacy_link_contact_title">Grievance &amp; Contact Support</string>
+    <string name="privacy_link_contact_detail">manishrnl.in/contact-us • manish.rnl@zohomail.in</string>
+    <string name="developer_contact_url">https://www.manishrnl.in/contact-us</string>
     <string name="privacy_link_developer_title">Developer Profile &amp; Contact</string>
     <string name="privacy_link_developer_detail">View developer bio, social links &amp; direct contact</string>
     <string name="privacy_guarantee_note">Privacy Guarantee: RNL ESPANSO contains no account requirement, internet access, advertising, analytics, or cloud sync. All operations remain strictly on your device.</string>

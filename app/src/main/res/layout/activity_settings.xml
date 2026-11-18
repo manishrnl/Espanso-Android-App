@@ -927,6 +927,31 @@
 
                 <ImageView style="@style/SettingsActionChevron" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsDonate"
+                style="@style/SettingsActionRow"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    style="@style/SettingsActionIcon"
+                    android:background="@drawable/bg_icon_badge_rose"
+                    android:src="@drawable/ic_heart"
+                    android:tint="@color/danger" />
+
+                <LinearLayout style="@style/SettingsActionTextContainer">
+
+                    <TextView
+                        style="@style/SettingsActionTitle"
+                        android:text="@string/support_and_donate" />
+
+                    <TextView
+                        style="@style/SettingsActionDetail"
+                        android:text="@string/support_and_donate_detail" />
+                </LinearLayout>
+
+                <ImageView style="@style/SettingsActionChevron" />
+            </LinearLayout>
         </LinearLayout>
 
         <TextView

@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <!-- White circular background with subtle border -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M24,2C11.85,2 2,11.85 2,24s9.85,22 22,22s22,-9.85 22,-22S36.15,2 24,2z" />
+  <!-- Google 4-color 'G' -->
+  <path
+      android:fillColor="#4285F4"
+      android:pathData="M35.6,24.2c0,-0.8 -0.07,-1.6 -0.2,-2.3H24v4.6h6.5c-0.28,1.5 -1.1,2.8 -2.4,3.6v3h3.9C34.3,31.2 35.6,28 35.6,24.2z" />
+  <path
+      android:fillColor="#34A853"
+      android:pathData="M24,36c3.2,0 6,-1.1 8,-2.9l-3.9,-3c-1.1,0.7 -2.5,1.2 -4.1,1.2c-3.1,0 -5.8,-2.1 -6.8,-5h-4v3.1C15.2,33.3 19.3,36 24,36z" />
+  <path
+      android:fillColor="#FBBC05"
+      android:pathData="M17.2,26.3c-0.25,-0.7 -0.4,-1.5 -0.4,-2.3s0.15,-1.6 0.4,-2.3v-3.1h-4C12.4,20.2 12,22 12,24s0.4,3.8 1.2,5.4L17.2,26.3z" />
+  <path
+      android:fillColor="#EA4335"
+      android:pathData="M24,16.7c1.8,0 3.3,0.6 4.6,1.8l3.4,-3.4C29.9,13.2 27.2,12 24,12c-4.7,0 -8.8,2.7 -10.8,6.6l4,3.1C18.2,18.8 20.9,16.7 24,16.7z" />
+</vector>

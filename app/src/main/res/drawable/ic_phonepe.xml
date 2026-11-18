@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <!-- PhonePe purple rounded-square background -->
+  <path
+      android:fillColor="#5F259F"
+      android:pathData="M13,4H35Q44,4 44,13V35Q44,44 35,44H13Q4,44 4,35V13Q4,4 13,4Z" />
+  <!-- Top bar of the "पे" glyph -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M15,12.5H33V16H15Z" />
+  <!-- Vertical stroke of the "प" -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M19.5,16H23V36H19.5Z" />
+  <!-- Bowl of the "प" (left, hook shape) -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M15,16H19.5V21.5H15Z" />
+  <!-- Stem and bowl of the "े" matra on the right -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M27,16H30.5V36H27Z" />
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M30.5,28H33V31.5H30.5Z" />
+</vector>

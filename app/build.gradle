@@ -61,5 +61,7 @@ java {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'com.google.zxing:core:3.5.3'
     testImplementation "junit:junit:4.13.2"
 }

@@ -179,24 +179,35 @@ Never upload a debug or unsigned APK. Keep permanent offline backups of the
 release keystore and its passwords; future store updates require the same key
 and a higher `versionCode`.
 
-See [docs/INDUS_APPSTORE_RELEASE.md](docs/INDUS_APPSTORE_RELEASE.md) for the
-store checklist and [docs/RELEASE_NOTES_1.7.0.md](docs/RELEASE_NOTES_1.7.0.md)
-for this release.
+## Indus Appstore Deployment
 
-## Privacy
+RNL ESPANSO is 100% compliant and ready for publication on the **Indus Appstore** (India's Android App Store by PhonePe).
 
-The app has no internet permission. Shortcuts, settings, and matching remain on
-the device. CSV files are accessed only through Android's system document
-picker. Android cloud backup is disabled.
+- **Submission Guide & Metadata:** [docs/INDUS_APPSTORE_SUBMISSION_GUIDE.md](docs/INDUS_APPSTORE_SUBMISSION_GUIDE.md) (copy-paste descriptions, reviewer test instructions, permission justifications, data safety answers)
+- **Store Checklist:** [docs/INDUS_APPSTORE_RELEASE.md](docs/INDUS_APPSTORE_RELEASE.md)
+- **Release Notes:** [docs/RELEASE_NOTES_1.7.0.md](docs/RELEASE_NOTES_1.7.0.md)
+- **Terms of Service:** [TERMS_OF_SERVICE.md](TERMS_OF_SERVICE.md)
+- **Indian DPDP Act Compliance:** See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
+
+## Privacy & Legal Compliance
+
+The app has no internet permission (`android.permission.INTERNET` is not declared).
+All shortcut data, preferences, and matching operations remain strictly on the device.
+CSV files are accessed only through Android's native system document picker.
+Android cloud backup is explicitly disabled.
+
+Compliant with India's **Digital Personal Data Protection Act, 2023 (DPDP Act)**
+and the **Information Technology Act, 2000**.
 
 The complete policy is available in [PRIVACY_POLICY.md](PRIVACY_POLICY.md) and
 inside the app under **Settings > Privacy policy**.
 
-## Developer
+## Developer & Grievance Officer
 
 Manish Kumar / Manish rnl
-
+- Support & Grievance Email: manish.rnl@zohomail.in
 - Website: https://www.manishrnl.in/projects
+- Contact: https://www.manishrnl.in/contact-us
 - Instagram: https://www.instagram.com/manishrnl/
 - Facebook: https://www.facebook.com/manishrnl/
 - GitHub: https://github.com/manishrnl/
